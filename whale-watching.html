@@ -255,19 +255,22 @@
                 d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
             </svg>
           </button>
-          <h1 class="font-bold text-2xl tracking-tight flex items-center gap-2">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="currentColor"
-              class="w-7 h-7 text-amber-300">
-              <path
-                fill-rule="evenodd"
-                d="M11.54 22.351l.07.04.028.016a.76.76 0 00.723 0l.028-.015.071-.041a16.975 16.975 0 001.144-.742 19.58 19.58 0 002.683-2.282c1.944-1.99 3.963-4.98 3.963-8.827a8.25 8.25 0 00-16.5 0c0 3.846 2.02 6.837 3.963 8.827a19.58 19.58 0 002.682 2.282 16.976 16.976 0 001.145.742zM12 13.5a3 3 0 100-6 3 3 0 000 6z"
-                clip-rule="evenodd" />
-            </svg>
-            Happy Cape Tours
-          </h1>
+          <a href="index.html">
+            <h1
+              class="font-bold text-2xl tracking-tight flex items-center gap-2">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                class="w-7 h-7 text-amber-300">
+                <path
+                  fill-rule="evenodd"
+                  d="M11.54 22.351l.07.04.028.016a.76.76 0 00.723 0l.028-.015.071-.041a16.975 16.975 0 001.144-.742 19.58 19.58 0 002.683-2.282c1.944-1.99 3.963-4.98 3.963-8.827a8.25 8.25 0 00-16.5 0c0 3.846 2.02 6.837 3.963 8.827a19.58 19.58 0 002.682 2.282 16.976 16.976 0 001.145.742zM12 13.5a3 3 0 100-6 3 3 0 000 6z"
+                  clip-rule="evenodd" />
+              </svg>
+              Happy Cape Tours
+            </h1>
+          </a>
         </div>
         <div class="hidden md:flex items-center space-x-8 text-sm font-medium">
           <a href="#" class="hover:text-amber-200 transition">Tours</a
@@ -973,21 +976,18 @@
       // animations
       gsap.from('.detail-card', {
         scrollTrigger: { trigger: '.detail-card', start: 'top 85%' },
-        opacity: 0,
         y: 30,
         duration: 0.8,
         stagger: 0.1,
       });
       gsap.from('.tour-card', {
         scrollTrigger: { trigger: '.tour-card', start: 'top 90%' },
-        opacity: 0,
         scale: 0.95,
         duration: 0.6,
         stagger: 0.1,
       });
       gsap.from('.timeline-item', {
         scrollTrigger: { trigger: '.timeline-item', start: 'top 90%' },
-        opacity: 0,
         x: -20,
         duration: 0.5,
         stagger: 0.1,
