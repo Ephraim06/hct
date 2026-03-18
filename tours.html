@@ -1,0 +1,1922 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+    <title>All Tours · Happy Cape Experiences</title>
+    <!-- Tailwind + Heroicons + Google Fonts (Montserrat + Playfair) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap"
+      rel="stylesheet" />
+    <!-- GSAP & ScrollTrigger -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+    <style>
+      body {
+        font-family: 'Montserrat', sans-serif;
+        background-color: #fbfaf8;
+      }
+      .font-serif {
+        font-family: 'Playfair Display', serif;
+      }
+      /* offcanvas menu */
+      .offcanvas-menu {
+        transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+      }
+      .offcanvas-open {
+        transform: translateX(0) !important;
+      }
+      /* tour card luxury */
+      .tour-card {
+        transition: all 0.3s ease;
+        border-radius: 2rem;
+        overflow: hidden;
+        background: white;
+        box-shadow: 0 15px 30px -12px rgba(0, 0, 0, 0.1);
+      }
+      .tour-card:hover {
+        transform: translateY(-8px) scale(1.01);
+        box-shadow: 0 30px 45px -15px rgba(0, 0, 0, 0.2);
+      }
+      .tour-card img {
+        transition: transform 0.7s;
+        height: 240px;
+        width: 100%;
+        object-fit: cover;
+      }
+      .tour-card:hover img {
+        transform: scale(1.05);
+      }
+      .badge {
+        background: rgba(251, 191, 36, 0.15);
+        backdrop-filter: blur(4px);
+        padding: 0.25rem 1rem;
+        border-radius: 9999px;
+        font-weight: 500;
+        font-size: 0.75rem;
+        color: #92400e;
+        border: 1px solid rgba(251, 191, 36, 0.3);
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+      }
+      /* faq interactive */
+      .faq-item {
+        transition: all 0.2s;
+        border: 1px solid rgba(0, 0, 0, 0.05);
+        backdrop-filter: blur(2px);
+      }
+      .faq-answer {
+        display: none;
+        opacity: 0;
+        transition: opacity 0.3s;
+      }
+      .faq-item.open .faq-answer {
+        display: block;
+        opacity: 1;
+      }
+      .faq-item.open .faq-toggle svg {
+        transform: rotate(180deg);
+      }
+      /* floating */
+      .floating {
+        animation: float 5s ease-in-out infinite;
+      }
+      @keyframes float {
+        0% {
+          transform: translateY(0px);
+        }
+        50% {
+          transform: translateY(-6px);
+        }
+        100% {
+          transform: translateY(0px);
+        }
+      }
+      /* filter buttons */
+      .filter-btn.active {
+        background: #fbbf24;
+        color: #1e1b0c;
+        border-color: #fbbf24;
+      }
+    </style>
+  </head>
+  <body class="antialiased text-gray-800 selection:bg-amber-200/80">
+    <!-- OFFCANVAS (same as homepage) -->
+    <div
+      id="offcanvas"
+      class="offcanvas-menu fixed top-0 left-0 w-72 h-full bg-white shadow-2xl z-50 transform -translate-x-full p-7 flex flex-col">
+      <div class="flex justify-between items-center mb-8">
+        <span class="font-bold text-xl tracking-tight">Happy Cape</span>
+        <button id="closeOffcanvas" class="p-1 rounded-full hover:bg-gray-100">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="w-7 h-7">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+      <nav class="flex flex-col space-y-5 text-lg font-medium">
+        <a
+          href="index.html"
+          class="flex items-center gap-3 py-2 border-b border-gray-100 hover:text-amber-600 transition"
+          ><svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="w-5 h-5">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+          </svg>
+          Home</a
+        >
+        <a
+          href="tours.html"
+          class="flex items-center gap-3 py-2 border-b border-gray-100 hover:text-amber-600 transition"
+          ><svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="w-5 h-5">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" /></svg
+          >Tours</a
+        >
+        <a
+          href="#"
+          class="flex items-center gap-3 py-2 border-b border-gray-100 hover:text-amber-600 transition"
+          ><svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="w-5 h-5">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" /></svg
+          >About</a
+        >
+        <a
+          href="#"
+          class="flex items-center gap-3 py-2 border-b border-gray-100 hover:text-amber-600 transition"
+          ><svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="w-5 h-5">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25z" /></svg
+          >Gallery</a
+        >
+        <a
+          href="#"
+          class="flex items-center gap-3 py-2 border-b border-gray-100 hover:text-amber-600 transition"
+          ><svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="w-5 h-5">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M20.25 8.511c.884.284 1.5 1.128 1.5 2.097v4.286c0 1.136-.847 2.1-1.98 2.193-.34.027-.68.052-1.02.072v3.091l-3-3c-1.354 0-2.694-.055-4.02-.163a2.115 2.115 0 01-.825-.242m9.345-8.334a2.126 2.126 0 00-.476-.095 48.64 48.64 0 00-8.048 0c-1.131.094-1.976 1.057-1.976 2.192v4.286c0 .837.46 1.58 1.155 1.951m9.345-8.334V6.637c0-1.621-1.152-3.026-2.76-3.235A48.455 48.455 0 0011.25 3c-2.115 0-4.198.137-6.24.402-1.608.209-2.76 1.614-2.76 3.235v6.226c0 1.621 1.152 3.026 2.76 3.235.577.075 1.157.14 1.74.194V21l4.155-4.155" /></svg
+          >Contact</a
+        >
+      </nav>
+      <div class="mt-auto pt-8">
+        <div class="flex gap-4 text-gray-500">
+          <a href="#" class="hover:text-amber-500"
+            ><svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="currentColor">
+              <path
+                d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.99h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.99C18.343 21.128 22 16.991 22 12z" /></svg
+          ></a>
+          <a href="#" class="hover:text-amber-500"
+            ><svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="currentColor">
+              <path
+                d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465.66.254 1.216.598 1.772 1.153.509.5.902 1.105 1.153 1.772.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 0 1-1.153 1.772c-.5.509-1.105.902-1.772 1.153-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 0 1-1.772-1.153 4.902 4.902 0 0 1-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 0 1 1.153-1.772A4.902 4.902 0 0 1 5.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 12 2z m0 5a5 5 0 1 0 0 10 5 5 0 0 0 0-10zm6.5-.25a1.25 1.25 0 1 0-2.5 0 1.25 1.25 0 0 0 2.5 0zM12 9a3 3 0 1 1 0 6 3 3 0 0 1 0-6z" /></svg
+          ></a>
+        </div>
+      </div>
+    </div>
+
+    <!-- NAVBAR (luxury, absolute) -->
+    <header class="absolute w-full z-30 text-white">
+      <div class="flex justify-between items-center px-6 md:px-10 py-6">
+        <div class="flex items-center gap-4">
+          <button
+            id="menuToggle"
+            class="menu-icon text-white bg-white/10 p-2 rounded-full backdrop-blur border border-white/20 hover:bg-white/20">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.8"
+              stroke="currentColor"
+              class="w-6 h-6">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+            </svg>
+          </button>
+          <h1 class="font-bold text-2xl tracking-tight flex items-center gap-2">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              class="w-7 h-7 text-amber-300">
+              <path
+                fill-rule="evenodd"
+                d="M11.54 22.351l.07.04.028.016a.76.76 0 00.723 0l.028-.015.071-.041a16.975 16.975 0 001.144-.742 19.58 19.58 0 002.683-2.282c1.944-1.99 3.963-4.98 3.963-8.827a8.25 8.25 0 00-16.5 0c0 3.846 2.02 6.837 3.963 8.827a19.58 19.58 0 002.682 2.282 16.976 16.976 0 001.145.742zM12 13.5a3 3 0 100-6 3 3 0 000 6z"
+                clip-rule="evenodd" />
+            </svg>
+            Happy Cape Tours
+          </h1>
+        </div>
+        <div class="hidden md:flex items-center space-x-8 text-sm font-medium">
+          <a href="index.html" class="hover:text-amber-200 transition">Home</a>
+          <a href="tours.html" class="hover:text-amber-200 transition">Tours</a>
+          <a href="about.html" class="hover:text-amber-200 transition">About</a>
+          <a href="gallery.html" class="hover:text-amber-200 transition"
+            >Gallery</a
+          >
+          <a href="contact.html" class="hover:text-amber-200 transition"
+            >Contact</a
+          >
+        </div>
+        <div class="flex items-center gap-3">
+          <a
+            href="tel:+2723078502"
+            class="text-sm hidden lg:flex items-center gap-1 bg-white/10 px-3 py-1.5 rounded-full backdrop-blur">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="w-4 h-4">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" />
+            </svg>
+            078 230 8502
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <!-- HERO for tours page -->
+    <section
+      class="relative h-[40vh] min-h-[80vh] flex items-center justify-center overflow-hidden">
+      <div class="absolute inset-0 z-0">
+        <img
+          src="./images/tours-hero-bg.jpg"
+          class="w-full h-full object-cover"
+          alt="Cape Town tours" />
+        <div
+          class="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-amber-900/40"></div>
+      </div>
+      <div class="relative z-10 text-center text-white px-6">
+        <div
+          class="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full border border-white/30 mb-6">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.8"
+            stroke="currentColor"
+            class="w-5 h-5 text-amber-300">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />
+          </svg>
+          <span class="text-sm font-medium tracking-wider"
+            >CURATED EXPERIENCES</span
+          >
+        </div>
+        <h1 class="text-5xl md:text-7xl font-bold mb-4">
+          All <span class="text-amber-300">Tours</span>
+        </h1>
+        <p class="text-xl max-w-2xl mx-auto font-light">
+          Discover the magic of Cape Town through our handcrafted journeys
+        </p>
+      </div>
+    </section>
+
+    <!-- FILTER BAR (fully functional) -->
+    <section class="px-6 md:px-10 pt-12 pb-6 max-w-7xl mx-auto">
+      <div class="flex flex-wrap items-center justify-between gap-4">
+        <div class="flex flex-wrap gap-2">
+          <button
+            data-filter="all"
+            class="filter-btn active px-5 py-2 rounded-full border border-amber-200 text-sm font-medium transition-all hover:bg-amber-50">
+            All tours
+          </button>
+          <button
+            data-filter="nature"
+            class="filter-btn px-5 py-2 rounded-full border border-gray-200 text-sm font-medium transition-all hover:bg-amber-50">
+            Nature & Wildlife
+          </button>
+          <button
+            data-filter="wine"
+            class="filter-btn px-5 py-2 rounded-full border border-gray-200 text-sm font-medium transition-all hover:bg-amber-50">
+            Wine & Food
+          </button>
+          <button
+            data-filter="culture"
+            class="filter-btn px-5 py-2 rounded-full border border-gray-200 text-sm font-medium transition-all hover:bg-amber-50">
+            Culture & City
+          </button>
+          <button
+            data-filter="adventure"
+            class="filter-btn px-5 py-2 rounded-full border border-gray-200 text-sm font-medium transition-all hover:bg-amber-50">
+            Adventure
+          </button>
+        </div>
+        <span
+          id="tourCount"
+          class="text-sm text-gray-500 flex items-center gap-1"
+          ><svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="w-5 h-5">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M6.429 9.75L2.25 12l4.179 2.25m0-4.5l5.571 3 5.571-3m-11.142 0L2.25 7.5 12 2.25l9.75 5.25-4.179 2.25m0 0L21.75 12l-4.179 2.25m0 0l4.179 2.25L12 21.75 2.25 16.5l4.179-2.25m11.142 0l-5.571 3-5.571-3" /></svg
+          ><span id="visibleCount">12</span> experiences</span
+        >
+      </div>
+    </section>
+
+    <!-- TOURS GRID (ALL TOURS LISTED with categories) -->
+    <section class="px-6 md:px-10 py-8 pb-20 max-w-7xl mx-auto">
+      <div id="toursGrid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- 1. Table Mountain & Cape of Good Hope -->
+        <div class="tour-card group" data-category="nature">
+          <div class="relative overflow-hidden">
+            <img
+              src="./images/cape-of-good-hope.jpg"
+              alt="Table Mountain & Cape of Good Hope"
+              class="h-64 w-full object-cover" />
+            <div class="absolute top-4 left-4 flex gap-2">
+              <span class="badge text-white">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  class="w-4 h-4 text-white">
+                  <path
+                    fill-rule="evenodd"
+                    d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z"
+                    clip-rule="evenodd" />
+                </svg>
+                4.9 (210)
+              </span>
+              <span
+                class="badge text-white bg-amber-400/20 text-amber-800 border-amber-300"
+                >nature</span
+              >
+            </div>
+          </div>
+          <div class="p-6">
+            <div class="flex items-start justify-between mb-2">
+              <h3 class="font-bold text-xl">
+                Table Mountain & Cape of Good Hope
+              </h3>
+            </div>
+            <p class="text-gray-500 text-sm mb-3 flex items-center gap-2">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="w-4 h-4">
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z" />
+              </svg>
+              Small Groups
+            </p>
+            <div class="flex items-center justify-between mt-4">
+              <span class="text-lg font-bold text-gray-800"
+                >R1950<span class="text-sm font-normal text-gray-400"
+                  >/p</span
+                ></span
+              >
+              <a href="./table-mountain-cape-of-good-hope.html">
+                <button
+                  class="bg-amber-400 hover:bg-amber-300 text-gray-900 px-5 py-2 rounded-full text-sm font-semibold transition shadow-md flex items-center gap-1">
+                  View tour
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="2"
+                    stroke="currentColor"
+                    class="w-4 h-4">
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                  </svg>
+                </button>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. Safari Day Tour (nature) -->
+        <div class="tour-card group" data-category="nature">
+          <div class="relative overflow-hidden">
+            <img
+              src="./images/safari-day-tour.jpg"
+              alt="Safari"
+              class="h-64 w-full object-cover" />
+            <div class="absolute top-4 left-4 flex gap-2">
+              <span class="badge text-white">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  class="w-4 h-4 text-white">
+                  <path
+                    fill-rule="evenodd"
+                    d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z"
+                    clip-rule="evenodd" />
+                </svg>
+                4.9 (187)
+              </span>
+              <span
+                class="badge text-white bg-amber-400/20 text-amber-800 border-amber-300"
+                >wildlife</span
+              >
+            </div>
+          </div>
+          <div class="p-6">
+            <h3 class="font-bold text-xl mb-2">Safari Day Tour</h3>
+            <p class="text-gray-500 text-sm mb-3 flex items-center gap-2">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="w-4 h-4">
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M20.893 13.393l-1.135-1.135a2.252 2.252 0 01-.421-.585l-1.08-2.16a.414.414 0 00-.663-.107.827.827 0 01-.812.2l-1.602-.415a2.182 2.182 0 01-1.354-1.082l-1.08-2.16a.414.414 0 00-.663-.107.827.827 0 01-.812.2l-1.602-.415a2.182 2.182 0 01-1.354-1.082L9.754 3.99a.414.414 0 00-.663-.107.827.827 0 01-.812.2L5.937 4.27a2.21 2.21 0 01-1.53-.205.413.413 0 00-.613.312L3.25 7.242a2.19 2.19 0 00.87 1.94l3.362 2.506c.236.176.424.408.548.676L9.2 15.312c.205.442.26.928.157 1.398l-.713 2.524a2.226 2.226 0 01-1.263 1.394l-.104.045" />
+              </svg>
+              Private Big Five reserve · lunch included
+            </p>
+            <div class="flex items-center justify-between mt-4">
+              <span class="text-lg font-bold text-gray-800"
+                >R3850<span class="text-sm font-normal text-gray-400"
+                  >/p</span
+                ></span
+              >
+              <a href="./safari-day-tour.html">
+                <button
+                  class="bg-amber-400 hover:bg-amber-300 text-gray-900 px-5 py-2 rounded-full text-sm font-semibold transition shadow-md flex items-center gap-1">
+                  View tour
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="2"
+                    stroke="currentColor"
+                    class="w-4 h-4">
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                  </svg>
+                </button>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. Cape of Good Hope, Cape Point & Penguins (nature) -->
+        <div class="tour-card group" data-category="nature">
+          <div class="relative overflow-hidden">
+            <img
+              src="./images/chapmans-peak.jpg"
+              alt="Cape Point"
+              class="h-64 w-full object-cover" />
+            <div class="absolute top-4 left-4 flex gap-2">
+              <span class="badge text-white">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  class="w-4 h-4 text-white">
+                  <path
+                    fill-rule="evenodd"
+                    d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z"
+                    clip-rule="evenodd" />
+                </svg>
+                4.8 (156)
+              </span>
+              <span
+                class="badge text-white bg-amber-400/20 text-amber-800 border-amber-300"
+                >coastal</span
+              >
+            </div>
+          </div>
+          <div class="p-6">
+            <h3 class="font-bold text-xl mb-2">Chapman's Peak & Winelands</h3>
+            <p class="text-gray-500 text-sm mb-3 flex items-center gap-2">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="w-4 h-4">
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M2.25 18.75a60.07 60.07 0 0115.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 013 6h-.75m16.5 0v10.5m0-10.5h.75a.75.75 0 01.75.75v3.75a.75.75 0 01-.75.75H18" />
+              </svg>
+              Boulders Beach · Chapman's Peak Drive
+            </p>
+            <div class="flex items-center justify-between mt-4">
+              <span class="text-lg font-bold text-gray-800"
+                >R990
+                <span class="text-sm font-normal text-gray-400">/p</span></span
+              >
+              <a href="./chapmans-peak.html">
+                <button
+                  class="bg-amber-400 hover:bg-amber-300 text-gray-900 px-5 py-2 rounded-full text-sm font-semibold transition shadow-md flex items-center gap-1">
+                  View tour
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="2"
+                    stroke="currentColor"
+                    class="w-4 h-4">
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                  </svg>
+                </button>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4. Robben Island & Township Cultural Tour (culture) -->
+        <div class="tour-card group" data-category="culture">
+          <div class="relative overflow-hidden">
+            <img
+              src="./images/robben-island.jpg"
+              alt="Robben Island"
+              class="h-64 w-full object-cover" />
+            <div class="absolute top-4 left-4 flex gap-2">
+              <span class="badge text-white">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  class="w-4 h-4 text-white">
+                  <path
+                    fill-rule="evenodd"
+                    d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z"
+                    clip-rule="evenodd" />
+                </svg>
+                4.9 (112)
+              </span>
+              <span
+                class="badge text-white bg-amber-400/20 text-amber-800 border-amber-300"
+                >cultural</span
+              >
+            </div>
+          </div>
+          <div class="p-6">
+            <h3 class="font-bold text-xl mb-2">
+              Robben Island & Township Tour
+            </h3>
+            <p class="text-gray-500 text-sm mb-3 flex items-center gap-2">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="w-4 h-4">
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M9 6.75V15m6-6v8.25m.503 3.498l4.875-2.437c.381-.19.622-.58.622-1.006V4.82c0-.836-.88-1.38-1.628-1.006l-3.869 1.934c-.317.159-.69.159-1.006 0L9.503 3.252a1.125 1.125 0 00-1.006 0L3.622 5.689C3.24 5.88 3 6.27 3 6.695V19.18c0 .836.88 1.38 1.628 1.006l3.869-1.934c.317-.159.69-.159 1.006 0l4.994 2.497c.317.158.69.158 1.006 0z" />
+              </svg>
+              Full-day guided · ferry & lunch
+            </p>
+            <div class="flex items-center justify-between mt-4">
+              <span class="text-lg font-bold text-gray-800"
+                >R1650<span class="text-sm font-normal text-gray-400"
+                  >/p</span
+                ></span
+              >
+              <a href="./robben-island.html">
+                <button
+                  class="bg-amber-400 hover:bg-amber-300 text-gray-900 px-5 py-2 rounded-full text-sm font-semibold transition shadow-md flex items-center gap-1">
+                  View tour
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="2"
+                    stroke="currentColor"
+                    class="w-4 h-4">
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                  </svg>
+                </button>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- 5. Whale Watching Cape Town – Full-Day Tour to Hermanus (nature) -->
+        <div class="tour-card group" data-category="nature">
+          <div class="relative overflow-hidden">
+            <img
+              src="./images/whale-2.jpg"
+              alt="Whale watching"
+              class="h-64 w-full object-cover" />
+            <div class="absolute top-4 left-4 flex gap-2">
+              <span class="badge text-white">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  class="w-4 h-4 text-white">
+                  <path
+                    fill-rule="evenodd"
+                    d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z"
+                    clip-rule="evenodd" />
+                </svg>
+                4.9 (204)
+              </span>
+              <span
+                class="badge text-white bg-amber-400/20 text-amber-800 border-amber-300"
+                >marine</span
+              >
+            </div>
+          </div>
+          <div class="p-6">
+            <h3 class="font-bold text-xl mb-2">Whale Watching · Hermanus</h3>
+            <p class="text-gray-500 text-sm mb-3 flex items-center gap-2">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="w-4 h-4">
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M20.893 13.393l-1.135-1.135a2.252 2.252 0 01-.421-.585l-1.08-2.16a.414.414 0 00-.663-.107.827.827 0 01-.812.2l-1.602-.415a2.182 2.182 0 01-1.354-1.082l-1.08-2.16a.414.414 0 00-.663-.107.827.827 0 01-.812.2l-1.602-.415a2.182 2.182 0 01-1.354-1.082L9.754 3.99a.414.414 0 00-.663-.107.827.827 0 01-.812.2L5.937 4.27a2.21 2.21 0 01-1.53-.205.413.413 0 00-.613.312L3.25 7.242a2.19 2.19 0 00.87 1.94l3.362 2.506c.236.176.424.408.548.676L9.2 15.312c.205.442.26.928.157 1.398l-.713 2.524a2.226 2.226 0 01-1.263 1.394l-.104.045" />
+              </svg>
+              Boat cruise · July–Nov · 9.5h
+            </p>
+            <div class="flex items-center justify-between mt-4">
+              <span class="text-lg font-bold text-gray-800"
+                >R2450<span class="text-sm font-normal text-gray-400"
+                  >/p</span
+                ></span
+              >
+              <a href="./whale-watching.html"
+                ><button
+                  class="bg-amber-400 hover:bg-amber-300 text-gray-900 px-5 py-2 rounded-full text-sm font-semibold transition shadow-md flex items-center gap-1">
+                  View tour
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="2"
+                    stroke="currentColor"
+                    class="w-4 h-4">
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                  </svg></button
+              ></a>
+            </div>
+          </div>
+        </div>
+
+        <!-- 6. Cape Winelands Tour (wine) -->
+        <div class="tour-card group" data-category="wine">
+          <div class="relative overflow-hidden">
+            <img
+              src="./images/simons-town-penguins.jpg"
+              alt="Winelands"
+              class="h-64 w-full object-cover" />
+            <div class="absolute top-4 left-4 flex gap-2">
+              <span class="badge text-white">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  class="w-4 h-4 text-white">
+                  <path
+                    fill-rule="evenodd"
+                    d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z"
+                    clip-rule="evenodd" />
+                </svg>
+                4.9 (98)
+              </span>
+              <span
+                class="badge text-white bg-amber-400/20 text-amber-800 border-amber-300"
+                >wine</span
+              >
+            </div>
+          </div>
+          <div class="p-6">
+            <h3 class="font-bold text-xl mb-2">Cape Point & Penguins</h3>
+            <p class="text-gray-500 text-sm mb-3 flex items-center gap-2">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="w-4 h-4">
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M20.25 8.511c.884.284 1.5 1.128 1.5 2.097v4.286c0 1.136-.847 2.1-1.98 2.193-.34.027-.68.052-1.02.072v3.091l-3-3c-1.354 0-2.694-.055-4.02-.163a2.115 2.115 0 01-.825-.242m9.345-8.334a2.126 2.126 0 00-.476-.095 48.64 48.64 0 00-8.048 0c-1.131.094-1.976 1.057-1.976 2.192v4.286c0 .837.46 1.58 1.155 1.951m9.345-8.334V6.637c0-1.621-1.152-3.026-2.76-3.235A48.455 48.455 0 0011.25 3c-2.115 0-4.198.137-6.24.402-1.608.209-2.76 1.614-2.76 3.235v6.226c0 1.621 1.152 3.026 2.76 3.235.577.075 1.157.14 1.74.194V21l4.155-4.155" />
+              </svg>
+              Stellenbosch · Franschhoek · tastings
+            </p>
+            <div class="flex items-center justify-between mt-4">
+              <span class="text-lg font-bold text-gray-800"
+                >R1750<span class="text-sm font-normal text-gray-400"
+                  >/p</span
+                ></span
+              >
+              <a href="./cape-point-penguins.html">
+                <button
+                  class="bg-amber-400 hover:bg-amber-300 text-gray-900 px-5 py-2 rounded-full text-sm font-semibold transition shadow-md flex items-center gap-1">
+                  View tour
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="2"
+                    stroke="currentColor"
+                    class="w-4 h-4">
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                  </svg>
+                </button>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MARQUEE (branding) -->
+    <div
+      class="w-full bg-amber-400/10 border-y border-amber-200/50 py-4 overflow-hidden mb-16">
+      <div
+        class="marquee flex gap-8 text-amber-800 text-sm font-medium uppercase tracking-widest"
+        style="animation: scroll 20s linear infinite; width: max-content">
+        <span></span>
+          Table Mountain · Cape of Good Hope · Boulders Penguins · Safari ·
+          Winelands · Whale Watching ·
+        </span>
+        <span>
+          Robben Island · Chapman's Peak · Hermanus · Aquila · Franschhoek ·
+          Stellenbosch ·
+        </span>
+        <span>
+          Table Mountain · Cape of Good Hope · Boulders Penguins · Safari ·
+          Winelands · Whale Watching ·
+        </span>
+      </div>
+    </div>
+
+    <!-- UPDATED FAQ SECTION with all People Also Ask questions -->
+    <section class="px-6 md:px-10 py-16 bg-amber-50/30">
+      <div class="max-w-4xl mx-auto">
+        <h2 class="text-4xl md:text-5xl font-bold mb-3 text-center">
+          essential <span class="text-amber-500">FAQs</span>
+        </h2>
+        <p class="text-center text-gray-500 mb-12">
+          everything you need to know about Cape Town tours
+        </p>
+        <div class="space-y-4">
+          <!-- What are the best tours in Cape Town? -->
+          <div
+            class="faq-item bg-white/80 rounded-2xl p-6 shadow-md border border-amber-100">
+            <div
+              class="flex justify-between items-center cursor-pointer faq-trigger">
+              <span class="font-bold text-lg flex gap-2">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="w-5 h-5 text-amber-500">
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M11.48 3.499a.562.562 0 0 1 1.04 0l2.125 5.111a.563.563 0 0 0 .475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 0 0-.182.557l1.285 5.385a.562.562 0 0 1-.84.61l-4.725-2.885a.562.562 0 0 0-.586 0L6.982 20.54a.562.562 0 0 1-.84-.61l1.285-5.386a.562.562 0 0 0-.182-.557l-4.204-3.602a.562.562 0 0 1 .321-.988l5.518-.442a.563.563 0 0 0 .475-.345L11.48 3.5Z" />
+                </svg>
+                What are the best tours in Cape Town?
+              </span>
+              <svg
+                class="faq-toggle w-5 h-5 text-gray-400 transition-transform"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M19 9l-7 7-7-7" />
+              </svg>
+            </div>
+            <div class="faq-answer mt-3 text-gray-600">
+              <p class="mb-2">
+                There are plenty of high-quality tours in Cape Town to choose
+                from. Looking at ratings and reviews by previous customers,
+                these are the best tours available right now:
+              </p>
+              <ul class="list-disc pl-5 space-y-1">
+                <li>
+                  Wine Tour: Paarl, Franschhoek & Stellenbosch Incl 3 Wineries
+                </li>
+                <li>Zipline Cape Town - From Foot of Table Mountain Reserve</li>
+                <li>Cape Point and Boulder's Penguins Full Day Tour</li>
+                <li>
+                  Cape of Good Hope & Boulder Penguins Full-Day Tour from Cape
+                  Town
+                </li>
+                <li>Cape Town Hop-On Hop-Off Bus Tour with Optional Cruise</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Are guided tours in Cape Town worth it? -->
+          <div
+            class="faq-item bg-white/80 rounded-2xl p-6 shadow-md border border-amber-100">
+            <div
+              class="flex justify-between items-center cursor-pointer faq-trigger">
+              <span class="font-bold text-lg flex gap-2">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="w-5 h-5 text-amber-500">
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M9 12.75 11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043A3.745 3.745 0 0 1 12 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 0 1-3.296-1.043 3.745 3.745 0 0 1-1.043-3.296A3.745 3.745 0 0 1 3 12c0-1.268.63-2.39 1.593-3.068a3.746 3.746 0 0 1 1.043-3.296 3.746 3.746 0 0 1 3.296-1.043A3.746 3.746 0 0 1 12 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 0 1 3.296 1.043 3.746 3.746 0 0 1 1.043 3.296A3.745 3.745 0 0 1 21 12Z" />
+                </svg>
+                Are guided tours in Cape Town worth it?
+              </span>
+              <svg
+                class="faq-toggle w-5 h-5 text-gray-400 transition-transform"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M19 9l-7 7-7-7" />
+              </svg>
+            </div>
+            <div class="faq-answer mt-3 text-gray-600">
+              <p>
+                Yes, guided tours in Cape Town are worth it. With a guided tour
+                you'll get expert knowledge, convenient transport, and access to
+                some of the city's best landmarks. Guided tours mean you can
+                make the most of your trip, from exploring historic sites like
+                Robben Island to hiking Table Mountain.
+              </p>
+              <p class="mt-2">
+                One customer who booked this Table Mountain, Penguins, & Cape
+                Point Small Group Tour said: "The tour was very well organised
+                and covered a lot of the main sights in the Cape Town area
+                without feeling rushed. A tremendous contrast from the
+                architecture of Bo-Kaap and Simon's Town to the spectacular
+                scenery of Table Mountain and Cape Point and the wildlife,
+                particularly the Boulder Beach penguins."
+              </p>
+            </div>
+          </div>
+
+          <!-- How much do Cape Town tours cost? -->
+          <div
+            class="faq-item bg-white/80 rounded-2xl p-6 shadow-md border border-amber-100">
+            <div
+              class="flex justify-between items-center cursor-pointer faq-trigger">
+              <span class="font-bold text-lg flex gap-2">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="w-5 h-5 text-amber-500">
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M12 6v12m-3-2.818.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                </svg>
+                How much do Cape Town tours cost?
+              </span>
+              <svg
+                class="faq-toggle w-5 h-5 text-gray-400 transition-transform"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M19 9l-7 7-7-7" />
+              </svg>
+            </div>
+            <div class="faq-answer mt-3 text-gray-600">
+              <p>
+                Cape Town tours vary in cost depending on the type and duration.
+                Prices range from around US$20 for a city walking tour to
+                US$5,000 and upwards for cross-country boat trips or safari
+                tours from Cape Town. Special activities such as paragliding and
+                shark diving tend to be on the higher end of the price scale.
+              </p>
+              <p class="mt-2">
+                For a budget option, soak in some of the city's sights on a tour
+                like the Cape Town 30-minute V&A Harbour Cruise for around US$5
+                per person, where you can cruise through the Alfred and Victoria
+                basins with guided commentary. Pricier options include tours
+                like the Full-Day Private Hiking Table Mountain & City tour
+                (around US$800 for two people), which includes hiking Table
+                Mountain, a cable car ride, and time to explore the city's
+                heritage at Bo-Kaap, Company's Garden, and Iziko Museums Slave
+                Lodge.
+              </p>
+            </div>
+          </div>
+
+          <!-- What do you see on Cape Town tours? -->
+          <div
+            class="faq-item bg-white/80 rounded-2xl p-6 shadow-md border border-amber-100">
+            <div
+              class="flex justify-between items-center cursor-pointer faq-trigger">
+              <span class="font-bold text-lg flex gap-2">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="w-5 h-5 text-amber-500">
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M6.827 6.175A2.31 2.31 0 0 1 5.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 0 0-1.134-.175 2.31 2.31 0 0 1-1.64-1.055l-.822-1.316a2.192 2.192 0 0 0-1.736-1.039 48.774 48.774 0 0 0-5.232 0 2.192 2.192 0 0 0-1.736 1.039l-.821 1.316Z" />
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M16.5 12.75a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0ZM18.75 10.5h.008v.008h-.008V10.5Z" />
+                </svg>
+                What do you see on Cape Town tours?
+              </span>
+              <svg
+                class="faq-toggle w-5 h-5 text-gray-400 transition-transform"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M19 9l-7 7-7-7" />
+              </svg>
+            </div>
+            <div class="faq-answer mt-3 text-gray-600">
+              <p>
+                Cape Town tours cover a whole range of things to see. Highlights
+                include the famous Table Mountain, the scenic Cape of Good Hope,
+                and the historic Robben Island. On wildlife tours, you might see
+                penguins at Boulders Beach, seals at Seal Island, and whales in
+                Hermanus.
+              </p>
+              <p class="mt-2">
+                Consider a full-day tour to visit as many attractions and
+                landmarks as possible. For example, the Cape of Good Hope &
+                Boulder Penguins Full-Day Tour from Cape Town allows you to
+                visit Bo-Kaap, Hout Bay, Kalk Bay, the Cape of Good Hope, and
+                the Boulders Beach penguin colony—all in a single day.
+              </p>
+            </div>
+          </div>
+
+          <!-- How many days in Cape Town is enough? -->
+          <div
+            class="faq-item bg-white/80 rounded-2xl p-6 shadow-md border border-amber-100">
+            <div
+              class="flex justify-between items-center cursor-pointer faq-trigger">
+              <span class="font-bold text-lg flex gap-2">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="w-5 h-5 text-amber-500">
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5" />
+                </svg>
+                How many days in Cape Town is enough?
+              </span>
+              <svg
+                class="faq-toggle w-5 h-5 text-gray-400 transition-transform"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M19 9l-7 7-7-7" />
+              </svg>
+            </div>
+            <div class="faq-answer mt-3 text-gray-600">
+              <p>
+                Three to five days in Cape Town is generally enough to explore
+                its main attractions. This allows time for a city tour, a trip
+                to the Cape of Good Hope, a visit to Robben Island, plus a day
+                for wine tasting in the nearby Winelands or a scenic drive along
+                Chapman's Peak.
+              </p>
+            </div>
+          </div>
+
+          <!-- What is the best month to visit Cape Town? -->
+          <div
+            class="faq-item bg-white/80 rounded-2xl p-6 shadow-md border border-amber-100">
+            <div
+              class="flex justify-between items-center cursor-pointer faq-trigger">
+              <span class="font-bold text-lg flex gap-2">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="w-5 h-5 text-amber-500">
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5m-9-6h.008v.008H12v-.008ZM12 15h.008v.008H12V15Zm0 2.25h.008v.008H12v-.008ZM9.75 15h.008v.008H9.75V15Zm0 2.25h.008v.008H9.75v-.008ZM7.5 15h.008v.008H7.5V15Zm0 2.25h.008v.008H7.5v-.008Zm6.75-4.5h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V15Zm0 2.25h.008v.008h-.008v-.008Zm2.25-4.5h.008v.008H16.5v-.008Zm0 2.25h.008v.008H16.5V15Z" />
+                </svg>
+                What is the best month to visit Cape Town?
+              </span>
+              <svg
+                class="faq-toggle w-5 h-5 text-gray-400 transition-transform"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M19 9l-7 7-7-7" />
+              </svg>
+            </div>
+            <div class="faq-answer mt-3 text-gray-600">
+              <p>
+                The best months to visit Cape Town are during the summer season
+                from December to March. These months offer long, warm, sunny
+                days, ideal for outdoor activities and relaxing on the beach.
+                For whale watching in Hermanus, the best months are from July to
+                September.
+              </p>
+            </div>
+          </div>
+
+          <!-- What are the best attractions in Cape Town? -->
+          <div
+            class="faq-item bg-white/80 rounded-2xl p-6 shadow-md border border-amber-100">
+            <div
+              class="flex justify-between items-center cursor-pointer faq-trigger">
+              <span class="font-bold text-lg flex gap-2">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="w-5 h-5 text-amber-500">
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />
+                </svg>
+                What are the best attractions in Cape Town?
+              </span>
+              <svg
+                class="faq-toggle w-5 h-5 text-gray-400 transition-transform"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M19 9l-7 7-7-7" />
+              </svg>
+            </div>
+            <div class="faq-answer mt-3 text-gray-600">
+              <p>
+                According to travelers, these are the best attractions in Cape
+                Town:
+              </p>
+              <ul class="list-disc pl-5 space-y-1 mt-2">
+                <li>Robben Island</li>
+                <li>Cape Point</li>
+                <li>Cape of Good Hope Nature Reserve</li>
+                <li>Hout Bay</li>
+                <li>Bo-Kaap</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- What are the best day trips from Cape Town? -->
+          <div
+            class="faq-item bg-white/80 rounded-2xl p-6 shadow-md border border-amber-100">
+            <div
+              class="flex justify-between items-center cursor-pointer faq-trigger">
+              <span class="font-bold text-lg flex gap-2">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="w-5 h-5 text-amber-500">
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M6 12 3.269 3.126A59.768 59.768 0 0 1 21.485 12 59.77 59.77 0 0 1 3.27 20.876L5.999 12Zm0 0h7.5" />
+                </svg>
+                What are the best day trips from Cape Town?
+              </span>
+              <svg
+                class="faq-toggle w-5 h-5 text-gray-400 transition-transform"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M19 9l-7 7-7-7" />
+              </svg>
+            </div>
+            <div class="faq-answer mt-3 text-gray-600">
+              <p>
+                There are tons of great trips to take from Cape Town. According
+                to traveler reviews, these are the best day trips to book right
+                now:
+              </p>
+              <ul class="list-disc pl-5 space-y-1 mt-2">
+                <li>
+                  Wine Tour: Paarl, Franschhoek, & Stellenbosch, Incl 3 Wineries
+                </li>
+                <li>Cape Point and Boulder's Penguins Full-Day Tour</li>
+                <li>
+                  Cape of Good Hope & Boulder Penguins Full-Day Tour from Cape
+                  Town
+                </li>
+                <li>
+                  Table Mountain, Penguins, & Cape Point Small Group Tour from
+                  Cape Town
+                </li>
+                <li>
+                  Cape of Good Hope & Penguins Small Group Tour from Cape Town
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- What are the best affordable things to do in Cape Town? -->
+          <div
+            class="faq-item bg-white/80 rounded-2xl p-6 shadow-md border border-amber-100">
+            <div
+              class="flex justify-between items-center cursor-pointer faq-trigger">
+              <span class="font-bold text-lg flex gap-2">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="w-5 h-5 text-amber-500">
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M2.25 18.75a60.07 60.07 0 0 1 15.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 0 1 3 6h-.75m16.5 0v10.5m0-10.5h.75a.75.75 0 0 1 .75.75v3.75a.75.75 0 0 1-.75.75H18" />
+                </svg>
+                What are the best affordable things to do in Cape Town?
+              </span>
+              <svg
+                class="faq-toggle w-5 h-5 text-gray-400 transition-transform"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M19 9l-7 7-7-7" />
+              </svg>
+            </div>
+            <div class="faq-answer mt-3 text-gray-600">
+              <p>
+                You don't have to spend a fortune to have a great time in Cape
+                Town. Here are some of the best Cape Town activities under
+                US$25:
+              </p>
+              <ul class="list-disc pl-5 space-y-1 mt-2">
+                <li>1-Hour Catamaran Cruise Cape Town</li>
+                <li>30-Min Harbour Boat Cruise Cape Town</li>
+                <li>Bo-Kaap: Walk With a Local</li>
+                <li>Sailing in The Bay by Catamaran (One Hour)</li>
+                <li>Champagne Cruise (Pre-Sunset) from Cape Town</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- What are the best outdoor activities in Cape Town? -->
+          <div
+            class="faq-item bg-white/80 rounded-2xl p-6 shadow-md border border-amber-100">
+            <div
+              class="flex justify-between items-center cursor-pointer faq-trigger">
+              <span class="font-bold text-lg flex gap-2">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="w-5 h-5 text-amber-500">
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M9.75 3.104v5.714a2.25 2.25 0 0 1-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 0 1 4.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3M14.25 3.104c.251.023.501.05.75.082M19.8 15.3l-1.57.393A9.065 9.065 0 0 1 12 15a9.065 9.065 0 0 0-6.23-.693L5 14.5m14.8.8 1.402 1.402c1.232 1.232.65 3.318-1.067 3.611A48.309 48.309 0 0 1 12 21c-2.773 0-5.491-.235-8.135-.687-1.718-.293-2.3-2.379-1.067-3.61L5 14.5" />
+                </svg>
+                What are the best outdoor activities in Cape Town?
+              </span>
+              <svg
+                class="faq-toggle w-5 h-5 text-gray-400 transition-transform"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M19 9l-7 7-7-7" />
+              </svg>
+            </div>
+            <div class="faq-answer mt-3 text-gray-600">
+              <p>
+                It's no secret that Cape Town is a haven for outdoor
+                enthusiasts. Here are some of the top outdoor tours to book
+                right now:
+              </p>
+              <ul class="list-disc pl-5 space-y-1 mt-2">
+                <li>Zipline Cape Town - From Foot of Table Mountain Reserve</li>
+                <li>Cape Point and Boulder's Penguins Full-Day Tour</li>
+                <li>
+                  Cape of Good Hope & Boulder Penguins Full-Day Tour from Cape
+                  Town
+                </li>
+                <li>
+                  Table Mountain, Penguins & Cape Point Small Group Tour from
+                  Cape Town
+                </li>
+                <li>
+                  Cape of Good Hope & Penguins Small Group Tour from Cape Town
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- What are the best museums and exhibitions in Cape Town? -->
+          <div
+            class="faq-item bg-white/80 rounded-2xl p-6 shadow-md border border-amber-100">
+            <div
+              class="flex justify-between items-center cursor-pointer faq-trigger">
+              <span class="font-bold text-lg flex gap-2">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="w-5 h-5 text-amber-500">
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M12 21v-8.25M15.75 21v-8.25M8.25 21v-8.25M3 9l9-6 9 6m-1.5 12V10.332A48.36 48.36 0 0 0 12 9.75c-2.551 0-5.056.2-7.5.582V21M3 21h18M12 6.75h.008v.008H12V6.75Z" />
+                </svg>
+                What are the best museums and exhibitions in Cape Town?
+              </span>
+              <svg
+                class="faq-toggle w-5 h-5 text-gray-400 transition-transform"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M19 9l-7 7-7-7" />
+              </svg>
+            </div>
+            <div class="faq-answer mt-3 text-gray-600">
+              <p>
+                According to travelers, these are the top museums and cultural
+                attractions in Cape Town:
+              </p>
+              <ul class="list-disc pl-5 space-y-1 mt-2">
+                <li>Robben Island</li>
+                <li>Castle of Good Hope</li>
+                <li>District Six Museum</li>
+                <li>Groot Constantia</li>
+                <li>Franschhoek Motor Museum</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- What are the best activities for couples in Cape Town? -->
+          <div
+            class="faq-item bg-white/80 rounded-2xl p-6 shadow-md border border-amber-100">
+            <div
+              class="flex justify-between items-center cursor-pointer faq-trigger">
+              <span class="font-bold text-lg flex gap-2">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="w-5 h-5 text-amber-500">
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
+                </svg>
+                What are the best activities for couples in Cape Town?
+              </span>
+              <svg
+                class="faq-toggle w-5 h-5 text-gray-400 transition-transform"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M19 9l-7 7-7-7" />
+              </svg>
+            </div>
+            <div class="faq-answer mt-3 text-gray-600">
+              <p>
+                Couples will find plenty of romantic tours in Cape Town. Here
+                are some of the top activities to book now, according to
+                previous travelers:
+              </p>
+              <ul class="list-disc pl-5 space-y-1 mt-2">
+                <li>
+                  Wine Tour to Stellenbosch & Franschhoek with Tastings & Lunch
+                </li>
+                <li>
+                  Full-Day Franschhoek Hop On Hop Off Wine Tram Tour from Cape
+                  Town
+                </li>
+                <li>Two Oceans Helicopter Tour in Cape Town</li>
+                <li>Camps Bay and Hout Bay Helicopter Tour from Cape Town</li>
+                <li>Scenic Cape Point Helicopter Tour from Cape Town</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- What are the best activities for families in Cape Town? -->
+          <div
+            class="faq-item bg-white/80 rounded-2xl p-6 shadow-md border border-amber-100">
+            <div
+              class="flex justify-between items-center cursor-pointer faq-trigger">
+              <span class="font-bold text-lg flex gap-2">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="w-5 h-5 text-amber-500">
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z" />
+                </svg>
+                What are the best activities for families in Cape Town?
+              </span>
+              <svg
+                class="faq-toggle w-5 h-5 text-gray-400 transition-transform"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M19 9l-7 7-7-7" />
+              </svg>
+            </div>
+            <div class="faq-answer mt-3 text-gray-600">
+              <p>
+                Cape Town has enough activities to entertain every member of
+                your family. Here are some of the top kid-friendly tours to book
+                now, according to previous travelers:
+              </p>
+              <ul class="list-disc pl-5 space-y-1 mt-2">
+                <li>Cape Town Safari Big 5 Experience All-Inclusive</li>
+                <li>
+                  Hermanus Whale-Watching Boat Trip with Shared Transfers from
+                  Cape Town
+                </li>
+                <li>Skip the Line: World of Birds Admission Ticket</li>
+                <li>Aquila Safari Game Tour (Groups)</li>
+                <li>Cape Town Private—The Best of Big Five Safari</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Do we actually go up Table Mountain? (original) -->
+          <div
+            class="faq-item open bg-white/80 rounded-2xl p-6 shadow-md border border-amber-100"
+            id="faqT1">
+            <div
+              class="flex justify-between items-center cursor-pointer faq-trigger">
+              <span class="font-bold text-lg flex gap-2">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="w-5 h-5 text-amber-500">
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M12 2v15m0 0l-3-3m3 3l3-3M6 20h12" />
+                </svg>
+                Do we actually go up Table Mountain?
+              </span>
+              <svg
+                class="faq-toggle w-5 h-5 text-gray-400 transition-transform"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M19 9l-7 7-7-7" />
+              </svg>
+            </div>
+            <div class="faq-answer mt-3 text-gray-600">
+              Absolutely. Our Table Mountain & Cape of Good Hope tour includes
+              cable car ride (weather permitting) or hiking option. You'll have
+              free time at the summit.
+            </div>
+          </div>
+
+          <!-- Are there penguins all year at Boulders? (original) -->
+          <div
+            class="faq-item bg-white/80 rounded-2xl p-6 shadow-md border border-amber-100">
+            <div
+              class="flex justify-between items-center cursor-pointer faq-trigger">
+              <span class="font-bold text-lg flex gap-2">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="w-5 h-5 text-amber-500">
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M6.633 10.5c.806 0 1.533-.446 2.031-1.08a9.041 9.041 0 0 1 2.861-2.4c.723-.384 1.35-.956 1.653-1.715a4.498 4.498 0 0 0 .322-1.672V3a.75.75 0 0 1 .75-.75A2.25 2.25 0 0 1 16.5 4.5c0 1.152-.26 2.243-.723 3.218-.266.558.107 1.282.725 1.282h3.126c1.026 0 1.945.694 2.054 1.715.045.422.068.85.068 1.285a11.95 11.95 0 0 1-2.649 7.521c-.388.482-.987.729-1.605.729H13.48c-.483 0-.964-.078-1.423-.23l-3.114-1.04a4.501 4.501 0 0 0-1.423-.23H5.904M14.25 9h2.25M5.904 18.75c.083.205.173.405.27.602.197.38-.078.839-.523.839h-.908c-.889 0-1.713-.518-1.972-1.368a12 12 0 0 1-.521-3.507c0-1.553.295-3.036.831-4.398C3.387 10.203 4.167 9.75 5 9.75h1.053c.472 0 .745.556.5.96a8.958 8.958 0 0 0-1.302 4.665c0 1.194.232 2.333.654 3.375Z" />
+                </svg>
+                Are there penguins all year at Boulders?
+              </span>
+              <svg
+                class="faq-toggle w-5 h-5 text-gray-400 transition-transform"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M19 9l-7 7-7-7" />
+              </svg>
+            </div>
+            <div class="faq-answer mt-3 text-gray-600">
+              Yes, the African penguin colony is resident year‑round. Boulders
+              Beach is part of every penguin tour, and you'll see them up close
+              from boardwalks.
+            </div>
+          </div>
+
+          <!-- Which game reserve for the Safari tour? (original) -->
+          <div
+            class="faq-item bg-white/80 rounded-2xl p-6 shadow-md border border-amber-100">
+            <div
+              class="flex justify-between items-center cursor-pointer faq-trigger">
+              <span class="font-bold text-lg flex gap-2">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="w-5 h-5 text-amber-500">
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M20.893 13.393l-1.135-1.135a2.252 2.252 0 0 1-.421-.585l-1.08-2.16a.414.414 0 0 0-.663-.107.827.827 0 0 1-.812.2l-1.602-.415a2.182 2.182 0 0 1-1.354-1.082l-1.08-2.16a.414.414 0 0 0-.663-.107.827.827 0 0 1-.812.2l-1.602-.415a2.182 2.182 0 0 1-1.354-1.082L9.754 3.99a.414.414 0 0 0-.663-.107.827.827 0 0 1-.812.2L5.937 4.27a2.21 2.21 0 0 1-1.53-.205.413.413 0 0 0-.613.312L3.25 7.242a2.19 2.19 0 0 0 .87 1.94l3.362 2.506c.236.176.424.408.548.676L9.2 15.312c.205.442.26.928.157 1.398l-.713 2.524a2.226 2.226 0 0 1-1.263 1.394l-.104.045" />
+                </svg>
+                Which game reserve for the Safari tour?
+              </span>
+              <svg
+                class="faq-toggle w-5 h-5 text-gray-400 transition-transform"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M19 9l-7 7-7-7" />
+              </svg>
+            </div>
+            <div class="faq-answer mt-3 text-gray-600">
+              We use a private Big Five reserve (Aquila or Inverdoorn depending
+              on season). Both offer luxury vehicles, guides, and buffet lunch
+              included.
+            </div>
+          </div>
+
+          <!-- When is whale season in Hermanus? (original) -->
+          <div
+            class="faq-item bg-white/80 rounded-2xl p-6 shadow-md border border-amber-100">
+            <div
+              class="flex justify-between items-center cursor-pointer faq-trigger">
+              <span class="font-bold text-lg flex gap-2">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="w-5 h-5 text-amber-500">
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M8.25 18.75a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 0 1-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 0 0-3.213-9.193 2.056 2.056 0 0 0-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.22-1.113-.615-1.53a15.14 15.14 0 0 0-2.084-1.587c-.456-.29-.986-.293-1.445-.003 0 0-1.279.81-2.397 1.587M5.25 18.75v-3.75m13.5 0v3.75" />
+                </svg>
+                When is whale season in Hermanus?
+              </span>
+              <svg
+                class="faq-toggle w-5 h-5 text-gray-400 transition-transform"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M19 9l-7 7-7-7" />
+              </svg>
+            </div>
+            <div class="faq-answer mt-3 text-gray-600">
+              Peak whale watching is from July to November. Southern right
+              whales come close to shore; our full‑day tour includes boat or
+              land-based viewing.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-gray-900 text-white px-6 md:px-10 py-16">
+      <div class="max-w-7xl mx-auto grid md:grid-cols-4 gap-10">
+        <div>
+          <h3 class="text-2xl font-bold flex items-center gap-2">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="currentColor"
+              viewBox="0 0 24 24"
+              class="w-8 h-8 text-amber-400">
+              <path
+                d="M11.54 22.351l.07.04.028.016a.76.76 0 00.723 0l.028-.015.071-.041a16.975 16.975 0 001.144-.742 19.58 19.58 0 002.683-2.282c1.944-1.99 3.963-4.98 3.963-8.827a8.25 8.25 0 00-16.5 0c0 3.846 2.02 6.837 3.963 8.827a19.58 19.58 0 002.682 2.282 16.976 16.976 0 001.145.742z" /></svg
+            >Happy Cape
+          </h3>
+          <p class="text-sm text-gray-400 mt-4">
+            Luxury guided tours · real adventures · local expertise.
+          </p>
+        </div>
+        <div>
+          <h4 class="font-semibold mb-4">Contact</h4>
+          <a href="tel:0782308502">
+            <p
+              class="text-sm text-gray-300 hover:text-amber-400 flex items-center gap-2">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="w-4 h-4">
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-1.293.97c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l.97-1.293c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" /></svg
+              >078 230 8502
+            </p>
+          </a>
+          <a href="mailto:info@happycapetours.com">
+            <p
+              class="text-sm hover:text-amber-400 text-gray-300 flex items-center gap-2 mt-2">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="w-4 h-4">
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" /></svg
+              >info@happycapetours.com
+            </p>
+          </a>
+        </div>
+        <div>
+          <h4 class="font-semibold mb-4">Tours</h4>
+          <ul class="text-sm text-gray-300 space-y-2">
+            <a class="hover:text-amber-400" href=""
+              ><li>Table Mountain & Penguins</li></a
+            >
+            <a class="hover:text-amber-400" href=""><li>Safari Day Tour</li></a>
+            <a class="hover:text-amber-400" href=""
+              ><li>Cape Point & Penguins</li></a
+            >
+            <a class="hover:text-amber-400" href=""
+              ><li>Robben Island Township</li></a
+            >
+            <a class="hover:text-amber-400" href=""
+              ><li>Whale Watching Hermanus</li></a
+            >
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-semibold mb-4">Connect</h4>
+          <a href="">
+            <button
+              class="flex items-center gap-2 bg-amber-400 text-gray-900 px-5 py-3 rounded-full font-semibold hover:bg-amber-300">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="w-5 h-5">
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M10.5 1.5H8.25A2.25 2.25 0 0 0 6 3.75v16.5a2.25 2.25 0 0 0 2.25 2.25h7.5A2.25 2.25 0 0 0 18 20.25V3.75a2.25 2.25 0 0 0-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-3 18.75h3" />
+              </svg>
+              Call Us Now
+            </button>
+          </a>
+        </div>
+      </div>
+      <div
+        class="border-t border-gray-800 mt-12 pt-6 text-center text-gray-500 text-sm">
+        © 2025 Happy Cape Tours — luxury mobile‑first adventures
+      </div>
+    </footer>
+
+    <!-- scripts -->
+    <script>
+      gsap.registerPlugin(ScrollTrigger);
+      // offcanvas
+      const offcanvas = document.getElementById('offcanvas');
+      const openBtns = document.querySelectorAll(
+        '#menuToggle, #footerMenuToggle',
+      );
+      const closeBtn = document.getElementById('closeOffcanvas');
+      openBtns.forEach((btn) =>
+        btn.addEventListener('click', () =>
+          offcanvas.classList.add('offcanvas-open'),
+        ),
+      );
+      closeBtn.addEventListener('click', () =>
+        offcanvas.classList.remove('offcanvas-open'),
+      );
+      offcanvas.addEventListener('click', (e) => {
+        if (e.target === offcanvas)
+          offcanvas.classList.remove('offcanvas-open');
+      });
+
+      // animations
+      gsap.from('.tour-card', {
+        scrollTrigger: { trigger: '.tour-card', start: 'top 85%' },
+        y: 30,
+        duration: 0.8,
+        stagger: 0.1,
+      });
+      gsap.from('.filter-btn', {
+        scrollTrigger: { trigger: '.filter-btn', start: 'top 95%' },
+        y: 10,
+        duration: 0.3,
+        stagger: 0.05,
+      });
+
+      // FULLY FUNCTIONAL FILTERING SYSTEM
+      const filterBtns = document.querySelectorAll('.filter-btn');
+      const tourCards = document.querySelectorAll('.tour-card');
+      const visibleCountSpan = document.getElementById('visibleCount');
+
+      function filterTours(category) {
+        let visible = 0;
+        tourCards.forEach((card) => {
+          if (category === 'all' || card.dataset.category === category) {
+            card.style.display = 'block';
+            visible++;
+          } else {
+            card.style.display = 'none';
+          }
+        });
+        visibleCountSpan.textContent = visible;
+      }
+
+      filterBtns.forEach((btn) => {
+        btn.addEventListener('click', function () {
+          // Update active button styling
+          filterBtns.forEach((b) =>
+            b.classList.remove(
+              'active',
+              'bg-amber-400',
+              'text-gray-900',
+              'border-amber-400',
+            ),
+          );
+          this.classList.add(
+            'active',
+            'bg-amber-400',
+            'text-gray-900',
+            'border-amber-400',
+          );
+
+          // Filter tours based on data-filter attribute
+          const category = this.dataset.filter;
+          filterTours(category);
+        });
+      });
+
+      // Initial count display
+      filterTours('all');
+    </script>
+    <style>
+      @keyframes scroll {
+        0% {
+          transform: translateX(0);
+        }
+        100% {
+          transform: translateX(-50%);
+        }
+      }
+      .marquee {
+        animation: scroll 30s linear infinite;
+        width: max-content;
+      }
+      .marquee:hover {
+        animation-play-state: paused;
+      }
+    </style>
+    <!-- scripts -->
+    <script>
+      gsap.registerPlugin(ScrollTrigger);
+      closeBtn.addEventListener('click', () =>
+        offcanvas.classList.remove('offcanvas-open'),
+      );
+      offcanvas.addEventListener('click', (e) => {
+        if (e.target === offcanvas)
+          offcanvas.classList.remove('offcanvas-open');
+      });
+
+      // FAQ toggles
+      document.querySelectorAll('.faq-trigger').forEach((t) =>
+        t.addEventListener('click', function () {
+          this.closest('.faq-item').classList.toggle('open');
+        }),
+      );
+
+      // GSAP entrance animations
+      gsap.from('.tour-card', {
+        scrollTrigger: { trigger: '.tour-card', start: 'top 90%' },
+        y: 40,
+        duration: 0.9,
+        stagger: 0.15,
+      });
+      gsap.from('.faq-item', {
+        scrollTrigger: { trigger: '.faq-item', start: 'top 95%' },
+        x: -20,
+        duration: 0.6,
+        stagger: 0.1,
+      });
+      // floating effect already CSS
+    </script>
+  </body>
+</html>

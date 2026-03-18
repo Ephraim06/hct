@@ -5,7 +5,7 @@
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
-    <title>Table Mountain & Cape of Good Hope Tour | Happy Cape Tours</title>
+    <title>Cape Point & Penguins | Happy Cape Tours</title>
     <!-- Tailwind + Heroicons + Google Fonts (Montserrat + Playfair) -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link
@@ -118,6 +118,16 @@
       .hr-gold {
         height: 2px;
         background: linear-gradient(90deg, transparent, #fbbf24, transparent);
+      }
+      /* fee table */
+      .fee-table {
+        border-collapse: separate;
+        border-spacing: 0 8px;
+      }
+      .fee-table td {
+        padding: 8px 12px;
+        background: #fef9e7;
+        border-radius: 12px;
       }
     </style>
   </head>
@@ -272,19 +282,22 @@
                 d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
             </svg>
           </button>
-          <h1 class="font-bold text-2xl tracking-tight flex items-center gap-2">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="currentColor"
-              class="w-7 h-7 text-amber-300">
-              <path
-                fill-rule="evenodd"
-                d="M11.54 22.351l.07.04.028.016a.76.76 0 00.723 0l.028-.015.071-.041a16.975 16.975 0 001.144-.742 19.58 19.58 0 002.683-2.282c1.944-1.99 3.963-4.98 3.963-8.827a8.25 8.25 0 00-16.5 0c0 3.846 2.02 6.837 3.963 8.827a19.58 19.58 0 002.682 2.282 16.976 16.976 0 001.145.742zM12 13.5a3 3 0 100-6 3 3 0 000 6z"
-                clip-rule="evenodd" />
-            </svg>
-            Happy Cape Tours
-          </h1>
+          <a href="index.html">
+            <h1
+              class="font-bold text-2xl tracking-tight flex items-center gap-2">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                class="w-7 h-7 text-amber-300">
+                <path
+                  fill-rule="evenodd"
+                  d="M11.54 22.351l.07.04.028.016a.76.76 0 00.723 0l.028-.015.071-.041a16.975 16.975 0 001.144-.742 19.58 19.58 0 002.683-2.282c1.944-1.99 3.963-4.98 3.963-8.827a8.25 8.25 0 00-16.5 0c0 3.846 2.02 6.837 3.963 8.827a19.58 19.58 0 002.682 2.282 16.976 16.976 0 001.145.742zM12 13.5a3 3 0 100-6 3 3 0 000 6z"
+                  clip-rule="evenodd" />
+              </svg>
+              Happy Cape Tours
+            </h1>
+          </a>
         </div>
         <div class="hidden md:flex items-center space-x-8 text-sm font-medium">
           <a href="index.html" class="hover:text-amber-200 transition">Home</a>
@@ -297,8 +310,9 @@
           >
         </div>
         <div class="flex items-center gap-3">
-          <button
-            class="flex items-center gap-2 bg-amber-400 hover:bg-amber-300 text-gray-900 px-5 py-2 rounded-full text-sm font-semibold transition shadow-lg">
+          <a
+            href="tel:+2723078502"
+            class="text-sm hidden lg:flex items-center gap-1 bg-white/10 px-3 py-1.5 rounded-full backdrop-blur">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -309,21 +323,26 @@
               <path
                 stroke-linecap="round"
                 stroke-linejoin="round"
-                d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" /></svg
-            >WhatsApp
+                d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" />
+            </svg>
+            078 230 8502</a
+          >
+          <button
+            class="bg-amber-400 hover:bg-amber-300 text-gray-900 px-5 py-2 rounded-full text-sm font-semibold transition shadow-lg">
+            Sign Up
           </button>
         </div>
       </div>
     </header>
 
-    <!-- HERO (Table Mountain & Cape of Good Hope) -->
+    <!-- HERO (tour specific: Cape Point & Penguins) -->
     <section
-      class="relative h-[70vh] min-h-[80vh] flex items-end justify-start overflow-hidden">
+      class="relative h-[70vh] min-h-[600px] flex items-end justify-start overflow-hidden">
       <div class="absolute inset-0 z-0">
         <img
-          src="./images/cape-of-good-hope-2.jpg"
+          src="./images/simons-town-penguins.jpg"
           class="w-full h-full object-cover"
-          alt="Table Mountain & Cape of Good Hope" />
+          alt="Cape Point & Penguins" />
         <div
           class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent"></div>
       </div>
@@ -340,20 +359,20 @@
             <path
               stroke-linecap="round"
               stroke-linejoin="round"
-              d="M12 2v15m0 0l-3-3m3 3l3-3M6 20h12" />
+              d="M6.115 5.19l.319 1.913A6 6 0 008.11 10.36L9.75 12l-.387.775c-.217.433-.132.956.21 1.298l1.348 1.348c.21.21.329.497.329.795v1.089c0 .426.24.815.622 1.006l.153.076c.433.217.956.132 1.298-.21l.723-.723a.75.75 0 01.846-.165l1.688.675c.484.194.893.638.976 1.15l.233 1.446c.06.374.286.7.62.864.918.45 1.964.689 3.06.689a6 6 0 005.31-3.221 10.5 10.5 0 01-7.5-3.907c-.657-.86-1.21-1.838-1.636-2.913a12.016 12.016 0 01-.618-3.12 10.5 10.5 0 013.838-8.162A6.003 6.003 0 0012 3a6 6 0 00-5.885 5.19z" />
           </svg>
           <span class="text-sm font-medium tracking-wide"
-            >TABLE MOUNTAIN · CAPE PENINSULA · PENGUINS</span
+            >COASTAL ADVENTURE · PENGUINS · CAPE POINT</span
           >
         </div>
         <h1 class="text-5xl md:text-7xl font-bold mb-4 leading-tight">
-          Table Mountain <br /><span class="text-amber-300"
-            >& Cape of Good Hope</span
+          Cape Point & Penguins<br /><span class="text-amber-300"
+            >Full-Day Tour</span
           >
         </h1>
         <p class="text-xl md:text-2xl mb-6 max-w-2xl font-light">
-          Includes Table Mountain, Chapman's Peak Drive, Cape of Good Hope and
-          Boulders Beach penguins
+          Includes Boulders Beach penguins, Cape Point, Cape of Good Hope and
+          Chapman's Peak Drive.
         </p>
         <div class="flex flex-wrap gap-6 items-center text-sm">
           <span
@@ -370,7 +389,7 @@
                 stroke-linejoin="round"
                 d="M12 6v12m-3-2.818l.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
-            R1150 / person</span
+            R990 / person</span
           >
           <span
             class="flex items-center gap-2 bg-white/20 backdrop-blur px-4 py-2 rounded-full"
@@ -386,16 +405,16 @@
                 stroke-linejoin="round"
                 d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
-            9.5 hours</span
+            8.5 hours</span
           >
         </div>
       </div>
     </section>
 
-    <!-- QUICK OVERVIEW-->
+    <!-- QUICK OVERVIEW + CTA -->
     <section class="px-6 md:px-16 -mt-12 relative z-20 max-w-7xl mx-auto">
       <div
-        class="bg-white/90 backdrop-blur-lg rounded-3xl shadow-2xl p-8 md:p-10 border border-white/30">
+        class="bg-white/90 backdrop-blur-lg rounded-3xl shadow-2xl p-8 md:p-10 border border-white/30 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
         <div class="max-w-2xl">
           <h2 class="text-2xl font-bold flex items-center gap-2 text-gray-800">
             <svg
@@ -412,14 +431,30 @@
             >Overview
           </h2>
           <p class="text-gray-600 mt-2 leading-relaxed">
-            Embark on an unforgettable journey through Cape Town's most iconic
-            landmarks. From the breathtaking heights of Table Mountain to the
-            scenic beauty of Chapman's Peak Drive, this day tour offers a
-            perfect blend of adventure and relaxation. Discover the rugged charm
-            of the Cape of Good Hope, and get up close with the adorable
-            penguins at Boulders Beach.
+            Embark on an unforgettable journey to the Cape of Good Hope, one of
+            Cape Town's most iconic landmarks. Our full-day guided tour offers
+            an unparalleled experience, showcasing the breathtaking beauty of
+            the Cape Peninsula. From the dramatic cliffs of Cape Point to the
+            serene beaches of Boulders Beach, home to the famous African
+            penguins, this tour is a must-do for anyone visiting Cape Town.
           </p>
         </div>
+        <button
+          class="btn-gold bg-amber-400 hover:bg-amber-300 text-gray-900 font-bold px-8 py-4 rounded-full text-lg shadow-xl flex items-center gap-3 shrink-0 transition-all hover:scale-105">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="w-6 h-6">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M8.25 6.75h12M8.25 12h12m-12 5.25h12M3.75 6.75h.007v.008H3.75V6.75zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zM3.75 12h.007v.008H3.75V12zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm-.375 5.25h.007v.008H3.75v-.008zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+          </svg>
+          Reserve now
+        </button>
       </div>
     </section>
 
@@ -459,8 +494,7 @@
                       stroke-linecap="round"
                       stroke-linejoin="round"
                       d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg></span
-                >Ride the Table Mountain Aerial Cableway for panoramic views of
-                Cape Town
+                >Scenic drive along the Atlantic Coast via Chapman's Peak
               </li>
               <li class="flex items-start gap-3">
                 <span class="bg-amber-100 p-1 rounded-full"
@@ -475,7 +509,7 @@
                       stroke-linecap="round"
                       stroke-linejoin="round"
                       d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg></span
-                >Stop at Hout Bay harbour
+                >Stop at Hout Bay – optional boat trip to Seal Island
               </li>
               <li class="flex items-start gap-3">
                 <span class="bg-amber-100 p-1 rounded-full"
@@ -490,7 +524,7 @@
                       stroke-linecap="round"
                       stroke-linejoin="round"
                       d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg></span
-                >Drive along the world-famous Chapman's Peak Drive
+                >Explore the breathtaking Cape Point Nature Reserve
               </li>
               <li class="flex items-start gap-3">
                 <span class="bg-amber-100 p-1 rounded-full"
@@ -505,8 +539,8 @@
                       stroke-linecap="round"
                       stroke-linejoin="round"
                       d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg></span
-                >Discover the Cape of Good Hope Nature Reserve and capture the
-                iconic sign photo
+                >Visit the famous Cape of Good Hope, the southwestern tip of
+                Africa
               </li>
               <li class="flex items-start gap-3">
                 <span class="bg-amber-100 p-1 rounded-full"
@@ -521,7 +555,7 @@
                       stroke-linecap="round"
                       stroke-linejoin="round"
                       d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg></span
-                >Visit Cape Point Lighthouse where the two oceans currents meet
+                >See the African penguins at Boulders Beach in Simon's Town
               </li>
               <li class="flex items-start gap-3">
                 <span class="bg-amber-100 p-1 rounded-full"
@@ -536,7 +570,8 @@
                       stroke-linecap="round"
                       stroke-linejoin="round"
                       d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg></span
-                >Stop at Boulders Beach to see the African penguin colony
+                >Experience stunning viewpoints and photo stops along the Cape
+                Peninsula
               </li>
               <li class="flex items-start gap-3">
                 <span class="bg-amber-100 p-1 rounded-full"
@@ -551,8 +586,23 @@
                       stroke-linecap="round"
                       stroke-linejoin="round"
                       d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg></span
-                >Enjoy stunning coastal and mountain scenery throughout the
-                journey
+                >Browse local craft markets and seaside towns
+              </li>
+              <li class="flex items-start gap-3">
+                <span class="bg-amber-100 p-1 rounded-full"
+                  ><svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="2"
+                    stroke="currentColor"
+                    class="w-5 h-5 text-amber-600">
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg></span
+                >Chance to spot wildlife such as baboons, ostriches, and
+                antelope
               </li>
             </ul>
           </div>
@@ -576,94 +626,113 @@
             </h3>
 
             <div class="space-y-8 pl-8 relative">
-              <!-- 07:30 Pick up -->
+              <!-- 07:45 Pick up -->
               <div class="timeline-item relative">
                 <div class="timeline-dot relative pl-6">
                   <div
                     class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-6">
                     <span class="font-bold text-amber-600 text-lg min-w-[80px]"
-                      >07:30</span
+                      >07:45</span
                     >
                     <div>
                       <span class="font-bold text-gray-800 text-lg"
                         >Cape Town – Pick up</span
                       >
                       <p class="text-gray-500 text-sm mt-1">
-                        Pick up from your accommodation in Cape Town.
+                        Pick up from your accommodation.
                       </p>
                     </div>
                   </div>
                 </div>
               </div>
 
-              <!-- Table Mountain -->
+              <!-- 08:20 Maiden's Cove -->
               <div class="timeline-item relative">
                 <div class="timeline-dot relative pl-6">
                   <div
                     class="flex flex-col sm:flex-row sm:items-start gap-2 sm:gap-6">
                     <span class="font-bold text-amber-600 text-lg min-w-[80px]"
-                      >08:30</span
+                      >08:20</span
                     >
                     <div>
                       <span class="font-bold text-gray-800 text-lg"
-                        >Table Mountain</span
+                        >Maiden's Cove viewpoint</span
                       >
                       <p class="text-gray-500 text-sm mt-1">
-                        Towering above Cape Town, Table Mountain gives you
-                        amazing views of the city and the ocean. The flat top is
-                        a great spot to enjoy the beautiful scenery.
+                        Enjoy a quick stop at this picturesque viewpoint,
+                        offering stunning vistas of the Camps Bay beach, Lion's
+                        Head and the Twelve Apostles mountain range.
                       </p>
                     </div>
                   </div>
                 </div>
               </div>
 
-              <!-- Hout Bay Harbour -->
+              <!-- 09:00 Hout Bay -->
               <div class="timeline-item relative">
                 <div class="timeline-dot relative pl-6">
                   <div
                     class="flex flex-col sm:flex-row sm:items-start gap-2 sm:gap-6">
                     <span class="font-bold text-amber-600 text-lg min-w-[80px]"
-                      >10:30</span
+                      >09:00</span
                     >
                     <div>
                       <span class="font-bold text-gray-800 text-lg"
-                        >Hout Bay Harbour</span
+                        >Hout Bay harbour</span
                       >
                       <p class="text-gray-500 text-sm mt-1">
-                        This charming fishing village is located at the base of
-                        the mountains, with a bustling harbor and a lively
-                        market.
+                        Enjoy a picturesque stop in the quaint fishing village
+                        of Hout Bay, with optional boat trips to Seal Island.
                       </p>
                     </div>
                   </div>
                 </div>
               </div>
 
-              <!-- Chapman's Peak Drive -->
+              <!-- 09:45 Chapman's Peak -->
               <div class="timeline-item relative">
                 <div class="timeline-dot relative pl-6">
                   <div
                     class="flex flex-col sm:flex-row sm:items-start gap-2 sm:gap-6">
                     <span class="font-bold text-amber-600 text-lg min-w-[80px]"
-                      >11:15</span
+                      >09:45</span
                     >
                     <div>
                       <span class="font-bold text-gray-800 text-lg"
                         >Chapman's Peak Drive</span
                       >
                       <p class="text-gray-500 text-sm mt-1">
-                        This scenic road winds along the rugged coastline,
-                        offering breathtaking views of the ocean and mountains.
-                        It's a great spot for a leisurely drive, or for hiking
-                        or cycling.
+                        Experience one of the world's most scenic coastal
+                        drives, with awe-inspiring views of the Atlantic Ocean.
                       </p>
                     </div>
                   </div>
                 </div>
               </div>
 
-              <!-- Cape of Good Hope Nature Reserve -->
+              <!-- 11:30 Cape Point -->
+              <div class="timeline-item relative">
+                <div class="timeline-dot relative pl-6">
+                  <div
+                    class="flex flex-col sm:flex-row sm:items-start gap-2 sm:gap-6">
+                    <span class="font-bold text-amber-600 text-lg min-w-[80px]"
+                      >11:30</span
+                    >
+                    <div>
+                      <span class="font-bold text-gray-800 text-lg"
+                        >Cape Point</span
+                      >
+                      <p class="text-gray-500 text-sm mt-1">
+                        Marvel at the stunning views from the Cape Point
+                        Lighthouse, offering panoramic vistas of the rugged
+                        coastline.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 12:00 Cape of Good Hope -->
               <div class="timeline-item relative">
                 <div class="timeline-dot relative pl-6">
                   <div
@@ -673,40 +742,36 @@
                     >
                     <div>
                       <span class="font-bold text-gray-800 text-lg"
-                        >Cape of Good Hope Nature Reserve</span
+                        >Cape of Good Hope</span
                       >
                       <p class="text-gray-500 text-sm mt-1">
-                        This stunning nature reserve is located at the
-                        southernmost tip of the Cape Peninsula. The reserve is
-                        home to an array of wildlife, including baboons,
-                        ostriches, and over 250 species of birds. Visitors can
-                        hike up to the lighthouse for panoramic views of the
-                        coastline, or take the funicular up to the top.
+                        Explore the southwestern tip of the Cape Peninsula,
+                        known for its rugged beauty and rich history.
                       </p>
                     </div>
                   </div>
                 </div>
               </div>
 
-              <!-- Lunch -->
+              <!-- 13:00 Lunch -->
               <div class="timeline-item relative">
                 <div class="timeline-dot relative pl-6">
                   <div
                     class="flex flex-col sm:flex-row sm:items-start gap-2 sm:gap-6">
                     <span class="font-bold text-amber-600 text-lg min-w-[80px]"
-                      >13:30</span
+                      >13:00</span
                     >
                     <div>
                       <span class="font-bold text-gray-800 text-lg">Lunch</span>
                       <p class="text-gray-500 text-sm mt-1">
-                        Flexible lunch stop (own expense).
+                        Flexible lunch break (own expense).
                       </p>
                     </div>
                   </div>
                 </div>
               </div>
 
-              <!-- Boulders Beach -->
+              <!-- 14:30 Boulders Beach -->
               <div class="timeline-item relative">
                 <div class="timeline-dot relative pl-6">
                   <div
@@ -719,30 +784,28 @@
                         >Boulders Beach</span
                       >
                       <p class="text-gray-500 text-sm mt-1">
-                        This sheltered cove is home to a colony of endangered
-                        African penguins, which visitors can view up close on
-                        the beach. The beach itself is also a great spot for
-                        swimming and sunbathing.
+                        Visit the charming African penguin colony and enjoy the
+                        serene beach setting.
                       </p>
                     </div>
                   </div>
                 </div>
               </div>
 
-              <!-- Drop-off -->
+              <!-- 16:30 Drop-off -->
               <div class="timeline-item relative">
                 <div class="timeline-dot relative pl-6">
                   <div
                     class="flex flex-col sm:flex-row sm:items-start gap-2 sm:gap-6">
                     <span class="font-bold text-amber-600 text-lg min-w-[80px]"
-                      >17:00</span
+                      >16:30</span
                     >
                     <div>
                       <span class="font-bold text-gray-800 text-lg"
-                        >Drop-off at your accommodation</span
+                        >Tour ends in Cape Town</span
                       >
                       <p class="text-gray-500 text-sm mt-1">
-                        Tour ends with drop-off at your accommodation.
+                        Drop off at your accommodation.
                       </p>
                     </div>
                   </div>
@@ -758,7 +821,7 @@
           <div
             class="bg-gradient-to-br from-amber-50 to-white p-8 rounded-3xl shadow-lg border border-amber-100">
             <div class="text-center">
-              <span class="text-3xl font-bold text-gray-800">R1150</span>
+              <span class="text-3xl font-bold text-gray-800">R990</span>
               <span class="text-gray-500">/ person</span>
             </div>
             <div class="flex justify-center items-center gap-4 my-4 text-sm">
@@ -774,7 +837,20 @@
                     stroke-linecap="round"
                     stroke-linejoin="round"
                     d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" /></svg
-                >9.5 hours</span
+                >8.5 hours</span
+              ><span class="flex items-center gap-1"
+                ><svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="w-5 h-5 text-amber-500">
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M6.115 5.19l.319 1.913A6 6 0 008.11 10.36L9.75 12l-.387.775c-.217.433-.132.956.21 1.298l1.348 1.348c.21.21.329.497.329.795v1.089c0 .426.24.815.622 1.006l.153.076c.433.217.956.132 1.298-.21l.723-.723a.75.75 0 01.846-.165l1.688.675c.484.194.893.638.976 1.15l.233 1.446c.06.374.286.7.62.864.918.45 1.964.689 3.06.689a6 6 0 005.31-3.221 10.5 10.5 0 01-7.5-3.907c-.657-.86-1.21-1.838-1.636-2.913a12.016 12.016 0 01-.618-3.12 10.5 10.5 0 013.838-8.162A6.003 6.003 0 0012 3a6 6 0 00-5.885 5.19z" /></svg
+                >guided tour</span
               >
             </div>
             <hr class="hr-gold my-6" />
@@ -796,7 +872,7 @@
             </button>
           </div>
 
-          <!-- Included -->
+          <!-- What's Included -->
           <div
             class="bg-white p-8 rounded-3xl shadow-md border border-gray-100">
             <h4 class="font-bold text-lg flex items-center gap-2 mb-4">
@@ -811,7 +887,7 @@
                   stroke-linecap="round"
                   stroke-linejoin="round"
                   d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg
-              >Included
+              >What's Included
             </h4>
             <ul class="space-y-3 text-sm">
               <li class="flex items-start gap-2">
@@ -823,8 +899,8 @@
                 Air-conditioned vehicle
               </li>
               <li class="flex items-start gap-2">
-                <span class="text-green-600 text-lg leading-5">•</span>
-                Hotel pickup/drop-off
+                <span class="text-green-600 text-lg leading-5">•</span> Hotel
+                pickup/drop-off
               </li>
             </ul>
           </div>
@@ -848,16 +924,12 @@
             </h4>
             <ul class="space-y-3 text-sm">
               <li class="flex items-start gap-2">
-                <span class="text-red-400 text-lg leading-5">•</span> Table
-                Mountain cable car ticket
-              </li>
-              <li class="flex items-start gap-2">
-                <span class="text-red-400 text-lg leading-5">•</span> Gate
-                Entrance Fees
-              </li>
-              <li class="flex items-start gap-2">
-                <span class="text-red-400 text-lg leading-5">•</span> Food and
+                <span class="text-red-400 text-lg leading-5">•</span> Meals and
                 drinks
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-red-400 text-lg leading-5">•</span> Optional
+                boat trip to Seal Island
               </li>
               <li class="flex items-start gap-2">
                 <span class="text-red-400 text-lg leading-5">•</span> Gratuities
@@ -865,7 +937,7 @@
             </ul>
           </div>
 
-          <!-- Gate Entrance Fees Card -->
+          <!-- Entrance Fees Card -->
           <div
             class="bg-white p-8 rounded-3xl shadow-md border border-gray-100">
             <h4 class="font-bold text-lg flex items-center gap-2 mb-4">
@@ -884,28 +956,32 @@
               Gate Entrance Fees
             </h4>
             <p class="text-sm text-gray-600 mb-3">
-              Tickets can be purchased online (recommended) or at the gate. Your
-              guide will assist.
+              Tickets can be purchased online (highly recommended) or at the
+              gate, guide will assist.
             </p>
 
             <div class="space-y-4">
-              <!-- Table Mountain & Cape Point -->
+              <!-- Cape Point Nature Reserve -->
               <div>
                 <h5 class="font-semibold text-sm mb-2">
-                  Table Mountain & Cape of Good Hope
+                  Cape Point Nature Reserve
                 </h5>
                 <ul class="space-y-1 text-xs text-gray-600">
                   <li class="flex justify-between">
-                    <span>Cable car:</span>
-                    <span class="font-medium">R490</span>
-                  </li>
-                  <li class="flex justify-between">
-                    <span>Cape Point (International):</span>
+                    <span>Adults (International):</span>
                     <span class="font-medium">R515</span>
                   </li>
                   <li class="flex justify-between">
-                    <span>Cape Point (2-11 years):</span>
+                    <span>Adults (SADC Residents):</span>
+                    <span class="font-medium">R225</span>
+                  </li>
+                  <li class="flex justify-between">
+                    <span>Children (International, 2-11):</span>
                     <span class="font-medium">R245</span>
+                  </li>
+                  <li class="flex justify-between">
+                    <span>Children (SADC, 2-11):</span>
+                    <span class="font-medium">R110</span>
                   </li>
                 </ul>
               </div>
@@ -917,12 +993,20 @@
                 <h5 class="font-semibold text-sm mb-2">Boulders Beach</h5>
                 <ul class="space-y-1 text-xs text-gray-600">
                   <li class="flex justify-between">
-                    <span>Boulders Beach (International):</span>
+                    <span>Adults (International):</span>
                     <span class="font-medium">R245</span>
                   </li>
                   <li class="flex justify-between">
-                    <span>Boulders Beach (2-11 years):</span>
+                    <span>Adults (SADC Residents):</span>
+                    <span class="font-medium">R110</span>
+                  </li>
+                  <li class="flex justify-between">
+                    <span>Children (International 2-11):</span>
                     <span class="font-medium">R120</span>
+                  </li>
+                  <li class="flex justify-between">
+                    <span>Children (SADC 2-11):</span>
+                    <span class="font-medium">R55</span>
                   </li>
                 </ul>
               </div>
@@ -932,23 +1016,23 @@
       </div>
     </section>
 
-    <!-- MARQUEE (cape themed) -->
+    <!-- MARQUEE (coastal themed) -->
     <div
       class="w-full bg-amber-400/10 border-y border-amber-200/50 py-4 overflow-hidden mb-16">
       <div
         class="marquee flex gap-8 text-amber-800 text-sm font-medium uppercase tracking-widest"
         style="animation: scroll 20s linear infinite; width: max-content">
-        <span>
-          Table Mountain · Cape of Good Hope · Boulders Penguins · Chapman's
-          Peak ·
+        <span></span>
+          African penguins · Cape Point · Cape of Good Hope · Chapman's Peak ·
         </span>
         <span>
-          Hout Bay · Cape Point Lighthouse · Two Oceans · Atlantic Coast ·
+          Hout Bay · Seal Island · Twelve Apostles · Boulders Beach ·
         </span>
-        <span> Iconic photo stops · Scenic drives · Wildlife · </span>
         <span>
-          Table Mountain · Cape of Good Hope · Boulders Penguins · Chapman's
-          Peak ·
+          Stunning viewpoints · Wildlife spotting · Coastal drives ·
+        </span>
+        <span>
+          African penguins · Cape Point · Cape of Good Hope · Chapman's Peak ·
         </span>
       </div>
     </div>
@@ -971,42 +1055,43 @@
         More Cape Town tours
       </h3>
       <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        <a href="./cape-point-penguins.html"
-          ><div
+        <a href="./chapmans-peak.html">
+          <div
             class="tour-card bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition">
             <img
-              src="./images/simons-town-penguins.jpg"
-              class="h-44 w-full object-cover" />
+              src="./images/chapmans-peak.jpg"
+              class="h-44 w-full object-cover"
+              alt="Chapman's Peak & Winelands" />
             <div class="p-5">
-              <h4 class="font-bold">Cape Point & Penguins</h4>
-              <p class="text-sm text-gray-500">
-                Boulders Beach · Chapman's Peak
-              </p>
+              <h4 class="font-bold">Chapman's Peak & Winelands</h4>
+              <p class="text-sm text-gray-500">Stellenbosch · Franschhoek</p>
             </div>
-          </div></a
-        >
+          </div>
+        </a>
         <a href="./safari-day-tour.html">
           <div
             class="tour-card bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition">
             <img
               src="./images/safari-day-tour.jpg"
-              class="h-44 w-full object-cover" />
+              class="h-44 w-full object-cover"
+              alt="Safari" />
             <div class="p-5">
               <h4 class="font-bold">Safari Day Tour</h4>
-              <p class="text-sm text-gray-500">
-                Private Game Reserve · Big Five
-              </p>
+              <p class="text-sm text-gray-500">Aquila · Big Five</p>
             </div>
           </div>
         </a>
-        <a href="./whale-watching.html">
+        <a href="./robben-island.html">
           <div
             class="tour-card bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition">
-            <img src="./images/whale-2.jpg" class="h-44 w-full object-cover" />
+            <img
+              src="./images/robben-island.jpg"
+              class="h-44 w-full object-cover"
+              alt="Winelands" />
             <div class="p-5">
-              <h4 class="font-bold">Whale Watching Hermanus</h4>
+              <h4 class="font-bold">Robben Island & Township Tour</h4>
               <p class="text-sm text-gray-500">
-                Southern Right Whales · Boat Cruise
+                Island Tour · Cultural Experience
               </p>
             </div>
           </div>

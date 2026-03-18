@@ -1,0 +1,887 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+    <title>Gallery · Happy Cape Tours</title>
+    <!-- Tailwind + Heroicons + Google Fonts (Montserrat + Playfair) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap"
+      rel="stylesheet" />
+    <!-- GSAP & ScrollTrigger -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <style>
+      body {
+        font-family: 'Montserrat', sans-serif;
+        background-color: #fbfaf8;
+      }
+      .font-serif {
+        font-family: 'Playfair Display', serif;
+      }
+      /* offcanvas menu */
+      .offcanvas-menu {
+        transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+      }
+      .offcanvas-open {
+        transform: translateX(0) !important;
+      }
+      /* gallery hover */
+      .gallery-item {
+        overflow: hidden;
+        border-radius: 2rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 15px 30px -12px rgba(0, 0, 0, 0.1);
+      }
+      .gallery-item:hover {
+        transform: translateY(-6px) scale(1.02);
+        box-shadow: 0 30px 40px -15px rgba(0, 0, 0, 0.25);
+      }
+      .gallery-item img {
+        transition: transform 0.7s;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .gallery-item:hover img {
+        transform: scale(1.08);
+      }
+      /* lightbox */
+      .lightbox {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.95);
+        backdrop-filter: blur(8px);
+        z-index: 100;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+      .lightbox.active {
+        display: flex;
+        opacity: 1;
+      }
+      .lightbox-content {
+        max-width: 85vw;
+        max-height: 85vh;
+        position: relative;
+        border-radius: 2rem;
+        overflow: hidden;
+        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
+        border: 3px solid rgba(251, 191, 36, 0.3);
+      }
+      .lightbox-content img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
+      .lightbox-close {
+        position: absolute;
+        top: 20px;
+        right: 30px;
+        color: white;
+        cursor: pointer;
+        z-index: 110;
+        background: rgba(0, 0, 0, 0.3);
+        backdrop-filter: blur(4px);
+        border-radius: 9999px;
+        padding: 8px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        transition: all 0.2s;
+      }
+      .lightbox-close:hover {
+        background: #fbbf24;
+        color: black;
+        transform: scale(1.1);
+      }
+      .lightbox-nav {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        color: white;
+        cursor: pointer;
+        background: rgba(0, 0, 0, 0.3);
+        backdrop-filter: blur(4px);
+        border-radius: 9999px;
+        padding: 12px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        transition: all 0.2s;
+        z-index: 110;
+      }
+      .lightbox-nav:hover {
+        background: #fbbf24;
+        color: black;
+      }
+      .lightbox-prev {
+        left: 20px;
+      }
+      .lightbox-next {
+        right: 20px;
+      }
+      .lightbox-caption {
+        position: absolute;
+        bottom: 20px;
+        left: 0;
+        right: 0;
+        text-align: center;
+        color: white;
+        font-weight: 500;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        z-index: 110;
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.5), transparent);
+        padding: 20px 20px 10px;
+      }
+      /* filter buttons */
+      .filter-btn.active {
+        background: #fbbf24;
+        color: #1e1b0c;
+        border-color: #fbbf24;
+      }
+    </style>
+  </head>
+  <body class="antialiased text-gray-800 selection:bg-amber-200/80">
+    <!-- OFFCANVAS (same as homepage) -->
+    <div
+      id="offcanvas"
+      class="offcanvas-menu fixed top-0 left-0 w-72 h-full bg-white shadow-2xl z-50 transform -translate-x-full p-7 flex flex-col">
+      <div class="flex justify-between items-center mb-8">
+        <span class="font-bold text-xl tracking-tight">Happy Cape</span>
+        <button id="closeOffcanvas" class="p-1 rounded-full hover:bg-gray-100">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="w-7 h-7">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+      <nav class="flex flex-col space-y-5 text-lg font-medium">
+        <a
+          href="tours.html"
+          class="flex items-center gap-3 py-2 border-b border-gray-100 hover:text-amber-600 transition"
+          ><svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="w-5 h-5">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" /></svg
+          >Tours</a
+        >
+        <a
+          href="about.html"
+          class="flex items-center gap-3 py-2 border-b border-gray-100 hover:text-amber-600 transition"
+          ><svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="w-5 h-5">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" /></svg
+          >About</a
+        >
+        <a
+          href="gallery.html"
+          class="flex items-center gap-3 py-2 border-b border-gray-100 hover:text-amber-600 transition"
+          ><svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="w-5 h-5">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25z" /></svg
+          >Gallery</a
+        >
+        <a
+          href="contact.html"
+          class="flex items-center gap-3 py-2 border-b border-gray-100 hover:text-amber-600 transition"
+          ><svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="w-5 h-5">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M20.25 8.511c.884.284 1.5 1.128 1.5 2.097v4.286c0 1.136-.847 2.1-1.98 2.193-.34.027-.68.052-1.02.072v3.091l-3-3c-1.354 0-2.694-.055-4.02-.163a2.115 2.115 0 01-.825-.242m9.345-8.334a2.126 2.126 0 00-.476-.095 48.64 48.64 0 00-8.048 0c-1.131.094-1.976 1.057-1.976 2.192v4.286c0 .837.46 1.58 1.155 1.951m9.345-8.334V6.637c0-1.621-1.152-3.026-2.76-3.235A48.455 48.455 0 0011.25 3c-2.115 0-4.198.137-6.24.402-1.608.209-2.76 1.614-2.76 3.235v6.226c0 1.621 1.152 3.026 2.76 3.235.577.075 1.157.14 1.74.194V21l4.155-4.155" /></svg
+          >Contact</a
+        >
+      </nav>
+      <div class="mt-auto pt-8">
+        <div class="flex gap-4 text-gray-500">
+          <a href="#" class="hover:text-amber-500"
+            ><svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="currentColor">
+              <path
+                d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.99h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.99C18.343 21.128 22 16.991 22 12z" /></svg
+          ></a>
+          <a href="#" class="hover:text-amber-500"
+            ><svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="currentColor">
+              <path
+                d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465.66.254 1.216.598 1.772 1.153.509.5.902 1.105 1.153 1.772.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 0 1-1.153 1.772c-.5.509-1.105.902-1.772 1.153-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 0 1-1.772-1.153 4.902 4.902 0 0 1-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 0 1 1.153-1.772A4.902 4.902 0 0 1 5.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 12 2z m0 5a5 5 0 1 0 0 10 5 5 0 0 0 0-10zm6.5-.25a1.25 1.25 0 1 0-2.5 0 1.25 1.25 0 0 0 2.5 0zM12 9a3 3 0 1 1 0 6 3 3 0 0 1 0-6z" /></svg
+          ></a>
+        </div>
+      </div>
+    </div>
+
+    <!-- NAVBAR (luxury, absolute) -->
+    <header class="absolute w-full z-30 text-white">
+      <div class="flex justify-between items-center px-6 md:px-10 py-6">
+        <div class="flex items-center gap-4">
+          <button
+            id="menuToggle"
+            class="menu-icon text-white bg-white/10 p-2 rounded-full backdrop-blur border border-white/20 hover:bg-white/20">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.8"
+              stroke="currentColor"
+              class="w-6 h-6">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+            </svg>
+          </button>
+          <h1 class="font-bold text-2xl tracking-tight flex items-center gap-2">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              class="w-7 h-7 text-amber-300">
+              <path
+                fill-rule="evenodd"
+                d="M11.54 22.351l.07.04.028.016a.76.76 0 00.723 0l.028-.015.071-.041a16.975 16.975 0 001.144-.742 19.58 19.58 0 002.683-2.282c1.944-1.99 3.963-4.98 3.963-8.827a8.25 8.25 0 00-16.5 0c0 3.846 2.02 6.837 3.963 8.827a19.58 19.58 0 002.682 2.282 16.976 16.976 0 001.145.742zM12 13.5a3 3 0 100-6 3 3 0 000 6z"
+                clip-rule="evenodd" />
+            </svg>
+            Happy Cape Tours
+          </h1>
+        </div>
+        <div class="hidden md:flex items-center space-x-8 text-sm font-medium">
+          <a href="tours.html" class="hover:text-amber-200 transition">Tours</a>
+          <a href="about.html" class="hover:text-amber-200 transition">About</a>
+          <a href="gallery.html" class="hover:text-amber-200 transition"
+            >Gallery</a
+          >
+          <a href="contact.html" class="hover:text-amber-200 transition"
+            >Contact</a
+          >
+        </div>
+        <div class="flex items-center gap-3">
+          <a
+            href="tel:+2723078502"
+            class="text-sm hidden lg:flex items-center gap-1 bg-white/10 px-3 py-1.5 rounded-full backdrop-blur">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="w-4 h-4">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" />
+            </svg>
+            078 230 8502
+          </a>
+          <button
+            class="bg-amber-400 hover:bg-amber-300 text-gray-900 px-5 py-2 rounded-full text-sm font-semibold transition shadow-lg">
+            Sign Up
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- HERO for gallery page -->
+    <section
+      class="relative h-[40vh] min-h-[350px] flex items-center justify-center overflow-hidden">
+      <div class="absolute inset-0 z-0">
+        <img
+          src="https://images.unsplash.com/photo-1542336392-4b6c3f361eaa?q=80&w=2070&auto=format&fit=crop"
+          class="w-full h-full object-cover"
+          alt="Cape Town landscapes" />
+        <div
+          class="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-amber-900/40"></div>
+      </div>
+      <div class="relative z-10 text-center text-white px-6">
+        <div
+          class="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full border border-white/30 mb-6">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.8"
+            stroke="currentColor"
+            class="w-5 h-5 text-amber-300">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25z" />
+          </svg>
+          <span class="text-sm font-medium tracking-wider">VISUAL STORIES</span>
+        </div>
+        <h1 class="text-5xl md:text-7xl font-bold mb-4">
+          Gallery of <span class="text-amber-300">moments</span>
+        </h1>
+        <p class="text-xl max-w-2xl mx-auto font-light">
+          Breathtaking views, happy faces, wild encounters — see what awaits
+        </p>
+      </div>
+    </section>
+
+    <!-- FILTER BAR -->
+    <section class="px-6 md:px-10 pt-12 pb-6 max-w-7xl mx-auto">
+      <div class="flex flex-wrap items-center justify-between gap-4">
+        <div class="flex flex-wrap gap-2">
+          <button
+            data-filter="all"
+            class="filter-btn active px-5 py-2 rounded-full border border-amber-200 text-sm font-medium transition-all hover:bg-amber-50">
+            All
+          </button>
+          <button
+            data-filter="landscape"
+            class="filter-btn px-5 py-2 rounded-full border border-gray-200 text-sm font-medium transition-all hover:bg-amber-50">
+            Landscapes
+          </button>
+          <button
+            data-filter="wildlife"
+            class="filter-btn px-5 py-2 rounded-full border border-gray-200 text-sm font-medium transition-all hover:bg-amber-50">
+            Wildlife
+          </button>
+          <button
+            data-filter="culture"
+            class="filter-btn px-5 py-2 rounded-full border border-gray-200 text-sm font-medium transition-all hover:bg-amber-50">
+            Culture
+          </button>
+          <button
+            data-filter="people"
+            class="filter-btn px-5 py-2 rounded-full border border-gray-200 text-sm font-medium transition-all hover:bg-amber-50">
+            People
+          </button>
+        </div>
+        <span
+          id="galleryCount"
+          class="text-sm text-gray-500 flex items-center gap-1"
+          ><svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="w-5 h-5">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M6.429 9.75L2.25 12l4.179 2.25m0-4.5l5.571 3 5.571-3m-11.142 0L2.25 7.5 12 2.25l9.75 5.25-4.179 2.25m0 0L21.75 12l-4.179 2.25m0 0l4.179 2.25L12 21.75 2.25 16.5l4.179-2.25m11.142 0l-5.571 3-5.571-3" /></svg
+          ><span id="visibleCount">16</span> photos</span
+        >
+      </div>
+    </section>
+
+    <!-- GALLERY GRID (with lightbox triggers) -->
+    <section class="px-6 md:px-10 py-8 pb-20 max-w-7xl mx-auto">
+      <div
+        id="galleryGrid"
+        class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 auto-rows-[280px]">
+        <!-- Row 1 -->
+        <div class="gallery-item" data-category="landscape" data-index="0">
+          <img
+            src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=2073"
+            alt="Table Mountain beach"
+            class="w-full h-full" />
+        </div>
+        <div class="gallery-item" data-category="wildlife" data-index="1">
+          <img
+            src="https://images.unsplash.com/photo-1587502464784-221706a249bd?q=80&w=1374"
+            alt="Penguins at Boulders"
+            class="w-full h-full" />
+        </div>
+        <div class="gallery-item" data-category="landscape" data-index="2">
+          <img
+            src="https://images.unsplash.com/photo-1572345617348-2c1a6e63ee34?q=80&w=1374"
+            alt="Cape Point"
+            class="w-full h-full" />
+        </div>
+        <div class="gallery-item" data-category="people" data-index="3">
+          <img
+            src="https://images.unsplash.com/photo-1529612700005-e35377bf1415?q=80&w=1374"
+            alt="Happy tourist"
+            class="w-full h-full" />
+        </div>
+
+        <!-- Row 2 -->
+        <div class="gallery-item" data-category="wildlife" data-index="4">
+          <img
+            src="https://images.unsplash.com/photo-1547471080-7cc2caa01b7e?q=80&w=1472"
+            alt="Safari lion"
+            class="w-full h-full" />
+        </div>
+        <div class="gallery-item" data-category="landscape" data-index="5">
+          <img
+            src="https://images.unsplash.com/photo-1514923995069-36f0fbfb0539?q=80&w=1374"
+            alt="Chapman's Peak"
+            class="w-full h-full" />
+        </div>
+        <div class="gallery-item" data-category="culture" data-index="6">
+          <img
+            src="https://images.unsplash.com/photo-1580286467172-e6a7a10f9575?q=80&w=1374"
+            alt="Bo Kaap colorful houses"
+            class="w-full h-full" />
+        </div>
+        <div class="gallery-item" data-category="wildlife" data-index="7">
+          <img
+            src="https://images.unsplash.com/photo-1547506587-9c5fcd3b2a7f?q=80&w=1472"
+            alt="Whale breaching"
+            class="w-full h-full" />
+        </div>
+
+        <!-- Row 3 -->
+        <div class="gallery-item" data-category="landscape" data-index="8">
+          <img
+            src="https://images.unsplash.com/photo-1580137189272-c9379f8864fd?q=80&w=1470"
+            alt="Cape Agulhas lighthouse"
+            class="w-full h-full" />
+        </div>
+        <div class="gallery-item" data-category="culture" data-index="9">
+          <img
+            src="https://images.unsplash.com/photo-1604311794649-7a105e4485d3?q=80&w=1470"
+            alt="Robben Island"
+            class="w-full h-full" />
+        </div>
+        <div class="gallery-item" data-category="people" data-index="10">
+          <img
+            src="https://images.unsplash.com/photo-1593417039406-dfd10b609dc8?q=80&w=1470"
+            alt="Local guide smiling"
+            class="w-full h-full" />
+        </div>
+        <div class="gallery-item" data-category="landscape" data-index="11">
+          <img
+            src="https://images.unsplash.com/photo-1589829085413-56de8ae18c73?q=80&w=1242"
+            alt="Penguins on beach"
+            class="w-full h-full" />
+        </div>
+
+        <!-- Row 4 -->
+        <div class="gallery-item" data-category="wildlife" data-index="12">
+          <img
+            src="https://images.unsplash.com/photo-1549362253-69f39f08c60a?q=80&w=1470"
+            alt="Elephant at Aquila"
+            class="w-full h-full" />
+        </div>
+        <div class="gallery-item" data-category="landscape" data-index="13">
+          <img
+            src="https://images.unsplash.com/photo-1577655197620-704858b270ac?q=80&w=1287"
+            alt="Chapman's Peak drive"
+            class="w-full h-full" />
+        </div>
+        <div class="gallery-item" data-category="culture" data-index="14">
+          <img
+            src="https://images.unsplash.com/photo-1542336392-4b6c3f361eaa?q=80&w=1374"
+            alt="Winelands vineyard"
+            class="w-full h-full" />
+        </div>
+        <div class="gallery-item" data-category="people" data-index="15">
+          <img
+            src="https://images.unsplash.com/photo-1527684655801-63e1a5364a73?q=80&w=1470"
+            alt="Tour group laughing"
+            class="w-full h-full" />
+        </div>
+      </div>
+    </section>
+
+    <!-- LIGHTBOX (custom, matches luxury brand) -->
+    <div id="lightbox" class="lightbox">
+      <div class="lightbox-close" id="lightboxClose">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.8"
+          stroke="currentColor"
+          class="w-8 h-8">
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </div>
+      <div class="lightbox-nav lightbox-prev" id="lightboxPrev">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="2"
+          stroke="currentColor"
+          class="w-6 h-6">
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M15.75 19.5L8.25 12l7.5-7.5" />
+        </svg>
+      </div>
+      <div class="lightbox-nav lightbox-next" id="lightboxNext">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="2"
+          stroke="currentColor"
+          class="w-6 h-6">
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+        </svg>
+      </div>
+      <div class="lightbox-content">
+        <img src="" alt="" id="lightboxImg" />
+      </div>
+      <div class="lightbox-caption" id="lightboxCaption"></div>
+    </div>
+
+    <!-- MARQUEE (branding) -->
+    <div
+      class="w-full bg-amber-400/10 border-y border-amber-200/50 py-4 overflow-hidden">
+      <div
+        class="marquee flex gap-8 text-amber-800 text-sm font-medium uppercase tracking-widest"
+        style="animation: scroll 20s linear infinite; width: max-content">
+        <span
+          >✨ TABLE MOUNTAIN · BOULDERS PENGUINS · SAFARI · WINELANDS · WHALE
+          WATCHING · CAPE POINT · ✨</span
+        >
+        <span
+          >✨ TABLE MOUNTAIN · BOULDERS PENGUINS · SAFARI · WINELANDS · WHALE
+          WATCHING · CAPE POINT · ✨</span
+        >
+      </div>
+    </div>
+
+    <!-- SIMILAR TOURS / RELATED -->
+    <section class="px-6 md:px-16 pb-24 max-w-7xl mt-10 mx-auto">
+      <h3 class="text-3xl font-bold mb-8 flex items-center gap-2">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+          class="w-8 h-8 text-amber-500">
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />
+        </svg>
+        More ocean & wildlife tours
+      </h3>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="tour-card bg-white rounded-2xl shadow-lg">
+          <img src="images/cape-point.jpg" class="h-44 w-full object-cover" />
+          <div class="p-5">
+            <h4 class="font-bold">Cape Point & Penguins</h4>
+            <p class="text-sm text-gray-500">Boulders Beach · Chapman's Peak</p>
+          </div>
+        </div>
+        <div class="tour-card bg-white rounded-2xl shadow-lg">
+          <img
+            src="https://images.pexels.com/photos/4577792/pexels-photo-4577792.jpeg"
+            class="h-44 w-full object-cover" />
+          <div class="p-5">
+            <h4 class="font-bold">Safari Day Tour</h4>
+            <p class="text-sm text-gray-500">Private Game Reserve · Big Five</p>
+          </div>
+        </div>
+        <div class="tour-card bg-white rounded-2xl shadow-lg">
+          <img
+            src="images/table-mountain.jpg"
+            class="h-44 w-full object-cover" />
+          <div class="p-5">
+            <h4 class="font-bold">Table Mountain & Cape of Good Hope</h4>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER (same as homepage) -->
+    <footer class="bg-gray-900 text-white px-6 md:px-16 py-16">
+      <div class="max-w-7xl mx-auto grid md:grid-cols-4 gap-10">
+        <div>
+          <h3 class="text-2xl font-bold flex items-center gap-2">
+            <svg
+              class="w-7 h-7 text-amber-400"
+              fill="currentColor"
+              viewBox="0 0 24 24">
+              <path
+                d="M11.54 22.351l.07.04.028.016a.76.76 0 00.723 0l.028-.015.071-.041a16.975 16.975 0 001.144-.742 19.58 19.58 0 002.683-2.282c1.944-1.99 3.963-4.98 3.963-8.827a8.25 8.25 0 00-16.5 0c0 3.846 2.02 6.837 3.963 8.827a19.58 19.58 0 002.682 2.282 16.976 16.976 0 001.145.742z" /></svg
+            >Happy Cape
+          </h3>
+          <p class="text-sm text-gray-400 mt-4">
+            Luxury guided tours · real adventures · local expertise.
+          </p>
+        </div>
+        <div>
+          <h4 class="font-semibold mb-4">Contact</h4>
+          <p class="text-sm text-gray-300 flex items-center gap-2">
+            <svg
+              class="w-4 h-4"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="1.5"
+                d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-1.293.97c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l.97-1.293c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" /></svg
+            >078 230 8502
+          </p>
+        </div>
+        <div>
+          <h4 class="font-semibold mb-4">Tours</h4>
+          <ul class="text-sm text-gray-300 space-y-2">
+            <li>Whale Watching</li>
+            <li>Safari</li>
+            <li>Penguins & Cape Point</li>
+          </ul>
+        </div>
+        <div>
+          <button
+            id="footerMenuToggle"
+            class="flex items-center gap-2 bg-amber-400 text-gray-900 px-5 py-3 rounded-full font-semibold">
+            <svg
+              class="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="1.8"
+                d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+            </svg>
+            offcanvas menu
+          </button>
+        </div>
+      </div>
+      <div
+        class="border-t border-gray-800 mt-12 pt-6 text-center text-gray-500 text-sm">
+        © 2025 Happy Cape Tours — luxury mobile‑first
+      </div>
+    </footer>
+
+    <!-- scripts -->
+    <script>
+      gsap.registerPlugin(ScrollTrigger);
+
+      // offcanvas
+      const offcanvas = document.getElementById('offcanvas');
+      const openBtns = document.querySelectorAll(
+        '#menuToggle, #footerMenuToggle',
+      );
+      const closeBtn = document.getElementById('closeOffcanvas');
+      openBtns.forEach((btn) =>
+        btn.addEventListener('click', () =>
+          offcanvas.classList.add('offcanvas-open'),
+        ),
+      );
+      closeBtn.addEventListener('click', () =>
+        offcanvas.classList.remove('offcanvas-open'),
+      );
+      offcanvas.addEventListener('click', (e) => {
+        if (e.target === offcanvas)
+          offcanvas.classList.remove('offcanvas-open');
+      });
+
+      // GSAP animations
+      gsap.from('.gallery-item', {
+        scrollTrigger: { trigger: '.gallery-item', start: 'top 90%' },
+        scale: 0.9,
+        opacity: 0,
+        duration: 0.6,
+        stagger: 0.05,
+      });
+
+      // LIGHTBOX functionality
+      const lightbox = document.getElementById('lightbox');
+      const lightboxImg = document.getElementById('lightboxImg');
+      const lightboxCaption = document.getElementById('lightboxCaption');
+      const lightboxClose = document.getElementById('lightboxClose');
+      const lightboxPrev = document.getElementById('lightboxPrev');
+      const lightboxNext = document.getElementById('lightboxNext');
+
+      const galleryItems = Array.from(
+        document.querySelectorAll('.gallery-item'),
+      );
+      let currentIndex = 0;
+
+      // Create captions from alt text (or use category)
+      const captions = [
+        'Table Mountain & Camps Bay beach',
+        'African penguins at Boulders Beach',
+        'Cape of Good Hope lighthouse',
+        'Happy traveller at Cape Point',
+        'Lion on safari at Aquila Reserve',
+        "Chapman's Peak scenic drive",
+        'Colorful Bo-Kaap houses',
+        'Southern right whale breaching',
+        'Cape Agulhas – southernmost tip',
+        'Robben Island ferry & prison',
+        'Local guide sharing stories',
+        'Penguin colony at sunset',
+        'Elephant family at waterhole',
+        "Coastal road along Chapman's Peak",
+        'Franschhoek wine estate',
+        'Tour group enjoying sunset',
+      ];
+
+      function openLightbox(index) {
+        currentIndex = index;
+        const imgElement = galleryItems[index].querySelector('img');
+        lightboxImg.src = imgElement.src;
+        lightboxCaption.textContent = captions[index] || 'Cape Town adventure';
+        lightbox.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      }
+
+      galleryItems.forEach((item, index) => {
+        item.addEventListener('click', () => openLightbox(index));
+      });
+
+      function closeLightbox() {
+        lightbox.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+
+      function prevImage() {
+        currentIndex =
+          (currentIndex - 1 + galleryItems.length) % galleryItems.length;
+        const imgElement = galleryItems[currentIndex].querySelector('img');
+        lightboxImg.src = imgElement.src;
+        lightboxCaption.textContent =
+          captions[currentIndex] || 'Cape Town adventure';
+      }
+
+      function nextImage() {
+        currentIndex = (currentIndex + 1) % galleryItems.length;
+        const imgElement = galleryItems[currentIndex].querySelector('img');
+        lightboxImg.src = imgElement.src;
+        lightboxCaption.textContent =
+          captions[currentIndex] || 'Cape Town adventure';
+      }
+
+      lightboxClose.addEventListener('click', closeLightbox);
+      lightboxPrev.addEventListener('click', prevImage);
+      lightboxNext.addEventListener('click', nextImage);
+
+      // keyboard navigation
+      document.addEventListener('keydown', (e) => {
+        if (!lightbox.classList.contains('active')) return;
+        if (e.key === 'Escape') closeLightbox();
+        if (e.key === 'ArrowLeft') prevImage();
+        if (e.key === 'ArrowRight') nextImage();
+      });
+
+      // click outside to close
+      lightbox.addEventListener('click', (e) => {
+        if (e.target === lightbox) closeLightbox();
+      });
+
+      // FILTER functionality
+      const filterBtns = document.querySelectorAll('.filter-btn');
+      const visibleCountSpan = document.getElementById('visibleCount');
+
+      function filterGallery(category) {
+        let visible = 0;
+        galleryItems.forEach((item) => {
+          if (category === 'all' || item.dataset.category === category) {
+            item.style.display = 'block';
+            visible++;
+          } else {
+            item.style.display = 'none';
+          }
+        });
+        visibleCountSpan.textContent = visible;
+      }
+
+      filterBtns.forEach((btn) => {
+        btn.addEventListener('click', function () {
+          filterBtns.forEach((b) =>
+            b.classList.remove(
+              'active',
+              'bg-amber-400',
+              'text-gray-900',
+              'border-amber-400',
+            ),
+          );
+          this.classList.add(
+            'active',
+            'bg-amber-400',
+            'text-gray-900',
+            'border-amber-400',
+          );
+
+          const category = this.dataset.filter;
+          filterGallery(category);
+        });
+      });
+
+      // initial count
+      filterGallery('all');
+    </script>
+    <style>
+      @keyframes scroll {
+        0% {
+          transform: translateX(0);
+        }
+        100% {
+          transform: translateX(-50%);
+        }
+      }
+      .marquee {
+        animation: scroll 30s linear infinite;
+        width: max-content;
+      }
+      .marquee:hover {
+        animation-play-state: paused;
+      }
+    </style>
+  </body>
+</html>

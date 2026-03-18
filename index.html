@@ -170,7 +170,24 @@
       </div>
       <nav class="flex flex-col space-y-5 text-lg font-medium">
         <a
-          href="#"
+          href="index.html"
+          class="flex items-center gap-3 py-2 border-b border-gray-100 hover:text-amber-600 transition"
+          ><svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="w-5 h-5">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+          </svg>
+          Home</a
+        >
+        <a
+          href="tours.html"
           class="flex items-center gap-3 py-2 border-b border-gray-100 hover:text-amber-600 transition"
           ><svg
             xmlns="http://www.w3.org/2000/svg"
@@ -299,10 +316,21 @@
           </div>
           <div
             class="hidden md:flex items-center space-x-8 text-sm font-medium">
-            <a href="#" class="hover:text-amber-200 transition">Tours</a>
-            <a href="#" class="hover:text-amber-200 transition">About</a>
-            <a href="#" class="hover:text-amber-200 transition">Gallery</a>
-            <a href="#" class="hover:text-amber-200 transition">Contact</a>
+            <a href="index.html" class="hover:text-amber-200 transition"
+              >Home</a
+            >
+            <a href="tours.html" class="hover:text-amber-200 transition"
+              >Tours</a
+            >
+            <a href="about.html" class="hover:text-amber-200 transition"
+              >About</a
+            >
+            <a href="gallery.html" class="hover:text-amber-200 transition"
+              >Gallery</a
+            >
+            <a href="contact.html" class="hover:text-amber-200 transition"
+              >Contact</a
+            >
           </div>
           <div class="flex items-center gap-3">
             <a
@@ -427,7 +455,7 @@
         </div>
         <!-- marquee overlay bottom -->
         <div
-          class="absolute bottom-6 left-0 w-full z-20 overflow-hidden bg-black/20 backdrop-blur-sm py-3 border-y border-white/10">
+          class="absolute bottom-28 left-0 w-full z-20 overflow-hidden bg-black/20 backdrop-blur-sm py-3 border-y border-white/10">
           <div
             class="marquee flex text-white/90 text-sm font-medium uppercase tracking-widest">
             <span class="flex items-center gap-2"
@@ -528,34 +556,20 @@
             viewBox="0 0 24 24"
             stroke-width="1.5"
             stroke="currentColor"
-            class="w-7 h-7">
+            class="w-8 h-8">
             <path
               stroke-linecap="round"
               stroke-linejoin="round"
-              d="M12 2v15m0 0l-3-3m3 3l3-3M6 20h12" />
+              d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
           </svg>
         </div>
-        <h3 class="font-bold text-xl mb-2">Table Mountain & Penguins</h3>
-        <p class="text-gray-500 text-sm mb-5">
-          Cape of Good Hope, Boulders Beach – private guided
+        <h3 class="text-2xl font-bold mb-3">Local expertise</h3>
+        <p class="text-gray-500">
+          Our guides are born and raised in Cape Town. They know the secret
+          spots, the best photo angles, and the stories behind every landmark.
         </p>
-        <a
-          href="#"
-          class="text-amber-600 font-semibold inline-flex items-center gap-2 group"
-          >Explore
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="2"
-            stroke="currentColor"
-            class="w-4 h-4 group-hover:translate-x-1 transition">
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M8.25 4.5l7.5 7.5-7.5 7.5" /></svg
-        ></a>
       </div>
+
       <div
         class="bg-white/90 backdrop-blur-md p-7 rounded-3xl shadow-2xl border border-white/40 floating"
         style="animation-delay: 0.5s">
@@ -567,34 +581,20 @@
             viewBox="0 0 24 24"
             stroke-width="1.5"
             stroke="currentColor"
-            class="w-7 h-7">
+            class="w-8 h-8">
             <path
               stroke-linecap="round"
               stroke-linejoin="round"
-              d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+              d="M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375 7.444 2.25 12 2.25s8.25 1.847 8.25 4.125zm0 4.5c0 1.314-1.038 2.528-2.61 3.473-.07.036-.14.07-.21.104A8.24 8.24 0 0112 14.25a8.24 8.24 0 01-5.43-1.873c-.07-.034-.14-.068-.21-.104-1.572-.945-2.61-2.159-2.61-3.473m13.5 0v1.5M4.5 10.875v1.5m13.5 4.5v2.25a2.25 2.25 0 01-2.25 2.25h-7.5a2.25 2.25 0 01-2.25-2.25v-2.25" />
           </svg>
         </div>
-        <h3 class="font-bold text-xl mb-2">Safari Day Tour</h3>
-        <p class="text-gray-500 text-sm mb-5">
-          Private Game Reserve · Big Five · luxury vehicle
+        <h3 class="text-2xl font-bold mb-3">Small groups</h3>
+        <p class="text-gray-500">
+          We cap our groups at 8 people. That means personalised attention,
+          comfortable transport, and a more intimate experience.
         </p>
-        <a
-          href="#"
-          class="text-amber-600 font-semibold inline-flex items-center gap-2 group"
-          >Explore
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="2"
-            stroke="currentColor"
-            class="w-4 h-4 group-hover:translate-x-1 transition">
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M8.25 4.5l7.5 7.5-7.5 7.5" /></svg
-        ></a>
       </div>
+
       <div
         class="bg-white/90 backdrop-blur-md p-7 rounded-3xl shadow-2xl border border-white/40 floating"
         style="animation-delay: 1s">
@@ -606,37 +606,191 @@
             viewBox="0 0 24 24"
             stroke-width="1.5"
             stroke="currentColor"
-            class="w-7 h-7">
+            class="w-8 h-8">
             <path
               stroke-linecap="round"
               stroke-linejoin="round"
-              d="M21 12a2.25 2.25 0 00-2.25-2.25H15a3 3 0 11-6 0H5.25A2.25 2.25 0 003 12m18 0v6a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 18v-6m18 0V9M3 12V9m18 0a2.25 2.25 0 00-2.25-2.25H5.25A2.25 2.25 0 003 9m18 0V6a2.25 2.25 0 00-2.25-2.25H5.25A2.25 2.25 0 003 6v3" />
+              d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
           </svg>
         </div>
-        <h3 class="font-bold text-xl mb-2">Whale Watching</h3>
-        <p class="text-gray-500 text-sm mb-5">
-          Hermanus full-day · boat & land based · marine biologist
+        <h3 class="text-2xl font-bold mb-3">Thoughtful extras</h3>
+        <p class="text-gray-500">
+          From bottled water and snacks to surprise photo stops — we take care
+          of the details so you can focus on the adventure.
         </p>
-        <a
-          href="whale-watching.html"
-          class="text-amber-600 font-semibold inline-flex items-center gap-2 group"
-          >Explore
+      </div>
+    </section>
+
+    <!-- WHY CHOOSE US - luxury section with South African English -->
+    <section class="px-6 md:px-10 py-24 max-w-7xl mx-auto">
+      <!-- heading -->
+      <div class="text-center mb-16">
+        <span
+          class="text-amber-500 font-semibold text-sm tracking-widest flex items-center justify-center gap-2 mb-3">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
-            stroke-width="2"
+            stroke-width="1.5"
             stroke="currentColor"
-            class="w-4 h-4 group-hover:translate-x-1 transition">
+            class="w-5 h-5">
             <path
               stroke-linecap="round"
               stroke-linejoin="round"
-              d="M8.25 4.5l7.5 7.5-7.5 7.5" /></svg
-        ></a>
+              d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456z" />
+          </svg>
+          WHY CHOOSE US
+        </span>
+        <h2 class="text-4xl md:text-5xl font-bold">
+          The <span class="text-amber-500">Happy Cape</span> difference
+        </h2>
+        <p class="text-gray-500 text-lg max-w-2xl mx-auto mt-4">
+          We don't just show you the sights. We create connections with the
+          land, the people, and the culture.
+        </p>
       </div>
+
+      <!-- three cards - South African English flavour -->
+      <div class="grid md:grid-cols-3 gap-8">
+        <!-- card 1: registered guides -->
+        <div
+          class="bg-white rounded-3xl p-8 shadow-xl border border-gray-100 hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
+          <div
+            class="w-16 h-16 bg-amber-100 rounded-2xl flex items-center justify-center text-amber-600 mb-6">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="w-8 h-8">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+            </svg>
+          </div>
+          <h3 class="text-2xl font-bold mb-3">
+            Registered & experienced guides
+          </h3>
+          <p class="text-gray-500 leading-relaxed">
+            All our tours are led by fully registered guides, locals who know
+            the Mother City inside out. With years of experience, they'll share
+            stories you won't find in any guidebook.
+          </p>
+          <div class="mt-4 flex items-center gap-2 text-sm text-amber-600">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.8"
+              stroke="currentColor"
+              class="w-5 h-5">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <span class="font-medium">FGASA accredited</span>
+          </div>
+        </div>
+
+        <!-- card 2: small groups / private tours -->
+        <div
+          class="bg-white rounded-3xl p-8 shadow-xl border border-gray-100 hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
+          <div
+            class="w-16 h-16 bg-amber-100 rounded-2xl flex items-center justify-center text-amber-600 mb-6">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="w-8 h-8">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z" />
+            </svg>
+          </div>
+          <h3 class="text-2xl font-bold mb-3">Small groups or private tours</h3>
+          <p class="text-gray-500 leading-relaxed">
+            We keep our groups lekker small, so you get personalised attention.
+            Prefer a private tour? We'll tailor the day just for you and your
+            crew.
+          </p>
+          <div class="mt-4 flex items-center gap-2 text-sm text-amber-600">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.8"
+              stroke="currentColor"
+              class="w-5 h-5">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M16.5 6v.75m0 3v.75m0 3v.75m0 3V18m-9-4.5v.75m0 3v.75M3 6h1.5m9 0h7.5M3 12h15M3 18h7.5" />
+            </svg>
+            <span class="font-medium">flexible & intimate</span>
+          </div>
+        </div>
+
+        <!-- card 3: authentic experiences -->
+        <div
+          class="bg-white rounded-3xl p-8 shadow-xl border border-gray-100 hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
+          <div
+            class="w-16 h-16 bg-amber-100 rounded-2xl flex items-center justify-center text-amber-600 mb-6">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="w-8 h-8">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M6.115 5.19l.319 1.913A6 6 0 008.11 10.36L9.75 12l-.387.775c-.217.433-.132.956.21 1.298l1.348 1.348c.21.21.329.497.329.795v1.089c0 .426.24.815.622 1.006l.153.076c.433.217.956.132 1.298-.21l.723-.723a.75.75 0 01.846-.165l1.688.675c.484.194.893.638.976 1.15l.233 1.446c.06.374.286.7.62.864.918.45 1.964.689 3.06.689a6 6 0 005.31-3.221 10.5 10.5 0 01-7.5-3.907c-.657-.86-1.21-1.838-1.636-2.913a12.016 12.016 0 01-.618-3.12 10.5 10.5 0 013.838-8.162A6.003 6.003 0 0012 3a6 6 0 00-5.885 5.19z" />
+            </svg>
+          </div>
+          <h3 class="text-2xl font-bold mb-3">
+            Authentic Cape Town experiences
+          </h3>
+          <p class="text-gray-500 leading-relaxed">
+            We take you beyond the postcards. Explore iconic landmarks, secret
+            spots only locals know, and get the inside scoop on our vibrant
+            culture, from Bo-Kaap to the winelands.
+          </p>
+          <div class="mt-4 flex items-center gap-2 text-sm text-amber-600">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.8"
+              stroke="currentColor"
+              class="w-5 h-5">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
+            </svg>
+            <span class="font-medium">local insights, hidden gems</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- subtle south african touch -->
+      <p class="text-center text-gray-400 text-sm mt-12 italic">
+        — lekker adventures with a local flavour —
+      </p>
     </section>
 
-    <!-- DETAILED TOURS (exact list, heroicons instead of emojis) -->
+    <!-- DETAILED TOURS -->
     <section class="px-6 md:px-10 py-24 max-w-7xl mx-auto">
       <div class="flex flex-wrap justify-between items-end mb-12">
         <div>
@@ -660,29 +814,32 @@
             curated Cape Town tours
           </h2>
         </div>
-        <button
-          class="hidden md:flex items-center gap-2 bg-gray-900 text-white px-6 py-3 rounded-full text-sm hover:bg-gray-800">
-          View all
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="1.8"
-            stroke="currentColor"
-            class="w-4 h-4">
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-          </svg>
-        </button>
+        <a href="tours.html">
+          <button
+            class="hidden md:flex items-center gap-2 bg-gray-900 text-white px-6 py-3 rounded-full text-sm hover:bg-gray-800">
+            View all
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.8"
+              stroke="currentColor"
+              class="w-4 h-4">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+            </svg>
+          </button>
+        </a>
       </div>
       <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-7">
         <!-- Tour 1: Table Mountain & Cape of Good Hope -->
         <div class="tour-card">
           <img
-            src="images/table-mountain.jpg"
-            class="h-52 w-full object-cover" />
+            src="images/cape-of-good-hope.jpg"
+            class="h-52 w-full object-cover"
+            alt="Cape of Good Hope" />
           <div class="p-6">
             <h3 class="font-bold text-xl">
               Table Mountain & Cape of Good Hope
@@ -703,9 +860,20 @@
             </p>
             <div class="flex items-center justify-between mt-4">
               <span
-                class="text-sm bg-amber-50 text-amber-800 px-3 py-1 rounded-full font-medium"
-                >⭐ 4.9 (210)</span
-              ><a href="./table-mountain-cape-of-good-hope.html">
+                class="text-sm bg-amber-50 text-amber-800 px-3 py-1 rounded-full font-medium flex items-center gap-1">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  class="w-4 h-4 text-amber-600">
+                  <path
+                    fill-rule="evenodd"
+                    d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z"
+                    clip-rule="evenodd" />
+                </svg>
+                4.9 (210)
+              </span>
+              <a href="./table-mountain-cape-of-good-hope.html">
                 <button
                   class="text-amber-600 font-semibold text-sm flex items-center gap-1">
                   Details
@@ -726,11 +894,13 @@
             </div>
           </div>
         </div>
+
         <!-- 2 Safari Day Tour -->
         <div class="tour-card">
           <img
-            src="https://images.pexels.com/photos/4577792/pexels-photo-4577792.jpeg"
-            class="h-52 w-full object-cover" />
+            src="./images/safari-day-tour.jpg"
+            class="h-52 w-full object-cover"
+            alt="Safari tour" />
           <div class="p-6">
             <h3 class="font-bold text-xl">Safari Day Tour</h3>
             <p class="flex items-center gap-1 text-sm text-gray-500 mt-1">
@@ -748,48 +918,48 @@
               >private game reserve
             </p>
             <div class="flex items-center justify-between mt-4">
-              <div class="flex items-center justify-between mt-4">
+              <span
+                class="text-sm bg-amber-50 text-amber-800 px-3 py-1 rounded-full font-medium flex items-center gap-1">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
                   viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  class="size-6 bg-amber-50 text-amber-800">
+                  fill="currentColor"
+                  class="w-4 h-4 text-amber-600">
                   <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M11.48 3.499a.562.562 0 0 1 1.04 0l2.125 5.111a.563.563 0 0 0 .475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 0 0-.182.557l1.285 5.385a.562.562 0 0 1-.84.61l-4.725-2.885a.562.562 0 0 0-.586 0L6.982 20.54a.562.562 0 0 1-.84-.61l1.285-5.386a.562.562 0 0 0-.182-.557l-4.204-3.602a.562.562 0 0 1 .321-.988l5.518-.442a.563.563 0 0 0 .475-.345L11.48 3.5Z" />
+                    fill-rule="evenodd"
+                    d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z"
+                    clip-rule="evenodd" />
                 </svg>
-                <span
-                  class="text-sm bg-amber-50 text-amber-800 px-3 py-1 rounded-full font-medium">
-                  4.9 (187)</span
-                >
-              </div>
-              <button
-                class="text-amber-600 font-semibold text-sm flex items-center gap-1">
-                Details
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="2"
-                  stroke="currentColor"
-                  class="w-3 h-3">
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M8.25 4.5l7.5 7.5-7.5 7.5" />
-                </svg>
-              </button>
+                4.9 (187)
+              </span>
+              <a href="safari-day-tour.html">
+                <button
+                  class="text-amber-600 font-semibold text-sm flex items-center gap-1">
+                  Details
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="2"
+                    stroke="currentColor"
+                    class="w-3 h-3">
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                  </svg>
+                </button>
+              </a>
             </div>
           </div>
         </div>
+
         <!-- 3 Cape of Good Hope, Cape Point & Penguins -->
         <div class="tour-card">
           <img
             src="images/simons-town-penguins.jpg"
-            class="h-52 w-full object-cover" />
+            class="h-52 w-full object-cover"
+            alt="Boulders Beach penguins" />
           <div class="p-6">
             <h3 class="font-bold text-xl">Cape Point & Penguins</h3>
             <p class="flex items-center gap-1 text-sm text-gray-500 mt-1">
@@ -808,95 +978,20 @@
             </p>
             <div class="flex items-center justify-between mt-4">
               <span
-                class="text-sm bg-amber-50 text-amber-800 px-3 py-1 rounded-full font-medium"
-                >⭐ 4.8 (156)</span
-              ><button
-                class="text-amber-600 font-semibold text-sm flex items-center gap-1">
-                Details
+                class="text-sm bg-amber-50 text-amber-800 px-3 py-1 rounded-full font-medium flex items-center gap-1">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
                   viewBox="0 0 24 24"
-                  stroke-width="2"
-                  stroke="currentColor"
-                  class="w-3 h-3">
+                  fill="currentColor"
+                  class="w-4 h-4 text-amber-600">
                   <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                    fill-rule="evenodd"
+                    d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z"
+                    clip-rule="evenodd" />
                 </svg>
-              </button>
-            </div>
-          </div>
-        </div>
-        <!-- 4 Robben Island & Township Cultural -->
-        <div class="tour-card">
-          <img
-            src="images/robben-island.jpg"
-            class="h-52 w-full object-cover" />
-          <div class="p-6">
-            <h3 class="font-bold text-xl">Robben Island & Township</h3>
-            <p class="flex items-center gap-1 text-sm text-gray-500 mt-1">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                class="w-4 h-4">
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M9 6.75V15m6-6v8.25m.503 3.498l4.875-2.437c.381-.19.622-.58.622-1.006V4.82c0-.836-.88-1.38-1.628-1.006l-3.869 1.934c-.317.159-.69.159-1.006 0L9.503 3.252a1.125 1.125 0 00-1.006 0L3.622 5.689C3.24 5.88 3 6.27 3 6.695V19.18c0 .836.88 1.38 1.628 1.006l3.869-1.934c.317-.159.69-.159 1.006 0l4.994 2.497c.317.158.69.158 1.006 0z" /></svg
-              >full-day guided
-            </p>
-            <div class="flex items-center justify-between mt-4">
-              <span
-                class="text-sm bg-amber-50 text-amber-800 px-3 py-1 rounded-full font-medium"
-                >⭐ 4.9 (112)</span
-              ><button
-                class="text-amber-600 font-semibold text-sm flex items-center gap-1">
-                Details
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="2"
-                  stroke="currentColor"
-                  class="w-3 h-3">
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M8.25 4.5l7.5 7.5-7.5 7.5" />
-                </svg>
-              </button>
-            </div>
-          </div>
-        </div>
-        <!-- 5 Whale Watching Hermanus -->
-        <div class="tour-card">
-          <img src="images/whale-2.jpg" class="h-52 w-full object-cover" />
-          <div class="p-6">
-            <h3 class="font-bold text-xl">Whale Watching · Hermanus</h3>
-            <p class="flex items-center gap-1 text-sm text-gray-500 mt-1">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                class="w-4 h-4">
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M20.893 13.393l-1.135-1.135a2.252 2.252 0 01-.421-.585l-1.08-2.16a.414.414 0 00-.663-.107.827.827 0 01-.812.2l-1.602-.415a2.182 2.182 0 01-1.354-1.082l-1.08-2.16a.414.414 0 00-.663-.107.827.827 0 01-.812.2l-1.602-.415a2.182 2.182 0 01-1.354-1.082L9.754 3.99a.414.414 0 00-.663-.107.827.827 0 01-.812.2L5.937 4.27a2.21 2.21 0 01-1.53-.205.413.413 0 00-.613.312L3.25 7.242a2.19 2.19 0 00.87 1.94l3.362 2.506c.236.176.424.408.548.676L9.2 15.312c.205.442.26.928.157 1.398l-.713 2.524a2.226 2.226 0 01-1.263 1.394l-.104.045" /></svg
-              >full-day marine safari
-            </p>
-            <div class="flex items-center justify-between mt-4">
-              <span
-                class="text-sm bg-amber-50 text-amber-800 px-3 py-1 rounded-full font-medium"
-                >⭐ 4.9 (204)</span
-              ><a href="./whale-watching.html">
+                4.8 (156)
+              </span>
+              <a href="cape-point-penguins.html">
                 <button
                   class="text-amber-600 font-semibold text-sm flex items-center gap-1">
                   Details
@@ -917,213 +1012,10 @@
             </div>
           </div>
         </div>
-        <!-- 6 extra: Chapman's peak drive etc (bundle) -->
-        <div class="tour-card">
-          <img
-            src="images/chapmans-peak.jpg"
-            class="h-52 w-full object-cover" />
-          <div class="p-6">
-            <h3 class="font-bold text-xl">Chapman's Peak & Winelands</h3>
-            <p class="flex items-center gap-1 text-sm text-gray-500 mt-1">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                class="w-4 h-4">
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M6.115 5.19l.319 1.913A6 6 0 008.11 10.36L9.75 12l-.387.775c-.217.433-.132.956.21 1.298l1.348 1.348c.21.21.329.497.329.795v1.089c0 .426.24.815.622 1.006l.153.076c.433.217.956.132 1.298-.21l.723-.723a.75.75 0 01.846-.165l1.688.675c.484.194.893.638.976 1.15l.233 1.446c.06.374.286.7.62.864.918.45 1.964.689 3.06.689a6 6 0 005.31-3.221 10.5 10.5 0 01-7.5-3.907c-.657-.86-1.21-1.838-1.636-2.913a12.016 12.016 0 01-.618-3.12 10.5 10.5 0 013.838-8.162A6.003 6.003 0 0012 3a6 6 0 00-5.885 5.19z" /></svg
-              >Stellenbosch & Franschhoek
-            </p>
-            <div class="flex items-center justify-between mt-4">
-              <span
-                class="text-sm bg-amber-50 text-amber-800 px-3 py-1 rounded-full font-medium"
-                >⭐ 4.8 (97)</span
-              ><button
-                class="text-amber-600 font-semibold text-sm flex items-center gap-1">
-                Details
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="2"
-                  stroke="currentColor"
-                  class="w-3 h-3">
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M8.25 4.5l7.5 7.5-7.5 7.5" />
-                </svg>
-              </button>
-            </div>
-          </div>
-        </div>
       </div>
     </section>
 
-    <!-- TOUR-SPECIFIC FAQ (no VR, only places) -->
-    <section class="px-6 md:px-10 py-16 bg-amber-50/30">
-      <div class="max-w-4xl mx-auto">
-        <h2 class="text-4xl md:text-5xl font-bold mb-3 text-center">
-          essential <span class="text-amber-500">FAQs</span>
-        </h2>
-        <p class="text-center text-gray-500 mb-12">
-          about the places we visit, not the VR stuff
-        </p>
-        <div class="space-y-4">
-          <div
-            class="faq-item open bg-white/80 rounded-2xl p-6 shadow-md border border-amber-100"
-            id="faqT1">
-            <div
-              class="flex justify-between items-center cursor-pointer faq-trigger">
-              <span class="font-bold text-lg flex gap-2"
-                ><svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  class="w-5 h-5 text-amber-500">
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M12 2v15m0 0l-3-3m3 3l3-3M6 20h12" /></svg
-                >Do we actually go up Table Mountain?</span
-              >
-              <svg
-                class="faq-toggle w-5 h-5 text-gray-400 transition-transform"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor">
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M19 9l-7 7-7-7" />
-              </svg>
-            </div>
-            <div class="faq-answer mt-3 text-gray-600">
-              Absolutely. Our Table Mountain & Cape of Good Hope tour includes
-              cable car ride (weather permitting) or hiking option. You'll have
-              free time at the summit.
-            </div>
-          </div>
-          <div
-            class="faq-item bg-white/80 rounded-2xl p-6 shadow-md border border-amber-100">
-            <div
-              class="flex justify-between items-center cursor-pointer faq-trigger">
-              <span class="font-bold text-lg flex gap-2"
-                ><svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  class="w-5 h-5 text-amber-500">
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M6.633 10.5c.806 0 1.533-.446 2.031-1.08a9.041 9.041 0 012.861-2.4c.723-.384 1.35-.956 1.653-1.715a4.498 4.498 0 00.322-1.672V3a.75.75 0 01.75-.75A2.25 2.25 0 0116.5 4.5c0 1.152-.26 2.243-.723 3.218-.266.558.107 1.282.725 1.282h3.126c1.026 0 1.945.694 2.054 1.715.045.422.068.85.068 1.285a11.95 11.95 0 01-2.649 7.521c-.388.482-.987.729-1.605.729H13.48c-.483 0-.964-.078-1.423-.23l-3.114-1.04a4.501 4.501 0 00-1.423-.23H5.904M14.25 9h2.25M5.904 18.75c.083.205.173.405.27.602.197.38-.078.839-.523.839h-.908c-.889 0-1.713-.518-1.972-1.368a12 12 0 01-.521-3.507c0-1.553.295-3.036.831-4.398C3.387 10.203 4.167 9.75 5 9.75h1.053c.472 0 .745.556.5.96a8.958 8.958 0 00-1.302 4.665c0 1.194.232 2.333.654 3.375z" /></svg
-                >Are there penguins all year at Boulders?</span
-              >
-              <svg
-                class="faq-toggle w-5 h-5 text-gray-400 transition-transform"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor">
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M19 9l-7 7-7-7" />
-              </svg>
-            </div>
-            <div class="faq-answer mt-3 text-gray-600">
-              Yes, the African penguin colony is resident year‑round. Boulders
-              Beach is part of every penguin tour, and you'll see them up close
-              from boardwalks.
-            </div>
-          </div>
-          <div
-            class="faq-item bg-white/80 rounded-2xl p-6 shadow-md border border-amber-100">
-            <div
-              class="flex justify-between items-center cursor-pointer faq-trigger">
-              <span class="font-bold text-lg flex gap-2"
-                ><svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  class="w-5 h-5 text-amber-500">
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M20.893 13.393l-1.135-1.135a2.252 2.252 0 01-.421-.585l-1.08-2.16a.414.414 0 00-.663-.107.827.827 0 01-.812.2l-1.602-.415a2.182 2.182 0 01-1.354-1.082l-1.08-2.16a.414.414 0 00-.663-.107.827.827 0 01-.812.2l-1.602-.415a2.182 2.182 0 01-1.354-1.082L9.754 3.99a.414.414 0 00-.663-.107.827.827 0 01-.812.2L5.937 4.27a2.21 2.21 0 01-1.53-.205.413.413 0 00-.613.312L3.25 7.242a2.19 2.19 0 00.87 1.94l3.362 2.506c.236.176.424.408.548.676L9.2 15.312c.205.442.26.928.157 1.398l-.713 2.524a2.226 2.226 0 01-1.263 1.394l-.104.045" /></svg
-                >Which game reserve for the Safari tour?</span
-              >
-              <svg
-                class="faq-toggle w-5 h-5 text-gray-400 transition-transform"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor">
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M19 9l-7 7-7-7" />
-              </svg>
-            </div>
-            <div class="faq-answer mt-3 text-gray-600">
-              We use a private Big Five reserve (Aquila or Inverdoorn depending
-              on season). Both offer luxury vehicles, guides, and buffet lunch
-              included.
-            </div>
-          </div>
-          <div
-            class="faq-item bg-white/80 rounded-2xl p-6 shadow-md border border-amber-100">
-            <div
-              class="flex justify-between items-center cursor-pointer faq-trigger">
-              <span class="font-bold text-lg flex gap-2"
-                ><svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  class="w-5 h-5 text-amber-500">
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M8.25 18.75a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 01-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 00-3.213-9.193 2.056 2.056 0 00-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.22-1.113-.615-1.53a15.14 15.14 0 00-2.084-1.587c-.456-.29-.986-.293-1.445-.003 0 0-1.279.81-2.397 1.587M5.25 18.75v-3.75m13.5 0v3.75" /></svg
-                >When is whale season in Hermanus?</span
-              >
-              <svg
-                class="faq-toggle w-5 h-5 text-gray-400 transition-transform"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor">
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M19 9l-7 7-7-7" />
-              </svg>
-            </div>
-            <div class="faq-answer mt-3 text-gray-600">
-              Peak whale watching is from July to November. Southern right
-              whales come close to shore; our full‑day tour includes boat or
-              land-based viewing.
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- FOOTER with offcanvas toggle & contact (luxury) -->
+    <!-- FOOTER -->
     <footer class="bg-gray-900 text-white px-6 md:px-10 py-16">
       <div class="max-w-7xl mx-auto grid md:grid-cols-4 gap-10">
         <div>
@@ -1143,64 +1035,79 @@
         </div>
         <div>
           <h4 class="font-semibold mb-4">Contact</h4>
-          <p class="text-sm text-gray-300 flex items-center gap-2">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              class="w-4 h-4">
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-1.293.97c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l.97-1.293c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" /></svg
-            >078 230 8502
-          </p>
-          <p class="text-sm text-gray-300 flex items-center gap-2 mt-2">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              class="w-4 h-4">
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" /></svg
-            >info@happycapetours.co.za
-          </p>
+          <a href="tel:0782308502">
+            <p
+              class="text-sm text-gray-300 hover:text-amber-400 flex items-center gap-2">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="w-4 h-4">
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-1.293.97c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l.97-1.293c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" /></svg
+              >078 230 8502
+            </p>
+          </a>
+          <a href="mailto:info@happycapetours.com">
+            <p
+              class="text-sm hover:text-amber-400 text-gray-300 flex items-center gap-2 mt-2">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="w-4 h-4">
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" /></svg
+              >info@happycapetours.com
+            </p>
+          </a>
         </div>
         <div>
           <h4 class="font-semibold mb-4">Tours</h4>
           <ul class="text-sm text-gray-300 space-y-2">
-            <li>Table Mountain & Penguins</li>
-            <li>Safari Day Tour</li>
-            <li>Cape Point & Penguins</li>
-            <li>Robben Island Township</li>
-            <li>Whale Watching Hermanus</li>
+            <a class="hover:text-amber-400" href=""
+              ><li>Table Mountain & Penguins</li></a
+            >
+            <a class="hover:text-amber-400" href=""><li>Safari Day Tour</li></a>
+            <a class="hover:text-amber-400" href=""
+              ><li>Cape Point & Penguins</li></a
+            >
+            <a class="hover:text-amber-400" href=""
+              ><li>Robben Island Township</li></a
+            >
+            <a class="hover:text-amber-400" href=""
+              ><li>Whale Watching Hermanus</li></a
+            >
           </ul>
         </div>
         <div>
           <h4 class="font-semibold mb-4">Connect</h4>
-          <button
-            id="footerMenuToggle"
-            class="flex items-center gap-2 bg-amber-400 text-gray-900 px-5 py-3 rounded-full font-semibold hover:bg-amber-300">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              class="w-5 h-5">
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-            </svg>
-            offcanvas menu
-          </button>
+          <a href="">
+            <button
+              class="flex items-center gap-2 bg-amber-400 text-gray-900 px-5 py-3 rounded-full font-semibold hover:bg-amber-300">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="w-5 h-5">
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M10.5 1.5H8.25A2.25 2.25 0 0 0 6 3.75v16.5a2.25 2.25 0 0 0 2.25 2.25h7.5A2.25 2.25 0 0 0 18 20.25V3.75a2.25 2.25 0 0 0-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-3 18.75h3" />
+              </svg>
+              Call Us Now
+            </button>
+          </a>
         </div>
       </div>
       <div
@@ -1248,7 +1155,6 @@
       });
       gsap.from('.faq-item', {
         scrollTrigger: { trigger: '.faq-item', start: 'top 95%' },
-        opacity: 0,
         x: -20,
         duration: 0.6,
         stagger: 0.1,

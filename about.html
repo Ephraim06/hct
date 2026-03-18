@@ -1,0 +1,838 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+    <title>About Us · Happy Cape Tours</title>
+    <!-- Tailwind + Heroicons + Google Fonts (Montserrat + Playfair) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap"
+      rel="stylesheet" />
+    <!-- GSAP & ScrollTrigger -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <style>
+      body {
+        font-family: 'Montserrat', sans-serif;
+        background-color: #fbfaf8;
+      }
+      .font-serif {
+        font-family: 'Playfair Display', serif;
+      }
+      /* offcanvas menu */
+      .offcanvas-menu {
+        transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+      }
+      .offcanvas-open {
+        transform: translateX(0) !important;
+      }
+      /* card hover */
+      .value-card {
+        transition: all 0.3s ease;
+        border-radius: 2rem;
+        background: white;
+        box-shadow: 0 15px 30px -12px rgba(0, 0, 0, 0.05);
+      }
+      .value-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 25px 35px -12px rgba(0, 0, 0, 0.15);
+      }
+      .team-card {
+        transition: all 0.3s ease;
+        border-radius: 2rem;
+        overflow: hidden;
+      }
+      .team-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 30px 40px -15px rgba(0, 0, 0, 0.2);
+      }
+      .team-card img {
+        transition: transform 0.7s;
+      }
+      .team-card:hover img {
+        transform: scale(1.05);
+      }
+      /* floating */
+      .floating {
+        animation: float 5s ease-in-out infinite;
+      }
+      @keyframes float {
+        0% {
+          transform: translateY(0px);
+        }
+        50% {
+          transform: translateY(-6px);
+        }
+        100% {
+          transform: translateY(0px);
+        }
+      }
+      /* stats */
+      .stat-number {
+        font-size: 3rem;
+        font-weight: 800;
+        line-height: 1;
+        background: linear-gradient(135deg, #fbbf24 0%, #d97706 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+    </style>
+  </head>
+  <body class="antialiased text-gray-800 selection:bg-amber-200/80">
+    <!-- OFFCANVAS -->
+    <div
+      id="offcanvas"
+      class="offcanvas-menu fixed top-0 left-0 w-72 h-full bg-white shadow-2xl z-50 transform -translate-x-full p-7 flex flex-col">
+      <div class="flex justify-between items-center mb-8">
+        <span class="font-bold text-xl tracking-tight">Happy Cape</span>
+        <button id="closeOffcanvas" class="p-1 rounded-full hover:bg-gray-100">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="w-7 h-7">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+      <nav class="flex flex-col space-y-5 text-lg font-medium">
+        <a
+          href="index.html"
+          class="flex items-center gap-3 py-2 border-b border-gray-100 hover:text-amber-600 transition"
+          ><svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="w-5 h-5">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+          </svg>
+          Home</a
+        >
+        <a
+          href="tours.html"
+          class="flex items-center gap-3 py-2 border-b border-gray-100 hover:text-amber-600 transition"
+          ><svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="w-5 h-5">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" /></svg
+          >Tours</a
+        >
+        <a
+          href="about.html"
+          class="flex items-center gap-3 py-2 border-b border-gray-100 hover:text-amber-600 transition"
+          ><svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="w-5 h-5">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" /></svg
+          >About</a
+        >
+        <a
+          href="#"
+          class="flex items-center gap-3 py-2 border-b border-gray-100 hover:text-amber-600 transition"
+          ><svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="w-5 h-5">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25z" /></svg
+          >Gallery</a
+        >
+        <a
+          href="#"
+          class="flex items-center gap-3 py-2 border-b border-gray-100 hover:text-amber-600 transition"
+          ><svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="w-5 h-5">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M20.25 8.511c.884.284 1.5 1.128 1.5 2.097v4.286c0 1.136-.847 2.1-1.98 2.193-.34.027-.68.052-1.02.072v3.091l-3-3c-1.354 0-2.694-.055-4.02-.163a2.115 2.115 0 01-.825-.242m9.345-8.334a2.126 2.126 0 00-.476-.095 48.64 48.64 0 00-8.048 0c-1.131.094-1.976 1.057-1.976 2.192v4.286c0 .837.46 1.58 1.155 1.951m9.345-8.334V6.637c0-1.621-1.152-3.026-2.76-3.235A48.455 48.455 0 0011.25 3c-2.115 0-4.198.137-6.24.402-1.608.209-2.76 1.614-2.76 3.235v6.226c0 1.621 1.152 3.026 2.76 3.235.577.075 1.157.14 1.74.194V21l4.155-4.155" /></svg
+          >Contact</a
+        >
+      </nav>
+      <div class="mt-auto pt-8">
+        <div class="flex gap-4 text-gray-500">
+          <a href="#" class="hover:text-amber-500"
+            ><svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="currentColor">
+              <path
+                d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.99h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.99C18.343 21.128 22 16.991 22 12z" /></svg
+          ></a>
+          <a href="#" class="hover:text-amber-500"
+            ><svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="currentColor">
+              <path
+                d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465.66.254 1.216.598 1.772 1.153.509.5.902 1.105 1.153 1.772.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 0 1-1.153 1.772c-.5.509-1.105.902-1.772 1.153-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 0 1-1.772-1.153 4.902 4.902 0 0 1-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 0 1 1.153-1.772A4.902 4.902 0 0 1 5.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 12 2z m0 5a5 5 0 1 0 0 10 5 5 0 0 0 0-10zm6.5-.25a1.25 1.25 0 1 0-2.5 0 1.25 1.25 0 0 0 2.5 0zM12 9a3 3 0 1 1 0 6 3 3 0 0 1 0-6z" /></svg
+          ></a>
+        </div>
+      </div>
+    </div>
+
+    <!-- NAVBAR (luxury, absolute) -->
+    <header class="absolute w-full z-30 text-white">
+      <div class="flex justify-between items-center px-6 md:px-10 py-6">
+        <div class="flex items-center gap-4">
+          <button
+            id="menuToggle"
+            class="menu-icon text-white bg-white/10 p-2 rounded-full backdrop-blur border border-white/20 hover:bg-white/20">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.8"
+              stroke="currentColor"
+              class="w-6 h-6">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+            </svg>
+          </button>
+          <h1 class="font-bold text-2xl tracking-tight flex items-center gap-2">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              class="w-7 h-7 text-amber-300">
+              <path
+                fill-rule="evenodd"
+                d="M11.54 22.351l.07.04.028.016a.76.76 0 00.723 0l.028-.015.071-.041a16.975 16.975 0 001.144-.742 19.58 19.58 0 002.683-2.282c1.944-1.99 3.963-4.98 3.963-8.827a8.25 8.25 0 00-16.5 0c0 3.846 2.02 6.837 3.963 8.827a19.58 19.58 0 002.682 2.282 16.976 16.976 0 001.145.742zM12 13.5a3 3 0 100-6 3 3 0 000 6z"
+                clip-rule="evenodd" />
+            </svg>
+            Happy Cape Tours
+          </h1>
+        </div>
+        <div class="hidden md:flex items-center space-x-8 text-sm font-medium">
+          <a href="index.html" class="hover:text-amber-200 transition">Home</a>
+          <a href="tours.html" class="hover:text-amber-200 transition">Tours</a>
+          <a href="about.html" class="hover:text-amber-200 transition">About</a>
+          <a href="gallery.html" class="hover:text-amber-200 transition"
+            >Gallery</a
+          >
+          <a href="contact.html" class="hover:text-amber-200 transition"
+            >Contact</a
+          >
+        </div>
+        <div class="flex items-center gap-3">
+          <a
+            href="https://wa.me/2782308502"
+            class="text-sm hidden lg:flex items-center gap-1 bg-white/10 px-3 py-1.5 rounded-full backdrop-blur">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="w-4 h-4">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" />
+            </svg>
+            078 230 8502
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <!-- HERO for about page -->
+    <section
+      class="relative h-[45vh] min-h-[450px] flex items-center justify-center overflow-hidden">
+      <div class="absolute inset-0 z-0">
+        <img
+          src="./images/about-hero-bg.jpg"
+          class="w-full h-full object-cover"
+          alt="Happy Cape team" />
+        <div
+          class="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-amber-900/50"></div>
+      </div>
+      <div class="relative z-10 text-center text-white px-6">
+        <div
+          class="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full border border-white/30 mb-6">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.8"
+            stroke="currentColor"
+            class="w-5 h-5 text-amber-300">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+          </svg>
+          <span class="text-sm font-medium tracking-wider">OUR STORY</span>
+        </div>
+        <h1 class="text-5xl md:text-7xl font-bold mb-4">
+          About <span class="text-amber-300">Us</span>
+        </h1>
+        <p class="text-xl max-w-2xl mx-auto font-light">
+          Real adventures, happy memories – since 2018
+        </p>
+      </div>
+    </section>
+
+    <!-- STATS BANNER (floating above hero) -->
+    <section class="px-6 md:px-10 -mt-20 relative z-20 max-w-6xl mx-auto">
+      <div
+        class="bg-white/90 backdrop-blur-lg rounded-3xl shadow-2xl p-8 border border-white/30 grid grid-cols-2 md:grid-cols-4 gap-6">
+        <div class="text-center">
+          <div class="stat-number">5k+</div>
+          <p class="text-sm text-gray-500 mt-1">happy explorers</p>
+        </div>
+        <div class="text-center">
+          <div class="stat-number">12</div>
+          <p class="text-sm text-gray-500 mt-1">signature tours</p>
+        </div>
+        <div class="text-center">
+          <div class="stat-number">10+</div>
+          <p class="text-sm text-gray-500 mt-1">local guides</p>
+        </div>
+        <div class="text-center">
+          <div class="stat-number">4.9</div>
+          <p class="text-sm text-gray-500 mt-1">avg rating</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- OUR MISSION & STORY -->
+    <section class="px-6 md:px-10 py-24 max-w-7xl mx-auto">
+      <div class="grid lg:grid-cols-2 gap-16 items-center">
+        <div>
+          <span
+            class="text-amber-500 font-semibold text-sm tracking-widest flex items-center gap-2 mb-4">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="w-5 h-5">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456z" />
+            </svg>
+            SINCE 2018
+          </span>
+          <h2 class="text-4xl md:text-5xl font-bold mb-6 leading-tight">
+            We turn ordinary holidays into
+            <span class="text-amber-500">extraordinary memories</span>
+          </h2>
+          <div class="prose text-gray-600 space-y-5 text-lg">
+            <p class="font-serif italic text-gray-500 text-xl">
+              "Adventure with a smile – that's our promise."
+            </p>
+            <p>
+              Happy Cape Tours was born from a simple idea: to share the raw
+              beauty of the Western Cape with genuine warmth and expertise. What
+              started as two friends showing travellers their favourite hidden
+              spots has grown into a boutique tour company known for personal
+              touches and unforgettable days.
+            </p>
+            <p>
+              We specialise in creating stress-free experiences that showcase
+              the very best of the Mother City — from the iconic Table Mountain
+              and breathtaking Cape Point, to hidden beaches, vibrant townships,
+              and world-class wine routes.
+            </p>
+            <p>
+              Whether you're visiting for the first time or returning for more,
+              our small-group and private tours are designed with one goal in
+              mind:
+              <strong
+                >to make every moment fun, safe, and full of smiles.</strong
+              >
+            </p>
+          </div>
+
+          <!-- signature -->
+          <div class="mt-8 flex items-center gap-4">
+            <div class="flex -space-x-3">
+              <img
+                class="w-12 h-12 rounded-full border-2 border-white"
+                src="https://randomuser.me/api/portraits/women/44.jpg"
+                alt="guide" />
+              <img
+                class="w-12 h-12 rounded-full border-2 border-white"
+                src="https://randomuser.me/api/portraits/men/32.jpg"
+                alt="guide" />
+              <img
+                class="w-12 h-12 rounded-full border-2 border-white"
+                src="https://randomuser.me/api/portraits/women/68.jpg"
+                alt="guide" />
+            </div>
+            <div class="text-sm text-gray-500">
+              <span class="font-bold text-gray-800">10+ local guides</span>
+              <p>passionate & certified</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-4">
+          <div class="space-y-4">
+            <img
+              src="https://images.unsplash.com/photo-1577655197620-704858b270ac?q=80&w=1287"
+              class="rounded-3xl shadow-xl h-56 w-full object-cover floating"
+              style="animation-delay: 0s" />
+            <img
+              src="https://images.unsplash.com/photo-1593417039406-dfd10b609dc8?q=80&w=1470"
+              class="rounded-3xl shadow-xl h-48 w-full object-cover floating"
+              style="animation-delay: 0.4s" />
+          </div>
+          <div class="space-y-4 mt-8">
+            <img
+              src="https://images.unsplash.com/photo-1589829085413-56de8ae18c73?q=80&w=1242"
+              class="rounded-3xl shadow-xl h-48 w-full object-cover floating"
+              style="animation-delay: 0.2s" />
+            <img
+              src="https://images.unsplash.com/photo-1542336392-4b6c3f361eaa?q=80&w=1374"
+              class="rounded-3xl shadow-xl h-56 w-full object-cover floating"
+              style="animation-delay: 0.6s" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- OUR VALUES (luxury cards) -->
+    <section class="px-6 md:px-10 py-16 bg-white">
+      <div class="max-w-7xl mx-auto">
+        <div class="text-center mb-12">
+          <span class="text-amber-500 font-semibold text-sm tracking-widest"
+            >WHY CHOOSE US</span
+          >
+          <h2 class="text-4xl md:text-5xl font-bold mt-2 mb-4">
+            The Happy Cape <span class="text-amber-500">difference</span>
+          </h2>
+          <p class="text-gray-500 max-w-2xl mx-auto">
+            We don't just show you the sights — we create connections with the
+            land, the people, and the culture.
+          </p>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-8">
+          <div class="value-card p-8">
+            <div
+              class="w-16 h-16 bg-amber-100 rounded-2xl flex items-center justify-center text-amber-600 mb-6">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="w-8 h-8">
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+              </svg>
+            </div>
+            <h3 class="text-2xl font-bold mb-3">Local expertise</h3>
+            <p class="text-gray-500">
+              Our guides are born and raised in Cape Town. They know the secret
+              spots, the best photo angles, and the stories behind every
+              landmark.
+            </p>
+          </div>
+          <div class="value-card p-8">
+            <div
+              class="w-16 h-16 bg-amber-100 rounded-2xl flex items-center justify-center text-amber-600 mb-6">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="w-8 h-8">
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375 7.444 2.25 12 2.25s8.25 1.847 8.25 4.125zm0 4.5c0 1.314-1.038 2.528-2.61 3.473-.07.036-.14.07-.21.104A8.24 8.24 0 0112 14.25a8.24 8.24 0 01-5.43-1.873c-.07-.034-.14-.068-.21-.104-1.572-.945-2.61-2.159-2.61-3.473m13.5 0v1.5M4.5 10.875v1.5m13.5 4.5v2.25a2.25 2.25 0 01-2.25 2.25h-7.5a2.25 2.25 0 01-2.25-2.25v-2.25" />
+              </svg>
+            </div>
+            <h3 class="text-2xl font-bold mb-3">Small groups</h3>
+            <p class="text-gray-500">
+              We cap our groups at 8 people. That means personalised attention,
+              comfortable transport, and a more intimate experience.
+            </p>
+          </div>
+          <div class="value-card p-8">
+            <div
+              class="w-16 h-16 bg-amber-100 rounded-2xl flex items-center justify-center text-amber-600 mb-6">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="w-8 h-8">
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
+              </svg>
+            </div>
+            <h3 class="text-2xl font-bold mb-3">Thoughtful extras</h3>
+            <p class="text-gray-500">
+              From bottled water and snacks to surprise photo stops — we take
+              care of the details so you can focus on the adventure.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MEET THE TEAM -->
+    <section class="px-6 md:px-10 py-20 max-w-7xl mx-auto">
+      <div class="text-center mb-12">
+        <span class="text-amber-500 font-semibold text-sm tracking-widest"
+          >YOUR HOSTS</span
+        >
+        <h2 class="text-4xl md:text-5xl font-bold mt-2 mb-4">
+          Meet the <span class="text-amber-500">team</span>
+        </h2>
+        <p class="text-gray-500 max-w-2xl mx-auto">
+          Passionate locals who love sharing their home with you.
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <!-- guide 1 -->
+        <div class="team-card bg-white shadow-xl">
+          <img
+            src="https://images.unsplash.com/photo-1581803118522-7b72a50f7e9f?q=80&w=1374"
+            alt="Thabo"
+            class="h-72 w-full object-cover" />
+          <div class="p-6">
+            <h3 class="text-xl font-bold">Thabo Ndlovu</h3>
+            <p class="text-amber-500 text-sm mb-2">
+              senior guide / wildlife expert
+            </p>
+            <p class="text-gray-500 text-sm">
+              10+ years experience, knows every trail in Table Mountain.
+            </p>
+          </div>
+        </div>
+        <!-- guide 2 -->
+        <div class="team-card bg-white shadow-xl">
+          <img
+            src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f9e?q=80&w=1374"
+            alt="Emma"
+            class="h-72 w-full object-cover" />
+          <div class="p-6">
+            <h3 class="text-xl font-bold">Emma Joubert</h3>
+            <p class="text-amber-500 text-sm mb-2">cultural tour specialist</p>
+            <p class="text-gray-500 text-sm">
+              Born in Bo-Kaap, shares the real stories of Cape Town.
+            </p>
+          </div>
+        </div>
+        <!-- guide 3 -->
+        <div class="team-card bg-white shadow-xl">
+          <img
+            src="https://images.unsplash.com/photo-1566492031773-4f4e44671857?q=80&w=1374"
+            alt="Lunga"
+            class="h-72 w-full object-cover" />
+          <div class="p-6">
+            <h3 class="text-xl font-bold">Lunga Mkhize</h3>
+            <p class="text-amber-500 text-sm mb-2">safari & marine guide</p>
+            <p class="text-gray-500 text-sm">
+              Marine biologist who can name every bird and whale.
+            </p>
+          </div>
+        </div>
+        <!-- guide 4 -->
+        <div class="team-card bg-white shadow-xl">
+          <img
+            src="https://images.unsplash.com/photo-1601412436009-d964bd02edbc?q=80&w=1374"
+            alt="Sophie"
+            class="h-72 w-full object-cover" />
+          <div class="p-6">
+            <h3 class="text-xl font-bold">Sophie van der Merwe</h3>
+            <p class="text-amber-500 text-sm mb-2">winelands expert</p>
+            <p class="text-gray-500 text-sm">
+              Certified sommelier, leads our Franschhoek tours.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TESTIMONIAL highlight -->
+    <section class="px-6 md:px-10 py-16">
+      <div
+        class="max-w-5xl mx-auto bg-gradient-to-br from-amber-50 to-white p-10 md:p-16 rounded-3xl shadow-xl border border-amber-100">
+        <div class="flex flex-col md:flex-row gap-8 items-center">
+          <div class="md:w-2/3">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              class="w-12 h-12 text-amber-400 mb-4">
+              <path
+                fill-rule="evenodd"
+                d="M4.804 3.716A.75.75 0 014 4.5v2.25c0 .414.336.75.75.75h2.25c.621 0 1.125.504 1.125 1.125v2.25c0 .621-.504 1.125-1.125 1.125h-2.25a.75.75 0 00-.75.75v2.25c0 .414.336.75.75.75h2.25c.621 0 1.125.504 1.125 1.125v2.25c0 .621-.504 1.125-1.125 1.125h-2.25a.75.75 0 00-.75.75V19.5c0 .414.336.75.75.75h2.25c2.485 0 4.5-2.015 4.5-4.5v-6.75c0-2.485-2.015-4.5-4.5-4.5h-2.25zm10.5 0A.75.75 0 0014.5 4.5v2.25c0 .414.336.75.75.75h2.25c.621 0 1.125.504 1.125 1.125v2.25c0 .621-.504 1.125-1.125 1.125h-2.25a.75.75 0 00-.75.75v2.25c0 .414.336.75.75.75h2.25c.621 0 1.125.504 1.125 1.125v2.25c0 .621-.504 1.125-1.125 1.125h-2.25a.75.75 0 00-.75.75V19.5c0 .414.336.75.75.75h2.25c2.485 0 4.5-2.015 4.5-4.5v-6.75c0-2.485-2.015-4.5-4.5-4.5h-2.25z"
+                clip-rule="evenodd" />
+            </svg>
+            <p class="text-2xl font-serif italic mb-6">
+              "We did the penguin tour and it was the highlight of our trip! Our
+              guide, Thabo, knew every secret spot. Felt like exploring with a
+              friend."
+            </p>
+            <div class="flex items-center gap-3">
+              <div class="flex text-amber-400">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  class="w-5 h-5">
+                  <path
+                    fill-rule="evenodd"
+                    d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z"
+                    clip-rule="evenodd" />
+                </svg>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  class="w-5 h-5">
+                  <path
+                    fill-rule="evenodd"
+                    d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z"
+                    clip-rule="evenodd" />
+                </svg>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  class="w-5 h-5">
+                  <path
+                    fill-rule="evenodd"
+                    d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z"
+                    clip-rule="evenodd" />
+                </svg>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  class="w-5 h-5">
+                  <path
+                    fill-rule="evenodd"
+                    d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z"
+                    clip-rule="evenodd" />
+                </svg>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  class="w-5 h-5">
+                  <path
+                    fill-rule="evenodd"
+                    d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z"
+                    clip-rule="evenodd" />
+                </svg>
+              </div>
+              <span class="font-medium">– Emma Richardson</span>
+            </div>
+          </div>
+          <div class="md:w-1/3 flex justify-center">
+            <img
+              src="https://images.unsplash.com/photo-1587502464784-221706a249bd?q=80&w=1374"
+              class="w-40 h-40 md:w-48 md:h-48 rounded-full object-cover shadow-2xl border-4 border-white floating" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MARQUEE (branding) -->
+    <div
+      class="w-full bg-amber-400/10 border-y border-amber-200/50 py-4 overflow-hidden">
+      <div
+        class="marquee flex gap-8 text-amber-800 text-sm font-medium uppercase tracking-widest"
+        style="animation: scroll 20s linear infinite; width: max-content">
+        <span
+          >✨ PASSIONATE GUIDES · SMALL GROUPS · LOCAL EXPERTISE · HAPPY
+          MEMORIES · ✨</span
+        >
+        <span
+          >✨ PASSIONATE GUIDES · SMALL GROUPS · LOCAL EXPERTISE · HAPPY
+          MEMORIES · ✨</span
+        >
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="bg-gray-900 text-white px-6 md:px-16 py-16">
+      <div class="max-w-7xl mx-auto grid md:grid-cols-4 gap-10">
+        <div>
+          <h3 class="text-2xl font-bold flex items-center gap-2">
+            <svg
+              class="w-7 h-7 text-amber-400"
+              fill="currentColor"
+              viewBox="0 0 24 24">
+              <path
+                d="M11.54 22.351l.07.04.028.016a.76.76 0 00.723 0l.028-.015.071-.041a16.975 16.975 0 001.144-.742 19.58 19.58 0 002.683-2.282c1.944-1.99 3.963-4.98 3.963-8.827a8.25 8.25 0 00-16.5 0c0 3.846 2.02 6.837 3.963 8.827a19.58 19.58 0 002.682 2.282 16.976 16.976 0 001.145.742z" /></svg
+            >Happy Cape
+          </h3>
+          <p class="text-sm text-gray-400 mt-4">
+            Luxury guided tours · real adventures · local expertise.
+          </p>
+        </div>
+        <div>
+          <h4 class="font-semibold mb-4">Contact</h4>
+          <a href="https://wa.me/2782308502"
+            ><p class="text-sm text-gray-300 flex items-center gap-2">
+              <svg
+                class="w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24">
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="1.5"
+                  d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-1.293.97c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l.97-1.293c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" /></svg
+              >078 230 8502
+            </p></a
+          >
+        </div>
+        <div>
+          <h4 class="font-semibold mb-4">Tours</h4>
+          <ul class="text-sm text-gray-300 space-y-2">
+            <li>Whale Watching</li>
+            <li>Safari</li>
+            <li>Penguins & Cape Point</li>
+          </ul>
+        </div>
+        <div>
+          <button
+            id="footerMenuToggle"
+            class="flex items-center gap-2 bg-amber-400 text-gray-900 px-5 py-3 rounded-full font-semibold">
+            <svg
+              class="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="1.8"
+                d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+            </svg>
+            offcanvas menu
+          </button>
+        </div>
+      </div>
+      <div
+        class="border-t border-gray-800 mt-12 pt-6 text-center text-gray-500 text-sm">
+        © 2025 Happy Cape Tours — luxury mobile‑first
+      </div>
+    </footer>
+
+    <!-- scripts -->
+    <script>
+      gsap.registerPlugin(ScrollTrigger);
+      // offcanvas
+      const offcanvas = document.getElementById('offcanvas');
+      const openBtns = document.querySelectorAll(
+        '#menuToggle, #footerMenuToggle',
+      );
+      const closeBtn = document.getElementById('closeOffcanvas');
+      openBtns.forEach((btn) =>
+        btn.addEventListener('click', () =>
+          offcanvas.classList.add('offcanvas-open'),
+        ),
+      );
+      closeBtn.addEventListener('click', () =>
+        offcanvas.classList.remove('offcanvas-open'),
+      );
+      offcanvas.addEventListener('click', (e) => {
+        if (e.target === offcanvas)
+          offcanvas.classList.remove('offcanvas-open');
+      });
+
+      // GSAP animations
+      gsap.from('.value-card', {
+        scrollTrigger: { trigger: '.value-card', start: 'top 85%' },
+        y: 40,
+        duration: 0.8,
+        stagger: 0.15,
+      });
+      gsap.from('.team-card', {
+        scrollTrigger: { trigger: '.team-card', start: 'top 85%' },
+        y: 40,
+        duration: 0.8,
+        stagger: 0.1,
+      });
+      gsap.from('.stat-number', {
+        scrollTrigger: { trigger: '.stat-number', start: 'top 95%' },
+        scale: 0.5,
+        opacity: 0,
+        duration: 0.6,
+        stagger: 0.1,
+      });
+    </script>
+    <style>
+      @keyframes scroll {
+        0% {
+          transform: translateX(0);
+        }
+        100% {
+          transform: translateX(-50%);
+        }
+      }
+      .marquee {
+        animation: scroll 30s linear infinite;
+        width: max-content;
+      }
+      .marquee:hover {
+        animation-play-state: paused;
+      }
+    </style>
+  </body>
+</html>
