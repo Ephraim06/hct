@@ -251,6 +251,25 @@
             >Contact</a
           >
         </div>
+        <div class="flex items-center gap-3">
+          <a
+            href="tel:+2723078502"
+            class="text-sm hidden lg:flex items-center gap-1 bg-white/10 px-3 py-1.5 rounded-full backdrop-blur">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="w-4 h-4">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" />
+            </svg>
+            078 230 8502</a
+          >
+        </div>
       </div>
     </header>
 
@@ -317,7 +336,7 @@
           </p>
           <a
             href="tel:+2723078502"
-            class="text-amber-600 font-semibold text-lg hover:underline"
+            class="text-amber-600 font-semibold hover:underline"
             >078 230 8502</a
           >
           <a
@@ -347,14 +366,14 @@
           <h3 class="text-xl font-bold mb-2">Email us</h3>
           <p class="text-gray-500 text-sm mb-3">We reply within 24 hours</p>
           <a
-            href="mailto:info@happycapetours.co.za"
-            class="text-amber-600 font-semibold text-lg hover:underline"
-            >info@happycapetours.co.za</a
+            href="mailto:info@happycapetours.com"
+            class="text-amber-600 font-semibold hover:underline"
+            >info@happycapetours.com</a
           >
           <a
-            href="mailto:bookings@happycapetours.co.za"
+            href="mailto:bookings@happycapetours.com"
             class="text-amber-600 font-semibold block hover:underline"
-            >bookings@happycapetours.co.za</a
+            >bookings@happycapetours.com</a
           >
         </div>
         <!-- Visit card -->
@@ -585,7 +604,7 @@
               </div>
             </div>
             <p class="text-sm text-gray-500 mt-4 border-t border-gray-100 pt-4">
-              📞 Emergency / after hours: 078 230 8502 (WhatsApp available)
+              📞 Emergency / after hours: 078 230 8502 <a class="text-amber-600" href="https://wa.me/2723078502">(WhatsApp available)</a>
             </p>
           </div>
 
@@ -618,7 +637,7 @@
               </svg>
             </a>
             <a
-              href="#"
+              href="https://wa.me/2723078502"
               class="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center text-amber-600 hover:bg-amber-200 transition">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -644,16 +663,16 @@
         class="marquee flex gap-8 text-amber-800 text-sm font-medium uppercase tracking-widest"
         style="animation: scroll 20s linear infinite; width: max-content">
         <span
-          >✨ WE'RE HERE TO HELP · ASK US ANYTHING · INSTANT WHATSAPP · ✨</span
+          >WE'RE HERE TO HELP · ASK US ANYTHING · INSTANT WHATSAPP · </span
         >
         <span
-          >✨ WE'RE HERE TO HELP · ASK US ANYTHING · INSTANT WHATSAPP · ✨</span
+          > WE'RE HERE TO HELP · ASK US ANYTHING · INSTANT WHATSAPP · </span
         >
       </div>
     </div>
 
-    <!-- SIMILAR TOURS / RELATED -->
-    <section class="px-6 md:px-16 pb-24 max-w-7xl mt-10 mx-auto">
+   <!-- SIMILAR TOURS / RELATED -->
+    <section class="px-6 md:px-16 pb-24 max-w-7xl mx-auto">
       <h3 class="text-3xl font-bold mb-8 flex items-center gap-2">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -667,37 +686,51 @@
             stroke-linejoin="round"
             d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />
         </svg>
-        More ocean & wildlife tours
+        More Cape Town tours
       </h3>
       <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        <div class="tour-card bg-white rounded-2xl shadow-lg">
-          <img src="images/cape-point.jpg" class="h-44 w-full object-cover" />
-          <div class="p-5">
-            <h4 class="font-bold">Cape Point & Penguins</h4>
-            <p class="text-sm text-gray-500">Boulders Beach · Chapman's Peak</p>
+        <a href="./table-mountain-cape-of-good-hope.html"
+          ><div
+            class="tour-card bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition">
+            <img
+              src="./images/cape-of-good-hope.jpg"
+              class="h-44 w-full object-cover" />
+            <div class="p-5">
+              <h4 class="font-bold">Table Mountain & Cape of Good Hope</h4>
+              <p class="text-sm text-gray-500">Cable Car · Penguins</p>
+            </div>
+          </div></a
+        >
+        <a href="./cape-point-penguins.html">
+          <div
+            class="tour-card bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition">
+            <img
+              src="./images/simons-town-penguins.jpg"
+              class="h-44 w-full object-cover" />
+            <div class="p-5">
+              <h4 class="font-bold">Cape Point & Penguins</h4>
+              <p class="text-sm text-gray-500">
+                Boulders Beach · Chapman's Peak
+              </p>
+            </div>
           </div>
-        </div>
-        <div class="tour-card bg-white rounded-2xl shadow-lg">
-          <img
-            src="https://images.pexels.com/photos/4577792/pexels-photo-4577792.jpeg"
-            class="h-44 w-full object-cover" />
-          <div class="p-5">
-            <h4 class="font-bold">Safari Day Tour</h4>
-            <p class="text-sm text-gray-500">Private Game Reserve · Big Five</p>
+        </a>
+        <a href="./whale-watching.html">
+          <div
+            class="tour-card bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition">
+            <img src="./images/whale-2.jpg" class="h-44 w-full object-cover" />
+            <div class="p-5">
+              <h4 class="font-bold">Whale Watching Hermanus</h4>
+              <p class="text-sm text-gray-500">
+                Southern Right Whales · Boat Cruise
+              </p>
+            </div>
           </div>
-        </div>
-        <div class="tour-card bg-white rounded-2xl shadow-lg">
-          <img
-            src="images/table-mountain.jpg"
-            class="h-44 w-full object-cover" />
-          <div class="p-5">
-            <h4 class="font-bold">Table Mountain & Cape of Good Hope</h4>
-          </div>
-        </div>
+        </a>
       </div>
     </section>
 
-    <!-- FOOTER -->
+   <!-- FOOTER -->
     <footer class="bg-gray-900 text-white px-6 md:px-10 py-16">
       <div class="max-w-7xl mx-auto grid md:grid-cols-4 gap-10">
         <div>
@@ -757,14 +790,14 @@
         <div>
           <h4 class="font-semibold mb-4">Tours</h4>
           <ul class="text-sm text-gray-300 space-y-2">
-            <a class="hover:text-amber-400" href=""
+            <a class="hover:text-amber-400" href="table-mountain-cape-of-good-hope.html"
               ><li>Table Mountain & Penguins</li></a
             >
-            <a class="hover:text-amber-400" href=""><li>Safari Day Tour</li></a>
-            <a class="hover:text-amber-400" href=""
+            <a class="hover:text-amber-400" href="safari-day-tour.html"><li>Safari Day Tour</li></a>
+            <a class="hover:text-amber-400" href="cape-point-penguins.html"
               ><li>Cape Point & Penguins</li></a
             >
-            <a class="hover:text-amber-400" href=""
+            <a class="hover:text-amber-400" href="robben-island-township.html"
               ><li>Robben Island Township</li></a
             >
             <a class="hover:text-amber-400" href=""
@@ -796,8 +829,9 @@
       </div>
       <div
         class="border-t border-gray-800 mt-12 pt-6 text-center text-gray-500 text-sm">
-        © 2025 <a href="index.html"> Happy Cape Tours </a> - All rights
-        reserved.
+        © 2025
+        <a href="index.html" class="hover:text-amber-400">Happy Cape Tours</a> —
+        All rights reserved.
       </div>
     </footer>
 
