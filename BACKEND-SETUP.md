@@ -154,10 +154,22 @@ Build, TypeScript checks, all 15 automated tests and the 16-page/718-destination
 
 Open `http://localhost:3000/admin`, select **First time? Create an account**, use `info@happycapetours.com`, choose a password and enter the verification code from that mailbox. Admin access is already granted for this email. No password was generated on the owner's behalf. The production account's actual mailbox verification and first sign-in must be completed by its owner.
 
-The production backend is live. Updated frontend files still need publication to the existing static website host. `assets/backend-config.js` now contains only the production API/Auth public URLs. No Git push or frontend publication was performed.
+The production backend is live. The updated frontend is published to the existing GitHub Pages website. `assets/backend-config.js` now contains only the production API/Auth public URLs. The tested site was committed and pushed to `main` as `076d19d`. Both live admin pages, the login bundle and production browser configuration returned HTTP 200 and passed content checks.
 
 Browser visual QA remains unverified. Production password-reset email links require Neon custom SMTP configuration; code-based verification uses the managed provider. Command output included a non-fatal future SSL-mode semantics notice; current connections retained certificate verification and all service checks passed.
 
 ## Dependency audit
 
 The Neon SDK pinned vulnerable Better Auth and Zod versions. Overrides upgrade them to Better Auth 1.7.15 and Zod >=4.6.6. Final audit: 0 critical, 0 high, 0 moderate, 7 low. The remaining low findings derive from the upstream SDK UI/email dependency chain's `deepmerge` advisory. No unverified downgrade was applied to suppress those findings.
+
+## Signup origin verification
+
+Neon Auth reports email/password enabled, signup enabled, localhost allowed, and both website domains trusted. Invalid-input signup requests reached validation (HTTP 400 rather than an origin rejection) from `http://localhost:3000`, `http://localhost:5500`, `http://127.0.0.1:5173`, `https://www.happycapetours.com` and `https://happycapetours.com`. No account was created and no verification email was sent during these origin checks. Production API CORS checks passed for all five origins.
+
+The API was updated and deployed to accept exact localhost/loopback hosts on IDE preview ports while rejecting lookalike domains. The complete build, typecheck and 15 automated tests passed.
+
+Verified published signup pages:
+- https://www.happycapetours.com/admin.html
+- https://happycapetours.com/admin.html
+
+Both load the admin bundle and production Neon configuration.
