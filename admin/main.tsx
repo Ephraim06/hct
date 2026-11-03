@@ -5,7 +5,7 @@ import {Images, Upload, LogOut, ExternalLink, RefreshCw, Eye, EyeOff, Pencil, Ma
 import {Button} from './components/ui/button';
 import {Input} from './components/ui/input';
 import {Label} from './components/ui/label';
-import {Card,CardHeader,CardTitle,CardDescription,CardContent} from './components/ui/card';
+import {Card,CardContent} from './components/ui/card';
 import {Badge} from './components/ui/badge';
 import {Dialog,DialogContent,DialogHeader,DialogTitle,DialogDescription} from './components/ui/dialog';
 import {Sidebar,SidebarProvider,SidebarContent,SidebarFooter,SidebarHeader,SidebarInset,SidebarTrigger,SidebarMenu,SidebarMenuItem,SidebarMenuButton,SidebarGroup} from './components/ui/sidebar';
@@ -34,9 +34,10 @@ async function api(path:string, options:RequestInit={}){
  return body;
 }
 function AuthForm({onLogin}:{onLogin:()=>Promise<void>}){
- const [mode,setMode]=useState<'login'|'register'|'verify'|'recover'>('login');
+ const [mode,setMode]=useState<'login'|'register'|'verify'|'recover'>(new URLSearchParams(location.search).get('view')==='signup'?'register':'login');
  const [email,setEmail]=useState(''),[password,setPassword]=useState(''),[otp,setOtp]=useState('');
  const [busy,setBusy]=useState(false),[message,setMessage]=useState('');
+ const [showPassword,setShowPassword]=useState(false),[rememberMe,setRememberMe]=useState(false);
  async function sendCode(){
   if(!auth)return;const result=await auth.emailOtp.sendVerificationOtp({email,type:'email-verification'});
   if(result.error)throw new Error(result.error.message||'The code could not be sent.');
@@ -53,7 +54,7 @@ function AuthForm({onLogin}:{onLogin:()=>Promise<void>}){
    }else if(mode==='verify'){
     const result=await auth.emailOtp.verifyEmail({email,otp});
     if(result.error)throw new Error(result.error.message||'The verification code is invalid or expired.');
-    const signed=await auth.signIn.email({email,password});
+    const signed=await auth.signIn.email({email,password,rememberMe});
     if(signed.error){setMode('login');setMessage('Email verified. Sign in with your password.');return;}
     await onLogin();
    }else if(mode==='recover'){
@@ -61,7 +62,7 @@ function AuthForm({onLogin}:{onLogin:()=>Promise<void>}){
     if(result.error)throw new Error(result.error.message||'Password recovery is unavailable.');
     setMessage('If an account exists, check your inbox for password recovery instructions.');
    }else{
-    const result=await auth.signIn.email({email,password});
+    const result=await auth.signIn.email({email,password,rememberMe});
     if(result.error)throw new Error(result.error.message||'Please check your email and password.');
     await onLogin();
    }
@@ -79,21 +80,35 @@ function AuthForm({onLogin}:{onLogin:()=>Promise<void>}){
   setResetDone(true);history.replaceState(null,'','admin.html');setMessage('Password updated. You can now sign in.');setPassword('');
  }catch(error){setMessage((error as Error).message);}finally{setBusy(false);}}
  const resetting=Boolean(resetToken&&!resetDone);
- return <div className="admin-login"><div className="admin-login-story"><span className="admin-eyebrow">HAPPY CAPE TOURS</span><h2>More adventures.<br/><em>Beautifully shared.</em></h2><p>Manage the photos that bring your Cape Town experiences to life.</p><a href="index.html">← Return to the website</a></div>
- <Card className="w-full max-w-md shadow-xl"><CardHeader><CardTitle className="text-2xl">{resetting?'Choose a new password':mode==='register'?'Create your admin account':mode==='verify'?'Verify your email':mode==='recover'?'Reset your password':'Welcome back'}</CardTitle><CardDescription>Happy Cape Tours administration. Access is restricted to approved administrators.</CardDescription></CardHeader><CardContent>
- <form onSubmit={resetting?reset:submit} className="space-y-5">
- {!resetting&&<div className="space-y-2"><Label htmlFor="admin-email">Email address</Label><Input id="admin-email" type="email" autoComplete="email" required value={email} onChange={e=>setEmail(e.target.value)} /></div>}
- {(resetting||mode==='login'||mode==='register')&&<div className="space-y-2"><Label htmlFor="admin-password">Password</Label><Input id="admin-password" type="password" autoComplete={mode==='register'||resetting?'new-password':'current-password'} minLength={mode==='register'||resetting?12:undefined} maxLength={128} required value={password} onChange={e=>setPassword(e.target.value)}/>{mode==='register'&&<p className="text-xs text-muted-foreground">Use at least 12 characters. Registration does not automatically grant admin access.</p>}</div>}
- {mode==='verify'&&!resetting&&<div className="space-y-2"><Label htmlFor="verification-code">Verification code</Label><Input id="verification-code" inputMode="numeric" autoComplete="one-time-code" required value={otp} onChange={e=>setOtp(e.target.value)} /></div>}
- <p className="text-sm text-muted-foreground" role="status" aria-live="polite">{message}</p>
- <Button className="w-full" type="submit" disabled={busy||!auth}>{busy?'Please wait…':resetting?'Save new password':mode==='register'?'Create account':mode==='verify'?'Verify email':mode==='recover'?'Send reset instructions':'Sign in'}</Button>
- </form>
- {!resetting&&<div className="flex flex-wrap gap-3 mt-5 text-sm">
- <Button variant="link" className="px-0" disabled={busy} onClick={()=>{setMode(mode==='login'?'register':'login');setMessage('');}}>{mode==='login'?'First time? Create an account':'Back to sign in'}</Button>
- {mode==='login'&&<Button variant="link" className="px-0" disabled={busy} onClick={()=>{setMode('recover');setMessage('');}}>Forgot password?</Button>}
- {mode==='verify'&&<Button variant="link" className="px-0" disabled={busy||!email} onClick={async()=>{setBusy(true);try{await sendCode();}catch(error){setMessage((error as Error).message);}finally{setBusy(false);}}}>Send a new code</Button>}
- </div>}
- </CardContent></Card></div>;
+ const title=resetting?'A fresh start.':mode==='register'?'Your adventure starts here.':mode==='verify'?'Check your inbox.':mode==='recover'?'Forgot your password?':'Welcome back!';
+ const description=resetting?'Choose a new password for your account.':mode==='register'?'Create your account and bring your Cape stories to life.':mode==='verify'?'Enter the verification code sent to your email.':mode==='recover'?'Enter your email and we’ll help you get back in.':'Welcome back! Please enter your details.';
+ return <div className="admin-login">
+ <section className="auth-shell" aria-label="Happy Cape Tours account">
+  <div className="auth-visual">
+   <a className="auth-brand" href="index.html"><img src="images/logo/circle-logo.png" alt="" width="44" height="44"/><span>HAPPY CAPE<span className="auth-brand-subtitle">TOURS &amp; ADVENTURES</span></span></a>
+   <div className="auth-story"><span className="auth-eyebrow">CAPE TOWN · SOUTH AFRICA</span><h2>Your next <br/>Cape adventure<br/><span>starts here.</span></h2><p>A coastline worth exploring. A story worth sharing.<br/>Bring your favourite Cape moments to life.</p><span className="auth-story-note">Make every moment a happy one.</span></div>
+   <a href="index.html" className="auth-return">← Back to the website</a>
+  </div>
+  <div className="auth-form-panel"><div className="auth-form-inner">
+   <span className="auth-form-eyebrow">HAPPY CAPE TOURS</span>
+   <h2 className="auth-title">{title}</h2><p className="auth-description">{description}</p>
+   <form onSubmit={resetting?reset:submit} className="auth-form">
+    {!resetting&&<div className="auth-field"><Label htmlFor="admin-email">Email</Label><Input id="admin-email" type="email" placeholder="Enter your email" autoComplete="email" required value={email} onChange={e=>setEmail(e.target.value)} /></div>}
+    {(resetting||mode==='login'||mode==='register')&&<div className="auth-field"><Label htmlFor="admin-password">Password</Label><div className="auth-password"><Input id="admin-password" type={showPassword?'text':'password'} placeholder={mode==='register'||resetting?'Create a strong password':'Enter your password'} autoComplete={mode==='register'||resetting?'new-password':'current-password'} minLength={mode==='register'||resetting?12:undefined} maxLength={128} required value={password} onChange={e=>setPassword(e.target.value)}/><button className="auth-password-toggle" type="button" aria-label={showPassword?'Hide password':'Show password'} aria-pressed={showPassword} onClick={()=>setShowPassword(!showPassword)}>{showPassword?<Eye size={19}/>:<EyeOff size={19}/>}</button></div>{(mode==='register'||resetting)&&<p className="auth-hint">Use at least 12 characters.</p>}</div>}
+    {mode==='verify'&&!resetting&&<div className="auth-field"><Label htmlFor="verification-code">Verification code</Label><Input id="verification-code" placeholder="Enter your code" inputMode="numeric" autoComplete="one-time-code" required value={otp} onChange={e=>setOtp(e.target.value)} /></div>}
+    {mode==='login'&&!resetting&&<div className="auth-options"><label className="auth-remember"><input type="checkbox" checked={rememberMe} onChange={e=>setRememberMe(e.target.checked)}/>Remember me</label><button type="button" className="auth-text-button" disabled={busy} onClick={()=>{setMode('recover');setMessage('');}}>Forgot password?</button></div>}
+    <p className="auth-status" role="status" aria-live="polite">{message}</p>
+    <Button className="auth-submit" type="submit" disabled={busy||!auth}>{busy?'Please wait…':resetting?'Save new password':mode==='register'?'Create account':mode==='verify'?'Verify email':mode==='recover'?'Send reset instructions':'Sign in'}<span aria-hidden="true">→</span></Button>
+   </form>
+   {!resetting&&<div className="auth-switch">
+    <p>{mode==='login'?'Don’t have an account?':mode==='register'?'Already have an account?':'Ready to sign in?'} <button className="auth-text-button" disabled={busy} onClick={()=>{setMode(mode==='login'?'register':'login');setMessage('');setShowPassword(false);}}>{mode==='login'?'Sign up':'Sign in'}</button></p>
+    {mode==='verify'&&<button className="auth-text-button auth-resend" disabled={busy||!email} onClick={async()=>{setBusy(true);try{await sendCode();}catch(error){setMessage((error as Error).message);}finally{setBusy(false);}}}>Send a new code</button>}
+   </div>}
+   <p className="auth-access-note">For approved Happy Cape Tours administrators.</p>
+  </div></div>
+ </section>
+ </div>;
+
 }
 function PhotoForm({photo,onSaved,onCancel}:{photo:Photo|null;onSaved:()=>Promise<void>;onCancel:()=>void}){
  const [caption,setCaption]=useState(photo?.caption||''),[alt,setAlt]=useState(photo?.alt||''),[category,setCategory]=useState(photo?.category||'landscape');
