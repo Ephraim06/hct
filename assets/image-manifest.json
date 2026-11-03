@@ -1,0 +1,740 @@
+{
+  "images/about/bo-kaap.jpg": {
+    "variants": [
+      {
+        "width": 480,
+        "target": "images/optimized/about-bo-kaap-480.webp"
+      },
+      {
+        "width": 960,
+        "target": "images/optimized/about-bo-kaap-960.webp"
+      },
+      {
+        "width": 1600,
+        "target": "images/optimized/about-bo-kaap-1600.webp"
+      }
+    ],
+    "width": 2400,
+    "height": 1600
+  },
+  "images/about/capetown-arial-view.jpg": {
+    "variants": [
+      {
+        "width": 480,
+        "target": "images/optimized/about-capetown-arial-view-480.webp"
+      },
+      {
+        "width": 960,
+        "target": "images/optimized/about-capetown-arial-view-960.webp"
+      },
+      {
+        "width": 1600,
+        "target": "images/optimized/about-capetown-arial-view-1600.webp"
+      }
+    ],
+    "width": 2400,
+    "height": 1600
+  },
+  "images/about/capetown-cbd.jpg": {
+    "variants": [
+      {
+        "width": 480,
+        "target": "images/optimized/about-capetown-cbd-480.webp"
+      },
+      {
+        "width": 960,
+        "target": "images/optimized/about-capetown-cbd-960.webp"
+      },
+      {
+        "width": 1600,
+        "target": "images/optimized/about-capetown-cbd-1600.webp"
+      }
+    ],
+    "width": 2400,
+    "height": 1818
+  },
+  "images/about/muizenburg.jpg": {
+    "variants": [
+      {
+        "width": 480,
+        "target": "images/optimized/about-muizenburg-480.webp"
+      },
+      {
+        "width": 960,
+        "target": "images/optimized/about-muizenburg-960.webp"
+      },
+      {
+        "width": 1600,
+        "target": "images/optimized/about-muizenburg-1600.webp"
+      }
+    ],
+    "width": 2400,
+    "height": 1600
+  },
+  "images/about-hero-bg.jpg": {
+    "variants": [
+      {
+        "width": 480,
+        "target": "images/optimized/about-hero-bg-480.webp"
+      },
+      {
+        "width": 960,
+        "target": "images/optimized/about-hero-bg-960.webp"
+      },
+      {
+        "width": 1600,
+        "target": "images/optimized/about-hero-bg-1600.webp"
+      }
+    ],
+    "width": 1920,
+    "height": 1280
+  },
+  "images/boulders-beach-penguins.jpg": {
+    "variants": [
+      {
+        "width": 480,
+        "target": "images/optimized/boulders-beach-penguins-480.webp"
+      },
+      {
+        "width": 960,
+        "target": "images/optimized/boulders-beach-penguins-960.webp"
+      },
+      {
+        "width": 1600,
+        "target": "images/optimized/boulders-beach-penguins-1600.webp"
+      }
+    ],
+    "width": 5760,
+    "height": 3840
+  },
+  "images/boulders-beach.jpg": {
+    "variants": [
+      {
+        "width": 480,
+        "target": "images/optimized/boulders-beach-480.webp"
+      },
+      {
+        "width": 960,
+        "target": "images/optimized/boulders-beach-960.webp"
+      },
+      {
+        "width": 1600,
+        "target": "images/optimized/boulders-beach-1600.webp"
+      }
+    ],
+    "width": 2000,
+    "height": 1391
+  },
+  "images/cape-agulhas-2.jpg": {
+    "variants": [
+      {
+        "width": 480,
+        "target": "images/optimized/cape-agulhas-2-480.webp"
+      },
+      {
+        "width": 960,
+        "target": "images/optimized/cape-agulhas-2-960.webp"
+      },
+      {
+        "width": 1600,
+        "target": "images/optimized/cape-agulhas-2-1600.webp"
+      }
+    ],
+    "width": 2400,
+    "height": 1600
+  },
+  "images/cape-agulhas.jpg": {
+    "variants": [
+      {
+        "width": 480,
+        "target": "images/optimized/cape-agulhas-480.webp"
+      },
+      {
+        "width": 960,
+        "target": "images/optimized/cape-agulhas-960.webp"
+      },
+      {
+        "width": 1600,
+        "target": "images/optimized/cape-agulhas-1600.webp"
+      }
+    ],
+    "width": 2400,
+    "height": 1600
+  },
+  "images/cape-of-good-hope-2.jpg": {
+    "variants": [
+      {
+        "width": 480,
+        "target": "images/optimized/cape-of-good-hope-2-480.webp"
+      },
+      {
+        "width": 960,
+        "target": "images/optimized/cape-of-good-hope-2-960.webp"
+      },
+      {
+        "width": 1600,
+        "target": "images/optimized/cape-of-good-hope-2-1600.webp"
+      }
+    ],
+    "width": 1920,
+    "height": 1278
+  },
+  "images/cape-of-good-hope.jpg": {
+    "variants": [
+      {
+        "width": 480,
+        "target": "images/optimized/cape-of-good-hope-480.webp"
+      },
+      {
+        "width": 960,
+        "target": "images/optimized/cape-of-good-hope-960.webp"
+      },
+      {
+        "width": 1600,
+        "target": "images/optimized/cape-of-good-hope-1600.webp"
+      }
+    ],
+    "width": 1920,
+    "height": 1617
+  },
+  "images/cape-point.jpg": {
+    "variants": [
+      {
+        "width": 480,
+        "target": "images/optimized/cape-point-480.webp"
+      },
+      {
+        "width": 960,
+        "target": "images/optimized/cape-point-960.webp"
+      },
+      {
+        "width": 1500,
+        "target": "images/optimized/cape-point-1500.webp"
+      }
+    ],
+    "width": 1500,
+    "height": 999
+  },
+  "images/cape-winelands-2.jpg": {
+    "variants": [
+      {
+        "width": 480,
+        "target": "images/optimized/cape-winelands-2-480.webp"
+      },
+      {
+        "width": 960,
+        "target": "images/optimized/cape-winelands-2-960.webp"
+      },
+      {
+        "width": 1600,
+        "target": "images/optimized/cape-winelands-2-1600.webp"
+      }
+    ],
+    "width": 3987,
+    "height": 2658
+  },
+  "images/cape-winelands.jpg": {
+    "variants": [
+      {
+        "width": 480,
+        "target": "images/optimized/cape-winelands-480.webp"
+      },
+      {
+        "width": 960,
+        "target": "images/optimized/cape-winelands-960.webp"
+      },
+      {
+        "width": 1600,
+        "target": "images/optimized/cape-winelands-1600.webp"
+      }
+    ],
+    "width": 1920,
+    "height": 1280
+  },
+  "images/chapmans-peak.jpg": {
+    "variants": [
+      {
+        "width": 480,
+        "target": "images/optimized/chapmans-peak-480.webp"
+      },
+      {
+        "width": 960,
+        "target": "images/optimized/chapmans-peak-960.webp"
+      },
+      {
+        "width": 1600,
+        "target": "images/optimized/chapmans-peak-1600.webp"
+      }
+    ],
+    "width": 1920,
+    "height": 1280
+  },
+  "images/contact-bg.jpg": {
+    "variants": [
+      {
+        "width": 480,
+        "target": "images/optimized/contact-bg-480.webp"
+      },
+      {
+        "width": 960,
+        "target": "images/optimized/contact-bg-960.webp"
+      },
+      {
+        "width": 1600,
+        "target": "images/optimized/contact-bg-1600.webp"
+      }
+    ],
+    "width": 1920,
+    "height": 1280
+  },
+  "images/gallery/bo-kaap.jpg": {
+    "variants": [
+      {
+        "width": 480,
+        "target": "images/optimized/gallery-bo-kaap-480.webp"
+      },
+      {
+        "width": 960,
+        "target": "images/optimized/gallery-bo-kaap-960.webp"
+      },
+      {
+        "width": 1600,
+        "target": "images/optimized/gallery-bo-kaap-1600.webp"
+      }
+    ],
+    "width": 1920,
+    "height": 1280
+  },
+  "images/gallery/cape-agulhas-lighthouse.jpg": {
+    "variants": [
+      {
+        "width": 480,
+        "target": "images/optimized/gallery-cape-agulhas-lighthouse-480.webp"
+      },
+      {
+        "width": 960,
+        "target": "images/optimized/gallery-cape-agulhas-lighthouse-960.webp"
+      },
+      {
+        "width": 1600,
+        "target": "images/optimized/gallery-cape-agulhas-lighthouse-1600.webp"
+      }
+    ],
+    "width": 1920,
+    "height": 1280
+  },
+  "images/gallery/cape-point.jpg": {
+    "variants": [
+      {
+        "width": 480,
+        "target": "images/optimized/gallery-cape-point-480.webp"
+      },
+      {
+        "width": 960,
+        "target": "images/optimized/gallery-cape-point-960.webp"
+      },
+      {
+        "width": 1600,
+        "target": "images/optimized/gallery-cape-point-1600.webp"
+      }
+    ],
+    "width": 1920,
+    "height": 1280
+  },
+  "images/gallery/chapmans-peak-drive.jpg": {
+    "variants": [
+      {
+        "width": 480,
+        "target": "images/optimized/gallery-chapmans-peak-drive-480.webp"
+      },
+      {
+        "width": 960,
+        "target": "images/optimized/gallery-chapmans-peak-drive-960.webp"
+      },
+      {
+        "width": 1600,
+        "target": "images/optimized/gallery-chapmans-peak-drive-1600.webp"
+      }
+    ],
+    "width": 1920,
+    "height": 1152
+  },
+  "images/gallery/chapmans-peak.jpg": {
+    "variants": [
+      {
+        "width": 480,
+        "target": "images/optimized/gallery-chapmans-peak-480.webp"
+      },
+      {
+        "width": 960,
+        "target": "images/optimized/gallery-chapmans-peak-960.webp"
+      },
+      {
+        "width": 1600,
+        "target": "images/optimized/gallery-chapmans-peak-1600.webp"
+      }
+    ],
+    "width": 1920,
+    "height": 1440
+  },
+  "images/gallery/elephant-aquila.jpg": {
+    "variants": [
+      {
+        "width": 480,
+        "target": "images/optimized/gallery-elephant-aquila-480.webp"
+      },
+      {
+        "width": 960,
+        "target": "images/optimized/gallery-elephant-aquila-960.webp"
+      },
+      {
+        "width": 1600,
+        "target": "images/optimized/gallery-elephant-aquila-1600.webp"
+      }
+    ],
+    "width": 1920,
+    "height": 1280
+  },
+  "images/gallery/happy-cape-tour-guide.jpg": {
+    "variants": [
+      {
+        "width": 480,
+        "target": "images/optimized/gallery-happy-cape-tour-guide-480.webp"
+      },
+      {
+        "width": 960,
+        "target": "images/optimized/gallery-happy-cape-tour-guide-960.webp"
+      },
+      {
+        "width": 1500,
+        "target": "images/optimized/gallery-happy-cape-tour-guide-1500.webp"
+      }
+    ],
+    "width": 1500,
+    "height": 1000
+  },
+  "images/gallery/happy-tourist.jpg": {
+    "variants": [
+      {
+        "width": 480,
+        "target": "images/optimized/gallery-happy-tourist-480.webp"
+      },
+      {
+        "width": 960,
+        "target": "images/optimized/gallery-happy-tourist-960.webp"
+      },
+      {
+        "width": 1600,
+        "target": "images/optimized/gallery-happy-tourist-1600.webp"
+      }
+    ],
+    "width": 1920,
+    "height": 1440
+  },
+  "images/gallery/hermanus.jpg": {
+    "variants": [
+      {
+        "width": 480,
+        "target": "images/optimized/gallery-hermanus-480.webp"
+      },
+      {
+        "width": 960,
+        "target": "images/optimized/gallery-hermanus-960.webp"
+      },
+      {
+        "width": 1600,
+        "target": "images/optimized/gallery-hermanus-1600.webp"
+      }
+    ],
+    "width": 1920,
+    "height": 1280
+  },
+  "images/gallery/penguins.jpg": {
+    "variants": [
+      {
+        "width": 480,
+        "target": "images/optimized/gallery-penguins-480.webp"
+      },
+      {
+        "width": 960,
+        "target": "images/optimized/gallery-penguins-960.webp"
+      },
+      {
+        "width": 1600,
+        "target": "images/optimized/gallery-penguins-1600.webp"
+      }
+    ],
+    "width": 1920,
+    "height": 1080
+  },
+  "images/gallery/safari-lion.jpg": {
+    "variants": [
+      {
+        "width": 480,
+        "target": "images/optimized/gallery-safari-lion-480.webp"
+      },
+      {
+        "width": 960,
+        "target": "images/optimized/gallery-safari-lion-960.webp"
+      },
+      {
+        "width": 1600,
+        "target": "images/optimized/gallery-safari-lion-1600.webp"
+      }
+    ],
+    "width": 1920,
+    "height": 1280
+  },
+  "images/gallery/table-mountain-beach.jpg": {
+    "variants": [
+      {
+        "width": 480,
+        "target": "images/optimized/gallery-table-mountain-beach-480.webp"
+      },
+      {
+        "width": 960,
+        "target": "images/optimized/gallery-table-mountain-beach-960.webp"
+      },
+      {
+        "width": 1600,
+        "target": "images/optimized/gallery-table-mountain-beach-1600.webp"
+      }
+    ],
+    "width": 1920,
+    "height": 1280
+  },
+  "images/gallery/tour-group-laughing.jpg": {
+    "variants": [
+      {
+        "width": 480,
+        "target": "images/optimized/gallery-tour-group-laughing-480.webp"
+      },
+      {
+        "width": 960,
+        "target": "images/optimized/gallery-tour-group-laughing-960.webp"
+      },
+      {
+        "width": 1600,
+        "target": "images/optimized/gallery-tour-group-laughing-1600.webp"
+      }
+    ],
+    "width": 1920,
+    "height": 1313
+  },
+  "images/gallery/winelands-vineyard.jpg": {
+    "variants": [
+      {
+        "width": 480,
+        "target": "images/optimized/gallery-winelands-vineyard-480.webp"
+      },
+      {
+        "width": 960,
+        "target": "images/optimized/gallery-winelands-vineyard-960.webp"
+      },
+      {
+        "width": 1600,
+        "target": "images/optimized/gallery-winelands-vineyard-1600.webp"
+      }
+    ],
+    "width": 1920,
+    "height": 1280
+  },
+  "images/gallery-hero-bg.jpg": {
+    "variants": [
+      {
+        "width": 480,
+        "target": "images/optimized/gallery-hero-bg-480.webp"
+      },
+      {
+        "width": 960,
+        "target": "images/optimized/gallery-hero-bg-960.webp"
+      },
+      {
+        "width": 1600,
+        "target": "images/optimized/gallery-hero-bg-1600.webp"
+      }
+    ],
+    "width": 1920,
+    "height": 1280
+  },
+  "images/hero-bg.jpg": {
+    "variants": [
+      {
+        "width": 480,
+        "target": "images/optimized/hero-bg-480.webp"
+      },
+      {
+        "width": 960,
+        "target": "images/optimized/hero-bg-960.webp"
+      },
+      {
+        "width": 1600,
+        "target": "images/optimized/hero-bg-1600.webp"
+      }
+    ],
+    "width": 2000,
+    "height": 1125
+  },
+  "images/hero-bg.png": {
+    "variants": [
+      {
+        "width": 480,
+        "target": "images/optimized/hero-bg-480.webp"
+      },
+      {
+        "width": 960,
+        "target": "images/optimized/hero-bg-960.webp"
+      },
+      {
+        "width": 1264,
+        "target": "images/optimized/hero-bg-1264.webp"
+      }
+    ],
+    "width": 1264,
+    "height": 842
+  },
+  "images/robben-island-2.jpg": {
+    "variants": [
+      {
+        "width": 480,
+        "target": "images/optimized/robben-island-2-480.webp"
+      },
+      {
+        "width": 960,
+        "target": "images/optimized/robben-island-2-960.webp"
+      },
+      {
+        "width": 1600,
+        "target": "images/optimized/robben-island-2-1600.webp"
+      }
+    ],
+    "width": 1920,
+    "height": 1280
+  },
+  "images/robben-island.jpg": {
+    "variants": [
+      {
+        "width": 480,
+        "target": "images/optimized/robben-island-480.webp"
+      },
+      {
+        "width": 960,
+        "target": "images/optimized/robben-island-960.webp"
+      },
+      {
+        "width": 1600,
+        "target": "images/optimized/robben-island-1600.webp"
+      }
+    ],
+    "width": 1920,
+    "height": 1276
+  },
+  "images/safari-day-tour.jpg": {
+    "variants": [
+      {
+        "width": 480,
+        "target": "images/optimized/safari-day-tour-480.webp"
+      },
+      {
+        "width": 960,
+        "target": "images/optimized/safari-day-tour-960.webp"
+      },
+      {
+        "width": 1600,
+        "target": "images/optimized/safari-day-tour-1600.webp"
+      }
+    ],
+    "width": 1920,
+    "height": 1280
+  },
+  "images/simons-town-penguins.jpg": {
+    "variants": [
+      {
+        "width": 480,
+        "target": "images/optimized/simons-town-penguins-480.webp"
+      },
+      {
+        "width": 960,
+        "target": "images/optimized/simons-town-penguins-960.webp"
+      },
+      {
+        "width": 1600,
+        "target": "images/optimized/simons-town-penguins-1600.webp"
+      }
+    ],
+    "width": 1920,
+    "height": 1280
+  },
+  "images/table-mountain.jpg": {
+    "variants": [
+      {
+        "width": 480,
+        "target": "images/optimized/table-mountain-480.webp"
+      },
+      {
+        "width": 960,
+        "target": "images/optimized/table-mountain-960.webp"
+      },
+      {
+        "width": 1600,
+        "target": "images/optimized/table-mountain-1600.webp"
+      }
+    ],
+    "width": 1920,
+    "height": 1080
+  },
+  "images/tours-hero-bg.jpg": {
+    "variants": [
+      {
+        "width": 480,
+        "target": "images/optimized/tours-hero-bg-480.webp"
+      },
+      {
+        "width": 960,
+        "target": "images/optimized/tours-hero-bg-960.webp"
+      },
+      {
+        "width": 1600,
+        "target": "images/optimized/tours-hero-bg-1600.webp"
+      }
+    ],
+    "width": 1920,
+    "height": 1280
+  },
+  "images/whale-2.jpg": {
+    "variants": [
+      {
+        "width": 480,
+        "target": "images/optimized/whale-2-480.webp"
+      },
+      {
+        "width": 960,
+        "target": "images/optimized/whale-2-960.webp"
+      },
+      {
+        "width": 1500,
+        "target": "images/optimized/whale-2-1500.webp"
+      }
+    ],
+    "width": 1500,
+    "height": 1000
+  },
+  "images/whale.jpg": {
+    "variants": [
+      {
+        "width": 480,
+        "target": "images/optimized/whale-480.webp"
+      },
+      {
+        "width": 960,
+        "target": "images/optimized/whale-960.webp"
+      },
+      {
+        "width": 1500,
+        "target": "images/optimized/whale-1500.webp"
+      }
+    ],
+    "width": 1500,
+    "height": 1000
+  }
+}

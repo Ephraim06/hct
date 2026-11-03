@@ -1,0 +1,26 @@
+.admin-page {
+ --background: 40 33% 98%; --foreground: 220 25% 16%; --card: 0 0% 100%; --card-foreground: 220 25% 16%;
+ --popover: 0 0% 100%; --popover-foreground: 220 25% 16%; --primary: 43 96% 56%; --primary-foreground: 220 25% 12%;
+ --secondary: 40 30% 94%; --secondary-foreground: 220 25% 16%; --muted: 40 25% 95%; --muted-foreground: 220 10% 40%;
+ --accent: 45 90% 94%; --accent-foreground: 28 75% 28%; --destructive: 0 72% 42%; --destructive-foreground: 0 0% 100%;
+ --border: 35 18% 87%; --input: 35 18% 80%; --ring: 35 80% 32%;
+ --sidebar-background: 220 30% 12%; --sidebar-foreground: 40 20% 94%; --sidebar-primary: 43 96% 56%; --sidebar-primary-foreground: 220 25% 12%;
+ --sidebar-accent: 220 20% 22%; --sidebar-accent-foreground: 45 95% 70%; --sidebar-border: 220 20% 25%; --sidebar-ring: 43 96% 56%;
+ background: #fbfaf8;
+}
+.admin-page > header { position: relative; background: #111827; }
+.admin-page > footer, .admin-page > .policy-links, .admin-page #whatsappButton { display:none; }
+.admin-app { min-height: 70vh; }
+.admin-app button { font-family: inherit; }
+.admin-login { max-width: 1200px; margin: auto; min-height: 75vh; padding: 4rem 2rem; display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 5rem; }
+.admin-login-story h2 { font-family: 'Playfair Display',serif; font-size: clamp(2.25rem,4vw,3.5rem); line-height: 1.2; margin: 1.25rem 0; }
+.admin-login-story em { color: #92400e; }
+.admin-login-story p { line-height: 1.8; color: #4b5563; max-width: 28rem; }
+.admin-login-story a { display: inline-block; margin-top: 2rem; font-size: .875rem; text-decoration: underline; }
+.admin-eyebrow { letter-spacing: .15em; color: #92400e; font-size: .75rem; font-weight: 700; }
+.admin-select { display:block; width:100%; min-height:36px; padding: .5rem .75rem; border:1px solid #d6d3d1; border-radius:.375rem; background:white; font:inherit; font-size:.875rem; }
+.admin-auth-notice { margin: 1rem auto; max-width: 44rem; padding: 1rem; color: #991b1b; background:#fef2f2; }
+.admin-page main:has([data-sidebar="sidebar"]) { min-height:100vh; }
+@media(max-width:767px) { .admin-login { grid-template-columns:1fr; padding:2rem 1.25rem; gap:2rem; } .admin-login-story h2 { font-size:2rem; } }
+
+.admin-page.admin-signed-in > header { display:none; }

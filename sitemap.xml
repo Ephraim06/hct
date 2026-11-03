@@ -52,4 +52,6 @@
     <loc>https://www.happycapetours.com/whale-watching.html</loc>
     <priority>0.9</priority>
   </url>
+  <url><loc>https://www.happycapetours.com/privacy.html</loc></url>
+  <url><loc>https://www.happycapetours.com/booking-information.html</loc></url>
 </urlset>

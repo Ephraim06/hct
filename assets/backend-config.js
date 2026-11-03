@@ -1,0 +1,1 @@
+window.HCT_BACKEND = {"apiBaseUrl":"https://br-divine-forest-bdtq10cq-gallery.compute.c-8.us-east-2.aws.neon.tech","authUrl":"https://ep-withered-mode-bdoj9xla.neonauth.c-8.us-east-2.aws.neon.tech/neondb/auth"};
