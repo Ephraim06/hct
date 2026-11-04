@@ -12,6 +12,7 @@ app.get('*',async c=>{
   try{pathname=decodeURIComponent(new URL(c.req.url).pathname);}catch{return c.notFound();}
   if(pathname==='/.well-known/health')return c.json({ok:true});
   if(pathname==='/')pathname='/index.html';
+  if(pathname==='/account'||pathname==='/account/')pathname='/account.html';
   if(pathname==='/admin'||pathname==='/admin/')pathname='/admin.html';
   // Never serve credentials, source, dependencies, config or arbitrary repo files.
   const safe=(/^\/[a-z0-9-]+\.html$/.test(pathname)||/^\/(assets|images)\/[a-zA-Z0-9_./-]+$/.test(pathname)||['/robots.txt','/sitemap.xml'].includes(pathname))&&!pathname.split('/').some(part=>part.startsWith('.'));

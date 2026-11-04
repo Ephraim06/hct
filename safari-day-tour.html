@@ -196,7 +196,7 @@
 <meta property="og:image" content="https://www.happycapetours.com/images/optimized/hero-bg-1600.webp">
 <meta name="twitter:image" content="https://www.happycapetours.com/images/optimized/hero-bg-1600.webp">
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "TouristTrip", "name": "Safari Day Tour", "url": "https://www.happycapetours.com/safari-day-tour.html", "provider": {"@id": "https://www.happycapetours.com/#business"}}</script>
-</head>
+<script src="assets/backend-config.js"></script><script type="module" src="assets/traveller/tour-saves.js?v=traveller-saves-1"></script></head>
 
 <body class="antialiased text-gray-800 selection:bg-amber-200/80">
   <a href="#main-content" class="skip-link">Skip to content</a>
@@ -224,7 +224,8 @@
       <a href="gallery.html" class="flex items-center gap-3 py-2 border-b border-gray-100 hover:text-amber-600 transition"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5" aria-hidden="true" focusable="false">
           <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25z"></path>
         </svg>Gallery</a>
-      <a href="contact.html" class="flex items-center gap-3 py-2 border-b border-gray-100 hover:text-amber-600 transition"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5" aria-hidden="true" focusable="false">
+      <a href="account.html" class="hover:text-amber-200 transition">My tours</a>
+          <a href="contact.html" class="flex items-center gap-3 py-2 border-b border-gray-100 hover:text-amber-600 transition"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5" aria-hidden="true" focusable="false">
           <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 8.511c.884.284 1.5 1.128 1.5 2.097v4.286c0 1.136-.847 2.1-1.98 2.193-.34.027-.68.052-1.02.072v3.091l-3-3c-1.354 0-2.694-.055-4.02-.163a2.115 2.115 0 01-.825-.242m9.345-8.334a2.126 2.126 0 00-.476-.095 48.64 48.64 0 00-8.048 0c-1.131.094-1.976 1.057-1.976 2.192v4.286c0 .837.46 1.58 1.155 1.951m9.345-8.334V6.637c0-1.621-1.152-3.026-2.76-3.235A48.455 48.455 0 0011.25 3c-2.115 0-4.198.137-6.24.402-1.608.209-2.76 1.614-2.76 3.235v6.226c0 1.621 1.152 3.026 2.76 3.235.577.075 1.157.14 1.74.194V21l4.155-4.155"></path>
         </svg>Contact</a>
     </nav>
@@ -252,6 +253,7 @@
           <a href="tours.html" class="hover:text-amber-200 transition">Tours</a>
           <a href="about.html" class="hover:text-amber-200 transition">About</a>
           <a href="gallery.html" class="hover:text-amber-200 transition">Gallery</a>
+          <a href="account.html" class="hover:text-amber-200 transition">My tours</a>
           <a href="contact.html" class="hover:text-amber-200 transition">Contact</a>
         <div class="language-desktop-slot"><details class="language-switch notranslate" translate="no"><summary><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"></circle><path d="M3 12h18M12 3c5 5 5 13 0 18M12 3c-5 5-5 13 0 18"></path></svg><span>Language</span><span class="language-chevron" aria-hidden="true">⌄</span></summary><div class="language-dropdown"><span class="language-dropdown-label" id="language-label">Choose your language</span><div id="google_translate_element" aria-labelledby="language-label"><span class="language-loading" role="status">Loading languages…</span></div></div></details></div></div>
         <div class="flex items-center gap-3 header-contact">
@@ -283,7 +285,7 @@
       </div>
       <h1 class="text-5xl md:text-7xl font-bold mb-4 leading-tight">
         Safari Day Tour <br><span class="text-amber-300">Cape Town</span>
-      </h1>
+      </h1><button type="button" class="save-tour-button" data-save-tour="safari-day-tour" aria-pressed="false">♡ Save tour</button>
       <p class="text-xl md:text-2xl mb-6 max-w-2xl font-light">
         Safari in Cape Town at a Private Game Reserve.
       </p>

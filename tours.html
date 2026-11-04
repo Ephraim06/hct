@@ -172,7 +172,7 @@
 <meta property="og:image" content="https://www.happycapetours.com/images/optimized/hero-bg-1600.webp">
 <meta name="twitter:image" content="https://www.happycapetours.com/images/optimized/hero-bg-1600.webp">
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "TravelAgency", "@id": "https://www.happycapetours.com/#business", "name": "Happy Cape Tours", "url": "https://www.happycapetours.com/", "telephone": "+27782308502", "email": "info@happycapetours.com", "areaServed": "Cape Town"}</script>
-</head>
+<script src="assets/backend-config.js"></script><script type="module" src="assets/traveller/tour-saves.js?v=traveller-saves-1"></script></head>
 
 <body class="antialiased text-gray-800 selection:bg-amber-200/80">
   <a href="#main-content" class="skip-link">Skip to content</a>
@@ -200,7 +200,8 @@
       <a href="gallery.html" class="flex items-center gap-3 py-2 border-b border-gray-100 hover:text-amber-600 transition"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5" aria-hidden="true" focusable="false">
           <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25z"></path>
         </svg>Gallery</a>
-      <a href="contact.html" class="flex items-center gap-3 py-2 border-b border-gray-100 hover:text-amber-600 transition"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5" aria-hidden="true" focusable="false">
+      <a href="account.html" class="hover:text-amber-200 transition">My tours</a>
+          <a href="contact.html" class="flex items-center gap-3 py-2 border-b border-gray-100 hover:text-amber-600 transition"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5" aria-hidden="true" focusable="false">
           <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 8.511c.884.284 1.5 1.128 1.5 2.097v4.286c0 1.136-.847 2.1-1.98 2.193-.34.027-.68.052-1.02.072v3.091l-3-3c-1.354 0-2.694-.055-4.02-.163a2.115 2.115 0 01-.825-.242m9.345-8.334a2.126 2.126 0 00-.476-.095 48.64 48.64 0 00-8.048 0c-1.131.094-1.976 1.057-1.976 2.192v4.286c0 .837.46 1.58 1.155 1.951m9.345-8.334V6.637c0-1.621-1.152-3.026-2.76-3.235A48.455 48.455 0 0011.25 3c-2.115 0-4.198.137-6.24.402-1.608.209-2.76 1.614-2.76 3.235v6.226c0 1.621 1.152 3.026 2.76 3.235.577.075 1.157.14 1.74.194V21l4.155-4.155"></path>
         </svg>Contact</a>
     </nav>
@@ -228,6 +229,7 @@
           <a href="tours.html" class="hover:text-amber-200 transition" aria-current="page">Tours</a>
           <a href="about.html" class="hover:text-amber-200 transition">About</a>
           <a href="gallery.html" class="hover:text-amber-200 transition">Gallery</a>
+          <a href="account.html" class="hover:text-amber-200 transition">My tours</a>
           <a href="contact.html" class="hover:text-amber-200 transition">Contact</a>
         <div class="language-desktop-slot"><details class="language-switch notranslate" translate="no"><summary><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"></circle><path d="M3 12h18M12 3c5 5 5 13 0 18M12 3c-5 5-5 13 0 18"></path></svg><span>Language</span><span class="language-chevron" aria-hidden="true">⌄</span></summary><div class="language-dropdown"><span class="language-dropdown-label" id="language-label">Choose your language</span><div id="google_translate_element" aria-labelledby="language-label"><span class="language-loading" role="status">Loading languages…</span></div></div></details></div></div>
         <div class="flex items-center gap-3 header-contact">
@@ -295,7 +297,7 @@
   <!-- TOURS GRID (ALL TOURS LISTED with categories) -->
   <section class="px-6 md:px-10 py-8 pb-20 max-w-7xl mx-auto">
     <div id="toursGrid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-      <article class="tour-card group" data-category="nature adventure"><img src="images/optimized/chapmans-peak-1600.webp" alt="Chapman’s Peak coastal drive" class="h-64 w-full object-cover" srcset="images/optimized/chapmans-peak-480.webp 480w, images/optimized/chapmans-peak-960.webp 960w, images/optimized/chapmans-peak-1600.webp 1600w" sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw" width="1920" height="1280" decoding="async" loading="lazy"><div class="p-6"><h3 class="font-bold text-xl mb-2">Chapman’s Peak</h3><p class="text-gray-600 mb-4">Scenic coastal drive and panoramic views.</p><p class="font-bold mb-4">R2250 / person</p><a href="chapmans-peak.html" class="inline-block bg-amber-400 text-gray-900 px-5 py-2 rounded-full font-semibold">View tour</a></div></article>
+      <article class="tour-card group" data-category="nature adventure"><img src="images/optimized/chapmans-peak-1600.webp" alt="Chapman’s Peak coastal drive" class="h-64 w-full object-cover" srcset="images/optimized/chapmans-peak-480.webp 480w, images/optimized/chapmans-peak-960.webp 960w, images/optimized/chapmans-peak-1600.webp 1600w" sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw" width="1920" height="1280" decoding="async" loading="lazy"><div class="p-6"><h3 class="font-bold text-xl mb-2">Chapman’s Peak</h3><p class="text-gray-600 mb-4">Scenic coastal drive and panoramic views.</p><p class="font-bold mb-4">R2250 / person</p><a href="chapmans-peak.html" class="inline-block bg-amber-400 text-gray-900 px-5 py-2 rounded-full font-semibold">View tour</a></div><button type="button" class="save-tour-button" data-save-tour="chapmans-peak" aria-pressed="false">♡ Save tour</button></article>
 <!-- Cape of Good Hope & Penguins -->
       <div class="tour-card group" data-category="nature">
         <div class="relative overflow-hidden">
@@ -323,7 +325,7 @@
               </a>
           </div>
         </div>
-      </div>
+      <button type="button" class="save-tour-button" data-save-tour="cape-point-penguins" aria-pressed="false">♡ Save tour</button></div>
 
       <!-- PRIVATE. Cape of Good Hope & Penguins -->
       <div class="tour-card group" data-category="nature">
@@ -353,7 +355,7 @@
               </a>
           </div>
         </div>
-      </div>
+      <button type="button" class="save-tour-button" data-save-tour="cape-point-penguins-private-tour" aria-pressed="false">♡ Save tour</button></div>
 
       <!-- 7. Cape Winelands & Stellenbosch Tour (wine) -->
       <div class="tour-card group" data-category="wine">
@@ -383,7 +385,7 @@
               </a>
           </div>
         </div>
-      </div>
+      <button type="button" class="save-tour-button" data-save-tour="capewinelands-stellenbosch" aria-pressed="false">♡ Save tour</button></div>
 
       <!-- 1. Cape Agulhas -->
       <div class="tour-card group" data-category="nature">
@@ -416,7 +418,7 @@
               </a>
           </div>
         </div>
-      </div>
+      <button type="button" class="save-tour-button" data-save-tour="cape-agulhas" aria-pressed="false">♡ Save tour</button></div>
 
       <!-- 5. Whale Watching Cape Town – Full-Day Tour to Hermanus (nature) -->
       <div class="tour-card group" data-category="nature">
@@ -444,7 +446,7 @@
                 </svg></a>
           </div>
         </div>
-      </div>
+      <button type="button" class="save-tour-button" data-save-tour="whale-watching" aria-pressed="false">♡ Save tour</button></div>
 
       <!-- 4. Robben Island & Township Cultural Tour (culture) -->
       <div class="tour-card group" data-category="culture">
@@ -475,7 +477,7 @@
               </a>
           </div>
         </div>
-      </div>
+      <button type="button" class="save-tour-button" data-save-tour="robben-island" aria-pressed="false">♡ Save tour</button></div>
 
       <!-- 2. Safari Day Tour (nature) -->
       <div class="tour-card group" data-category="nature adventure">
@@ -504,48 +506,9 @@
               </a>
           </div>
         </div>
-      </div>
+      <button type="button" class="save-tour-button" data-save-tour="safari-day-tour" aria-pressed="false">♡ Save tour</button></div>
 
       <!-- 3. Cape of Good Hope, Cape of Good Hope & Penguins (nature) -->
-      <!-- <div class="tour-card group" data-category="nature">
-        <div class="relative overflow-hidden">
-          <img src="./images/chapmans-peak.jpg" alt="Cape Point" class="h-64 w-full object-cover" />
-          <div class="absolute top-4 left-4 flex gap-2">
-            <span class="badge text-white">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
-                class="w-4 h-4 text-white">
-                <path fill-rule="evenodd"
-                  d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z"
-                  clip-rule="evenodd" />
-              </svg>
-              4.8 (156)
-            </span>
-            <span class="badge text-white bg-amber-400/20 text-amber-800 border-amber-300">coastal</span>
-          </div>
-        </div>
-        <div class="p-6">
-          <h3 class="font-bold text-xl mb-2">Chapman's Peak & Winelands</h3>
-          <p class="text-gray-500 text-sm mb-3 flex items-center gap-2">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-              stroke="currentColor" class="w-4 h-4">
-              <path stroke-linecap="round" stroke-linejoin="round"
-                d="M2.25 18.75a60.07 60.07 0 0115.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 013 6h-.75m16.5 0v10.5m0-10.5h.75a.75.75 0 01.75.75v3.75a.75.75 0 01-.75.75H18" />
-            </svg>
-            Boulders Beach · Chapman's Peak Drive
-          </p>
-          <div class="flex items-center justify-between mt-4">
-            <span class="text-lg font-bold text-gray-800">R990
-              <span class="text-sm font-normal text-gray-400">/p</span></span>
-            <a href="./chapmans-peak.html" class="bg-amber-400 hover:bg-amber-300 text-gray-900 px-5 py-2 rounded-full text-sm font-semibold transition shadow-md flex items-center gap-1">
-                View tour
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
-                  stroke="currentColor" class="w-4 h-4">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-                </svg>
-              </a>
-          </div>
-        </div>
-      </div> -->
 
     </div>
   </section>

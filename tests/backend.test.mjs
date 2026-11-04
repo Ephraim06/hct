@@ -31,3 +31,7 @@ test('Published media routes allow cross-origin embedding while admin responses 
  const admin=await api.request('/admin/me');assert.equal(admin.headers.get('cross-origin-resource-policy'),'same-origin');
  assert.equal(admin.status,401);
 });
+
+test('Traveller collections and administrator user lists require authentication',async()=>{
+ for(const [path,method] of [['/account/me','GET'],['/account/saved-tours','GET'],['/account/saved-tours/cape-agulhas','POST'],['/account/saved-tours/cape-agulhas','DELETE'],['/admin/users','GET']])assert.equal((await api.request(path,{method})).status,401);
+});

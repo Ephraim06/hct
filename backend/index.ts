@@ -1,4 +1,4 @@
-import {Hono} from 'hono';
+import {Hono,type Context,type Next} from 'hono';
 import {cors} from 'hono/cors';
 import {bodyLimit} from 'hono/body-limit';
 import {secureHeaders} from 'hono/secure-headers';
@@ -11,8 +11,9 @@ import {getSignedUrl} from '@aws-sdk/s3-request-presigner';
 import {createRemoteJWKSet, jwtVerify} from 'jose';
 import sharp, {type OutputInfo} from 'sharp';
 import {randomUUID} from 'node:crypto';
-import {galleryImages, adminInvitations} from './database/schema';
+import {galleryImages, adminInvitations, savedTours} from './database/schema';
 import {isAllowedOrigin} from './origins';
+import {findTour} from './tours';
 
 export const pool = new Pool({connectionString:process.env.DATABASE_URL, max:5, connectionTimeoutMillis:10000});
 attachDatabasePool(pool);
@@ -22,14 +23,15 @@ const bucket='assets';
 const categories=new Set(['landscape','wildlife','people','culture']);
 const jwks = process.env.NEON_AUTH_JWKS_URL ? createRemoteJWKSet(new URL(process.env.NEON_AUTH_JWKS_URL)) : null;
 const issuer=process.env.NEON_AUTH_BASE_URL ? new URL(process.env.NEON_AUTH_BASE_URL).origin : '';
-const app=new Hono<{Variables:{userId:string; email:string}}>();
+type AppEnv={Variables:{userId:string;email:string;name:string}};
+const app=new Hono<AppEnv>();
 // Published media is embedded by the separately hosted website. Admin responses remain same-origin.
 app.use('*',(c,next)=>secureHeaders({crossOriginResourcePolicy:/^\/(?:api\/)?media\//.test(c.req.path)?'cross-origin':'same-origin'})(c,next));
-app.use('*',cors({origin:origin=>isAllowedOrigin(origin)?origin:undefined, allowMethods:['GET','POST','PATCH','OPTIONS'],allowHeaders:['Authorization','Content-Type'],maxAge:600}));
+app.use('*',cors({origin:origin=>isAllowedOrigin(origin)?origin:undefined, allowMethods:['GET','POST','PATCH','DELETE','OPTIONS'],allowHeaders:['Authorization','Content-Type'],maxAge:600}));
 app.onError((error,c)=>{console.error('Gallery request failed',error.name);return c.json({error:'The request could not be completed. Please try again.'},500);});
-app.get('/health',c=>c.json({ok:true,service:'Happy Cape Tours gallery',version:'gallery-media-3'}));
+app.get('/health',c=>c.json({ok:true,service:'Happy Cape Tours gallery',version:'traveller-saves-1'}));
 app.get('/config',c=>c.json({authUrl:process.env.NEON_AUTH_BASE_URL || ''}));
-app.use('/admin/*',async(c,next)=>{
+async function requireIdentity(c:Context<AppEnv>,next:Next){
   c.header('Cache-Control','no-store');
   const token=c.req.header('Authorization');
   if(!jwks || !token?.startsWith('Bearer '))return c.json({error:'Please sign in.'},401);
@@ -40,12 +42,46 @@ app.use('/admin/*',async(c,next)=>{
     userId=payload.sub;
   } catch{return c.json({error:'Your session has expired. Please sign in again.'},401);}
   // Use the current database identity and verification status, never an untrusted email claim.
-  const identity=await pool.query('SELECT id, email, "emailVerified" FROM neon_auth."user" WHERE id=$1',[userId]);
+  const identity=await pool.query('SELECT id, name, email, "emailVerified" FROM neon_auth."user" WHERE id=$1',[userId]);
   const user=identity.rows[0];
-  if(!user || !user.emailVerified)return c.json({error:'Verify your email address before accessing administration.',code:'EMAIL_UNVERIFIED'},403);
-  const [grant]=await db.select().from(adminInvitations).where(eq(adminInvitations.email,user.email.toLowerCase())).limit(1);
-  if(!grant)return c.json({error:'This account has not been authorized as an administrator.'},403);
-  c.set('userId',userId);c.set('email',user.email);await next();
+  if(!user || !user.emailVerified)return c.json({error:'Verify your email address to continue.',code:'EMAIL_UNVERIFIED'},403);
+  c.set('userId',userId);c.set('email',user.email);c.set('name',user.name);await next();
+}
+app.use('/account/*',requireIdentity);
+app.use('/admin/*',requireIdentity,async(c,next)=>{
+ const [grant]=await db.select().from(adminInvitations).where(eq(adminInvitations.email,c.get('email').toLowerCase())).limit(1);
+ if(!grant)return c.json({error:'This account has not been authorized as an administrator.'},403);
+ await next();
+});
+app.get('/account/me',async c=>{
+ const [grant]=await db.select().from(adminInvitations).where(eq(adminInvitations.email,c.get('email').toLowerCase())).limit(1);
+ return c.json({user:{id:c.get('userId'),email:c.get('email'),name:c.get('name'),isAdmin:Boolean(grant)}});
+});
+app.get('/account/saved-tours',async c=>{
+ const rows=await db.select().from(savedTours).where(eq(savedTours.userId,c.get('userId'))).orderBy(desc(savedTours.createdAt));
+ return c.json({tours:rows.map(row=>({...findTour(row.tourSlug),savedAt:row.createdAt}))});
+});
+app.post('/account/saved-tours/:slug',async c=>{
+ const tour=findTour(c.req.param('slug'));if(!tour)return c.json({error:'Tour not found.'},404);
+ await db.insert(savedTours).values({userId:c.get('userId'),tourSlug:tour.slug}).onConflictDoNothing();
+ return c.json({saved:true,tour});
+});
+app.delete('/account/saved-tours/:slug',async c=>{
+ const tour=findTour(c.req.param('slug'));if(!tour)return c.json({error:'Tour not found.'},404);
+ await db.delete(savedTours).where(and(eq(savedTours.userId,c.get('userId')),eq(savedTours.tourSlug,tour.slug)));
+ return c.json({saved:false,slug:tour.slug});
+});
+app.get('/admin/users',async c=>{
+ const search=(c.req.query('search')||'').trim().slice(0,80);
+ const page=Number(c.req.query('page')||'1');if(!Number.isInteger(page)||page<1||page>1000)return c.json({error:'Invalid page.'},400);
+ const pattern='%'+search.replace(/[\\%_]/g,'\\$&')+'%';
+ const count=await pool.query('SELECT count(*)::int AS total FROM neon_auth."user" WHERE email ILIKE $1 OR name ILIKE $1',[pattern]);
+ const result=await pool.query(`SELECT u.id,u.name,u.email,u."emailVerified" AS verified,u."createdAt" AS created_at,
+ EXISTS(SELECT 1 FROM gallery_admins a WHERE a.email=lower(u.email)) AS is_admin,
+ COALESCE(jsonb_agg(jsonb_build_object('slug',s.tour_slug,'savedAt',s.created_at) ORDER BY s.created_at DESC) FILTER(WHERE s.tour_slug IS NOT NULL),'[]'::jsonb) AS saved_tours
+ FROM neon_auth."user" u LEFT JOIN saved_tours s ON s.user_id=u.id
+ WHERE u.email ILIKE $1 OR u.name ILIKE $1 GROUP BY u.id ORDER BY u."createdAt" DESC,u.id LIMIT 25 OFFSET $2`,[pattern,(page-1)*25]);
+ return c.json({users:result.rows.map(user=>({...user,saved_tours:user.saved_tours.map((saved:{slug:string;savedAt:string})=>({...findTour(saved.slug),savedAt:saved.savedAt}))})),page,pageSize:25,total:count.rows[0].total});
 });
 app.get('/admin/me',c=>c.json({email:c.get('email'),userId:c.get('userId')}));
 function fields(value:Record<string,unknown>){

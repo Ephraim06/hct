@@ -8,5 +8,6 @@ const client=new pg.Client({connectionString:process.env.DATABASE_URL_UNPOOLED})
 try{
  await client.connect();await client.query('BEGIN');
  await client.query(await readFile('backend/database/001-gallery.sql','utf8'));
- await client.query('COMMIT');console.log('Gallery migration applied successfully.');
+ await client.query(await readFile('backend/database/002-saved-tours.sql','utf8'));
+ await client.query('COMMIT');console.log('Gallery and saved-tour migrations applied successfully.');
 }catch(error){await client.query('ROLLBACK').catch(()=>{});throw error;}finally{await client.end();}
