@@ -1,6 +1,7 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import api from '../dist/api.mjs';
+import {Hono} from 'hono';
 
 test('Gallery API rejects unauthenticated writes before parsing the upload or accessing storage',async()=>{
  for(const [method,path]of [['GET','/admin/me'],['GET','/admin/gallery'],['POST','/admin/gallery'],['PATCH','/admin/gallery/00000000-0000-0000-0000-000000000000']]){
@@ -21,4 +22,12 @@ test('CORS allows only the configured site origins and localhost',async()=>{
 test('Public health and configuration responses contain no credentials',async()=>{
  const response=await api.request('/health');assert.equal(response.status,200);assert.equal((await response.json()).ok,true);
  const config=await(await api.request('/config')).json();assert.deepEqual(Object.keys(config),['authUrl']);
+});
+
+test('Published media routes allow cross-origin embedding while admin responses remain restricted',async()=>{
+ const media=await api.request('/media/not-an-id');assert.equal(media.headers.get('cross-origin-resource-policy'),'cross-origin');
+ const local=new Hono().route('/api',api);
+ assert.equal((await local.request('/api/media/not-an-id')).headers.get('cross-origin-resource-policy'),'cross-origin');
+ const admin=await api.request('/admin/me');assert.equal(admin.headers.get('cross-origin-resource-policy'),'same-origin');
+ assert.equal(admin.status,401);
 });

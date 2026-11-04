@@ -19,7 +19,8 @@ test('Published uploads retain display order, join category filters and open wit
  }finally{dom.window.close();}
 });
 test('The public gallery contains no bundled photos and shows an empty state when no uploads are published',async()=>{
- const dom=await page();try{const d=dom.window.document;assert.equal(d.querySelectorAll('main img[src]').length,0);dom.window.HCT_BACKEND={apiBaseUrl:'https://api.example'};dom.window.fetch=async()=>({ok:true,json:async()=>({images:[]})});dom.window.eval(source);await tick();assert.equal(d.querySelectorAll('.gallery-item').length,0);assert.match(d.getElementById('galleryStatus').textContent,/Check back soon/);}finally{dom.window.close();}
+ const dom=await page();try{const d=dom.window.document;assert.equal(d.querySelectorAll('#galleryGrid img').length,0);
+  assert.equal(d.querySelectorAll('main .tour-card img').length,3);dom.window.HCT_BACKEND={apiBaseUrl:'https://api.example'};dom.window.fetch=async()=>({ok:true,json:async()=>({images:[]})});dom.window.eval(source);await tick();assert.equal(d.querySelectorAll('.gallery-item').length,0);assert.match(d.getElementById('galleryStatus').textContent,/Check back soon/);}finally{dom.window.close();}
 });
 test('An unavailable gallery API shows an error and never restores old static photos',async()=>{
  const dom=await page();try{dom.window.HCT_BACKEND={apiBaseUrl:'https://api.example'};dom.window.fetch=async()=>{throw new Error('offline');};dom.window.eval(source);await tick();assert.equal(dom.window.document.querySelectorAll('.gallery-item').length,0);assert.match(dom.window.document.getElementById('galleryStatus').textContent,/temporarily unavailable/);}finally{dom.window.close();}

@@ -102,6 +102,8 @@
     });
     const count = document.getElementById('visibleCount');
     if (count) count.textContent = String(cards.filter(card => !card.hidden).length);
+    const photoLabel=document.getElementById('galleryCountLabel');
+    if(photoLabel)photoLabel.textContent=cards.filter(card=>!card.hidden).length===1?'photo':'photos';
     const galleryStatus = document.getElementById('galleryStatus');
     if (galleryStatus && document.getElementById('galleryGrid')?.dataset.loaded === 'true') {
       const visible = cards.filter(card => !card.hidden).length;

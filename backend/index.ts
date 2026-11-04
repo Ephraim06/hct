@@ -23,10 +23,11 @@ const categories=new Set(['landscape','wildlife','people','culture']);
 const jwks = process.env.NEON_AUTH_JWKS_URL ? createRemoteJWKSet(new URL(process.env.NEON_AUTH_JWKS_URL)) : null;
 const issuer=process.env.NEON_AUTH_BASE_URL ? new URL(process.env.NEON_AUTH_BASE_URL).origin : '';
 const app=new Hono<{Variables:{userId:string; email:string}}>();
-app.use('*',secureHeaders());
+// Published media is embedded by the separately hosted website. Admin responses remain same-origin.
+app.use('*',(c,next)=>secureHeaders({crossOriginResourcePolicy:/^\/(?:api\/)?media\//.test(c.req.path)?'cross-origin':'same-origin'})(c,next));
 app.use('*',cors({origin:origin=>isAllowedOrigin(origin)?origin:undefined, allowMethods:['GET','POST','PATCH','OPTIONS'],allowHeaders:['Authorization','Content-Type'],maxAge:600}));
 app.onError((error,c)=>{console.error('Gallery request failed',error.name);return c.json({error:'The request could not be completed. Please try again.'},500);});
-app.get('/health',c=>c.json({ok:true,service:'Happy Cape Tours gallery',version:'gallery-uploads-2'}));
+app.get('/health',c=>c.json({ok:true,service:'Happy Cape Tours gallery',version:'gallery-media-3'}));
 app.get('/config',c=>c.json({authUrl:process.env.NEON_AUTH_BASE_URL || ''}));
 app.use('/admin/*',async(c,next)=>{
   c.header('Cache-Control','no-store');

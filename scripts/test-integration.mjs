@@ -12,7 +12,7 @@ async function authRequest(path,body,cookie){const headers={'Content-Type':'appl
 async function request(path,options={}){return fetch(api+path,{...options,signal:AbortSignal.timeout(20000)});}
 try{
  await client.connect();assert.equal((await client.query('SELECT 1 AS connected')).rows[0].connected,1);console.log('PASS Postgres connection');
- let ready=false;for(let attempt=0;attempt<30;attempt++){const health=await request('/health?revision=gallery-uploads-2&attempt='+attempt);if(health.ok&&(await health.json()).version==='gallery-uploads-2'){ready=true;break;}console.log('Waiting for latest gallery function revision…');await new Promise(resolve=>setTimeout(resolve,2000));}
+ let ready=false;for(let attempt=0;attempt<60;attempt++){const health=await request('/health?revision=gallery-media-3&attempt='+attempt);if(health.ok&&(await health.json()).version==='gallery-media-3'){ready=true;break;}console.log('Waiting for latest gallery function revision…');await new Promise(resolve=>setTimeout(resolve,2000));}
  assert.ok(ready,'The newest gallery function has not finished rolling out.');console.log('PASS deployed Neon Function');
  const signup=await authRequest('/sign-up/email',{email,password,name:'Disposable gallery integration fixture'});
  userId=signup.data.user?.id || (await client.query('SELECT id FROM neon_auth."user" WHERE email=$1',[email])).rows[0]?.id;
@@ -34,7 +34,7 @@ try{
  const update={caption:'Disposable integration photo',alt:'Gold test image',category:'landscape',sortOrder:-10,published:true};
  assert.equal((await request(`/admin/gallery/${imageId}`,{method:'PATCH',headers:{...headers,'Content-Type':'application/json'},body:JSON.stringify(update)})).status,200);
  const gallery=await(await request('/gallery')).json();assert.ok(gallery.images.some(photo=>photo.id===imageId));
- const media=await request(`/media/${imageId}`);assert.equal(media.status,200);assert.match(media.headers.get('content-type'),/image\/webp/);const metadata=await sharp(Buffer.from(await media.arrayBuffer())).metadata();assert.equal(metadata.width,64);console.log('PASS publish → public gallery → object download');
+ const media=await request(`/media/${imageId}`);assert.equal(media.status,200);assert.equal(media.headers.get('cross-origin-resource-policy'),'cross-origin');assert.match(media.headers.get('content-type'),/image\/webp/);const metadata=await sharp(Buffer.from(await media.arrayBuffer())).metadata();assert.equal(metadata.width,64);console.log('PASS publish → public gallery → object download');
  update.published=false;assert.equal((await request(`/admin/gallery/${imageId}`,{method:'PATCH',headers:{...headers,'Content-Type':'application/json'},body:JSON.stringify(update)})).status,200);
  assert.equal((await request(`/media/${imageId}`)).status,404);console.log('PASS unpublish removes public access');
  const batchFiles=['Cape Point.jpg','Penguins.jpg'].map(name=>({file:new File([image],name,{type:'image/jpeg'}),status:'pending'}));
