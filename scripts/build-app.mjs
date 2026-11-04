@@ -25,3 +25,7 @@ await build({entryPoints:['backend/enquiries.ts','backend/gallery-management.ts'
 await build({entryPoints:['admin/lib/google-auth.ts'],bundle:true,format:'esm',platform:'node',target:'node24',outfile:'dist/google-auth.mjs',logLevel:'silent'});
 
 await build({entryPoints:{'analytics-charts':'admin/lib/analytics-charts.ts','analytics-config':'backend/analytics-config.ts'},bundle:true,format:'esm',platform:'node',target:'node24',outdir:'dist',outExtension:{'.js':'.mjs'},logLevel:'silent'});
+
+await build({entryPoints:['admin/public-controls.ts'],bundle:true,format:'esm',platform:'browser',target:['es2022'],outfile:'assets/controls.js',minify:true,logLevel:'info'});
+
+await build({entryPoints:{'admin-controls':'admin/components/ui/admin-controls.ts'},bundle:true,format:'esm',platform:'node',target:'node24',packages:'external',outdir:'dist',outExtension:{'.js':'.mjs'},logLevel:'silent'});

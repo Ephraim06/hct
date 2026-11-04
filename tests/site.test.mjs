@@ -41,7 +41,7 @@ test('Formspree success sends all named fields, blocks duplicates and clears onl
     assert.equal(calls,1); assert.equal(document.getElementById('submitBtn').disabled,true);
     assert.equal(document.getElementById('message').value,'Test enquiry');
     const modal=document.getElementById('enquirySubmissionModal');assert.equal(modal.hidden,false);assert.equal(modal.dataset.state,'loading');assert.equal(document.getElementById('main-content').inert,true);document.dispatchEvent(new dom.window.KeyboardEvent('keydown',{key:'Escape',bubbles:true}));assert.equal(modal.hidden,false);
-    resolve({ok:true,json:async()=>({accepted:true,reference:'12345678-1234-4123-8123-123456789abc'})}); await tick();
+    resolve({ok:true,json:async()=>({accepted:true,stored:true,reference:'12345678-1234-4123-8123-123456789abc'})}); await tick();
     assert.equal(document.getElementById('message').value,'');
     assert.ok(document.getElementById('formStatus').hasAttribute('data-success'));
     assert.equal(document.getElementById('submitBtn').disabled,false);
@@ -49,12 +49,13 @@ test('Formspree success sends all named fields, blocks duplicates and clears onl
     assert.equal(accepted.length,1);assert.equal(accepted[0].tourSlug,'cape-point-penguins-private-tour');assert.equal(modal.dataset.state,'success');assert.match(modal.textContent,/12345678/);modal.querySelector('button').click();assert.equal(modal.hidden,true);assert.equal(document.getElementById('main-content').inert,false);
   } finally {dom.window.close();}
 });
-for (const failure of ['http','network','timeout']) test(`Form ${failure} failure keeps enquiry and allows retry`, async () => {
+for (const failure of ['http','network','timeout','unstored']) test(`Form ${failure} failure keeps enquiry and allows retry`, async () => {
   const dom=await page('contact.html');
   try {
     fill(dom);let accepted=0;dom.window.document.addEventListener('hct:enquiry-accepted',()=>accepted++);
     dom.window.fetch=async (url, options) => {
-      if(failure==='http') return {ok:false,json:async()=>({error:'Unavailable'})};
+      if(failure==='unstored')return{ok:true,json:async()=>({accepted:true,reference:'discarded-reference'})};
+      if(failure==='http') return {ok:false,json:async()=>({error:'We couldn’t confirm receipt. Please retry.'})};
       if(failure==='timeout') return new Promise((resolve,reject) => options.signal.addEventListener('abort', () => reject(new dom.window.DOMException('Aborted','AbortError')), {once:true}));
       throw new Error('Offline');
     };
@@ -62,7 +63,7 @@ for (const failure of ['http','network','timeout']) test(`Form ${failure} failur
     submit(dom); await tick();
     const document=dom.window.document;
     assert.equal(document.getElementById('message').value,'Test enquiry');
-    assert.match(document.getElementById('formStatus').textContent,/couldn’t confirm receipt/);
+    assert.match(document.getElementById('formStatus').textContent,/couldn’t confirm/);
     assert.equal(document.getElementById('submitBtn').disabled,false);
     assert.equal(document.querySelector('form').hasAttribute('aria-busy'),false);assert.equal(accepted,0);const modal=document.getElementById('enquirySubmissionModal');assert.equal(modal.dataset.state,'error');modal.querySelector('button').click();assert.equal(modal.hidden,true);assert.equal(document.getElementById('message').value,'Test enquiry');
   } finally {dom.window.close();}

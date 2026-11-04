@@ -10,6 +10,7 @@ const mime:Record<string,string>={'.html':'text/html; charset=utf-8','.css':'tex
 app.get('*',async c=>{
   let pathname:string;
   try{pathname=decodeURIComponent(new URL(c.req.url).pathname);}catch{return c.notFound();}
+  if(pathname==='/sw.js'){const body=await readFile('sw.js','utf8');c.header('Content-Type','application/javascript; charset=utf-8');c.header('Cache-Control','no-cache');c.header('Service-Worker-Allowed','/');return c.body(body);}
   if(pathname==='/assets/backend-config.js'){c.header('Content-Type','application/javascript; charset=utf-8');c.header('Cache-Control','no-store');return c.body('window.HCT_BACKEND = '+JSON.stringify({apiBaseUrl:'/api',authUrl:process.env.NEON_AUTH_BASE_URL||''})+';\n');}
   if(pathname==='/.well-known/health')return c.json({ok:true});
   if(pathname==='/')pathname='/index.html';

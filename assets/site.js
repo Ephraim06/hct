@@ -34,6 +34,20 @@
     activeDialog = null;
     returnFocus?.focus();
   }
+  function validationTarget(field){return field._flatpickr?.altInput||(field.tagName==='SELECT'?field.parentElement?.querySelector('.hct-select-trigger'):null)||field;}
+  function validateForm(form){
+    form.querySelectorAll('.hct-field-error').forEach(el=>el.remove());form.querySelectorAll('[aria-invalid="true"]').forEach(el=>{el.removeAttribute('aria-invalid');el.removeAttribute('aria-errormessage');});
+    const missingDates=[...form.querySelectorAll('input[data-hct-date]')].filter(field=>field.required&&!field.value);
+    if(form.checkValidity()&&!missingDates.length)return true;
+    let first=null;for(const field of form.querySelectorAll('input,select,textarea')){const missingDate=missingDates.includes(field);if(!missingDate&&(!field.willValidate||field.validity.valid))continue;const target=validationTarget(field);const error=document.createElement('span');error.className='hct-field-error';error.id='field-error-'+crypto.randomUUID();error.setAttribute('role','alert');error.textContent=missingDate?'Choose a date.':field.validity.valueMissing?'Please complete this field.':field.validity.typeMismatch?'Enter a valid email address.':field.validity.rangeUnderflow?`Enter at least ${field.min}.`:field.validity.rangeOverflow?`Enter no more than ${field.max}.`:field.validity.tooShort?`Use at least ${field.minLength} characters.`:'Please check this value.';field.setAttribute('aria-invalid','true');field.setAttribute('aria-errormessage',error.id);target.setAttribute('aria-invalid','true');target.setAttribute('aria-errormessage',error.id);(target.closest('.auth-password,.hct-date-control,.hct-public-select')||target).after(error);first ||=target;}
+    first?.focus();return false;
+  }
+  document.addEventListener('invalid',event=>event.preventDefault(),true);
+  document.addEventListener('submit',event=>{if(event.target instanceof HTMLFormElement&&!validateForm(event.target)){event.preventDefault();event.stopImmediatePropagation();}},true);
+  function disableNativeValidation(root=document){root.querySelectorAll('form').forEach(form=>{form.noValidate=true;});}disableNativeValidation();
+  new MutationObserver(records=>records.forEach(record=>record.addedNodes.forEach(node=>{if(node instanceof HTMLElement){if(node.tagName==='FORM')node.noValidate=true;disableNativeValidation(node);}}))).observe(document.body,{subtree:true,childList:true});
+  const clearFieldError=event=>{const field=event.target;if(field.validity?.valid){const target=validationTarget(field);document.getElementById(field.getAttribute('aria-errormessage')||target.getAttribute('aria-errormessage'))?.remove();for(const el of[field,target]){el.removeAttribute('aria-invalid');el.removeAttribute('aria-errormessage');}}};document.addEventListener('input',clearFieldError,true);document.addEventListener('change',clearFieldError,true);
+
   document.addEventListener('keydown', event => {
     if (!activeDialog) return;
     if (event.key === 'Escape') { event.preventDefault(); activeDialog.close(); return; }
@@ -192,7 +206,7 @@
     const received=new URLSearchParams(location.search).get('received');if(received&&/^[0-9a-f]{8}$/i.test(received)){status.className='form-feedback is-success';status.textContent='Thank you! Your enquiry has been received. Reference: '+received.toUpperCase()+'.';}
     form.addEventListener('submit', async event => {
       event.preventDefault();
-      if (pending || !form.reportValidity()) return;
+      if (pending || !validateForm(form)) return;
       pending = true; button.disabled = true; form.setAttribute('aria-busy', 'true');
       showSubmission('loading','Sending your enquiry','Saving your details and sending your message…');
       status.removeAttribute('data-success');status.className='form-feedback is-sending'; status.textContent = 'Sending your enquiry…';
@@ -201,11 +215,11 @@
       const timeout = setTimeout(() => controller.abort(), 45000);
       try {
         const fields = new FormData(form);
-        const payload = {firstName:String(fields.get('first-name')||''),lastName:String(fields.get('last-name')||''),email:String(fields.get('email')||''),phone:String(fields.get('mobile-number')||''),tour:String(fields.get('tour')||''),travelDate:String(fields.get('travel-date')||''),partySize:Number(fields.get('party-size')),message:String(fields.get('message')||''),website:String(fields.get('website')||'')};
+        const payload = {firstName:String(fields.get('first-name')||''),lastName:String(fields.get('last-name')||''),email:String(fields.get('email')||''),phone:String(fields.get('mobile-number')||''),tour:String(fields.get('tour')||''),travelDate:String(fields.get('travel-date')||''),partySize:Number(fields.get('party-size')),message:String(fields.get('message')||'')};
         const fingerprint=JSON.stringify(payload);if(!submissionId||fingerprint!==submissionFingerprint){submissionId=crypto.randomUUID();submissionFingerprint=fingerprint;}
         const base=window.HCT_BACKEND?.apiBaseUrl?.replace(/\/$/,'');if(!base)throw new Error('Enquiry service unavailable');
         const response = await fetch(base+'/enquiries', {method:'POST',body:JSON.stringify({...payload,id:submissionId}),headers:{Accept:'application/json','Content-Type':'application/json'},signal:controller.signal});
-        const result=await response.json();if(!response.ok||!result.accepted)throw new Error(result.error||'Submission rejected');
+        const result=await response.json();if(!response.ok||!result.accepted||result.stored!==true)throw Object.assign(new Error('Submission rejected'),{displayMessage:typeof result.error==='string'?result.error.slice(0,300):'We couldn’t confirm that your enquiry was saved. Your details are still here.'});
         // Analytics receives only a canonical tour slug, never the form contents.
         const selection=String(tour?.value||'').toLowerCase();
         const tourSlug=({'cape point & penguins':'cape-point-penguins','cape of good hope & penguins':'cape-point-penguins','private cape point & penguins':'cape-point-penguins-private-tour','private cape of good hope & penguins':'cape-point-penguins-private-tour','cape agulhas':'cape-agulhas',"chapman’s peak":'chapmans-peak',"chapman's peak":'chapmans-peak','cape winelands':'capewinelands-stellenbosch','robben island & township':'robben-island','safari day tour':'safari-day-tour','whale watching hermanus':'whale-watching'})[selection]||null;
@@ -219,8 +233,8 @@
         status.textContent = `Thank you! Your enquiry has been received. Reference: ${reference}.`;
         showSubmission('success',result.notification==='sent'?'Message sent!':'Enquiry received!','Thank you. We’ll be in touch about your enquiry.',reference);
       } catch (error) {
-        status.className='form-feedback is-error';status.textContent = 'We couldn’t confirm receipt. Please retry—your details are still here.';
-        showSubmission('error','Let’s try that again','We couldn’t confirm receipt. Your details are still in the form.');
+        const message=error.displayMessage||'We couldn’t confirm receipt. Please retry—your details are still here.';status.className='form-feedback is-error';status.textContent=message;
+        showSubmission('error','Let’s try that again',message);
       } finally {
         clearTimeout(timeout); pending = false; button.disabled = false;button.innerHTML=originalButton; form.removeAttribute('aria-busy'); if(submissionModal.hidden)status.focus();
       }

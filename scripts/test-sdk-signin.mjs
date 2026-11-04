@@ -15,7 +15,7 @@ globalThis.fetch=async(input,init={})=>{
 await db.connect();
 try{
  const endpoint=process.env.NEON_FUNCTION_GALLERY_BASE_URL.replace(/\/$/,'');let ready=false;
- for(let i=0;i<90;i++){const response=await nativeFetch(endpoint+'/health?revision=inbox-gallery-3&attempt='+i,{signal:AbortSignal.timeout(20000)});if(response.ok&&(await response.json()).version==='inbox-gallery-3'){ready=true;break;}await new Promise(r=>setTimeout(r,2000));}
+ for(let i=0;i<90;i++){const response=await nativeFetch(endpoint+'/health?revision=enquiries-pwa-1&attempt='+i,{signal:AbortSignal.timeout(20000)});if(response.ok&&(await response.json()).version==='enquiries-pwa-1'){ready=true;break;}await new Promise(r=>setTimeout(r,2000));}
  assert.ok(ready,'Latest inbox/gallery deployment is not ready.');
 
  const client=createAuthClient(authUrl);

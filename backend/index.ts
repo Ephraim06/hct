@@ -32,7 +32,7 @@ const app=new Hono<AppEnv>();
 app.use('*',(c,next)=>secureHeaders({crossOriginResourcePolicy:/^\/(?:api\/)?media\//.test(c.req.path)?'cross-origin':'same-origin'})(c,next));
 app.use('*',cors({origin:origin=>isAllowedOrigin(origin)?origin:undefined, allowMethods:['GET','POST','PATCH','DELETE','OPTIONS'],allowHeaders:['Authorization','Content-Type'],maxAge:600}));
 app.onError((error,c)=>{console.error('Gallery request failed',error.name);return c.json({error:'The request could not be completed. Please try again.'},500);});
-app.get('/health',c=>c.json({ok:true,service:'Happy Cape Tours gallery',version:'inbox-gallery-3'}));
+app.get('/health',c=>c.json({ok:true,service:'Happy Cape Tours gallery',version:'enquiries-pwa-1'}));
 app.post('/events',bodyLimit({maxSize:16384,onError:c=>c.json({error:'Payload too large.'},413)}),async c=>{
  const origin=c.req.header('Origin')||'';
  if(!isAllowedOrigin(origin))return c.json({error:'Origin not allowed.'},403);
