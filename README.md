@@ -128,3 +128,13 @@ Both traveller and admin sign-in/registration screens use **Continue with Google
 Configure and enable Google in the production branch’s Neon Auth settings. Keep the Google client secret in Neon, never in public JavaScript or this repository. In Google Cloud, use the OAuth redirect URI displayed by Neon; this provider callback is different from the website return URL. The configured trusted website/local origins must remain allowed. Account linking and provider email verification remain controlled by Neon, rather than being overridden in app code.
 
 Critical checks: build/typecheck and `node --test tests/google-auth.test.mjs tests/session.test.mjs tests/backend.test.mjs`. Complete a real Google consent/login once from localhost and once from the website after configuring credentials; automated checks do not sign into a personal Google account.
+
+## Local submission and analytics UI update
+
+The enquiry form now opens an accessible progress modal until the backend acknowledges receipt. The confirmation includes its reference; a notification is labelled sent only when the backend confirms it. Failure keeps the form contents and provides a return-to-form action. Escape/backdrop dismissal is blocked while submission is in flight, and focus/background interaction are restored on dismissal.
+
+Tracking starts on **2026-11-04** (`backend/analytics-config.ts`). Default and preset ranges start no earlier than launch, and comparisons before launch are unavailable rather than fabricated zeros. Reporting still uses the UTC dates shown in the dashboard. The backend change needs deployment separately when publication is explicitly authorized; this update is kept local.
+
+ApexCharts supplies lazy-loaded traffic, tour, source, device, journey and contact charts. Exact figures and CSV remain available. Only standard area/bar/donut types are used. ApexCharts 8.7.0 is subject to its [Community/Commercial licensing terms](https://apexcharts.com/license/); its license files are included with the dependency. No chart data is sent to a third-party chart service.
+
+The local Node server serves public backend configuration with `/api` as its API base, so preview pages use the locally built handlers; Neon remains the configured auth/database/storage service. Static builds retain their deployment API URL.

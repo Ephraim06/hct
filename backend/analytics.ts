@@ -1,4 +1,5 @@
 import type {Pool} from 'pg';
+import {TRACKING_STARTED_ON,analyticsToday,analyticsStart} from './analytics-config';
 import {findTour,tours} from './tours';
 const kinds=new Set(['page_view','tour_click','tour_save','enquiry','whatsapp','phone','email','enquiry_click']);
 const paths=new Set(['/', '/index.html','/tours.html','/about.html','/gallery.html','/contact.html','/privacy.html','/booking-information.html','/account.html','/account',...tours.map(t=>'/'+t.href)]);
@@ -27,11 +28,12 @@ export async function recordEvents(pool:Pool,events:Event[]){
  await client.query('COMMIT');}catch(e){await client.query('ROLLBACK');throw e;}finally{client.release();}
 }
 export function dateRange(from:string|undefined,to:string|undefined){
- const end=to||new Date().toISOString().slice(0,10);const start=from||new Date(Date.now()-29*86400000).toISOString().slice(0,10);
+ const end=to||analyticsToday();const start=from||analyticsStart();
  const valid=(v:string)=>/^\d{4}-\d{2}-\d{2}$/.test(v)&&Number.isFinite(Date.parse(v))&&new Date(v).toISOString().slice(0,10)===v;
  if(!valid(start)||!valid(end))return null;const days=(Date.parse(end)-Date.parse(start))/86400000+1;
- if(days<1||days>180||end>new Date().toISOString().slice(0,10))return null;
- return {from:start,to:end,days,previousFrom:new Date(Date.parse(start)-days*86400000).toISOString().slice(0,10)};
+ if(start<TRACKING_STARTED_ON||days<1||days>180||end>analyticsToday())return null;
+ const previousFrom=new Date(Date.parse(start)-days*86400000).toISOString().slice(0,10);
+ return {from:start,to:end,days,previousFrom,previousAvailable:previousFrom>=TRACKING_STARTED_ON,trackingStartedOn:TRACKING_STARTED_ON};
 }
 export async function analyticsReport(pool:Pool,range:NonNullable<ReturnType<typeof dateRange>>){
  const summary=`jsonb_build_object('visits',count(DISTINCT session_id),'visitors',count(DISTINCT visitor_id),
@@ -41,7 +43,7 @@ export async function analyticsReport(pool:Pool,range:NonNullable<ReturnType<typ
  'contactRate',CASE WHEN count(DISTINCT session_id)=0 THEN 0 ELSE round(100.0*count(DISTINCT session_id) FILTER(WHERE kind IN ('enquiry','whatsapp','phone','email'))/count(DISTINCT session_id),1) END)`;
  const result=await pool.query(`WITH scoped AS MATERIALIZED (
  SELECT *, (created_at AT TIME ZONE 'UTC')::date AS day FROM analytics_events
- WHERE created_at >= $1::date AND created_at < $2::date+interval '1 day' AND created_at >= now()-interval '180 days'
+ WHERE created_at >= GREATEST($1::date,$4::date) AND created_at < $2::date+interval '1 day' AND created_at >= now()-interval '180 days'
  ), current AS MATERIALIZED (SELECT * FROM scoped WHERE day >= $3::date),
  daily AS (SELECT day,${summary} AS metrics FROM current GROUP BY day),
  tour_counts AS (SELECT tour_slug AS slug,count(*) FILTER(WHERE kind='page_view')::int AS views,
@@ -58,7 +60,7 @@ export async function analyticsReport(pool:Pool,range:NonNullable<ReturnType<typ
  (SELECT jsonb_build_array(jsonb_build_array('Visits',count(DISTINCT session_id)),
  jsonb_build_array('Viewed a tour',count(DISTINCT session_id) FILTER(WHERE kind='page_view' AND tour_slug IS NOT NULL)),
  jsonb_build_array('Saved a tour',count(DISTINCT session_id) FILTER(WHERE kind='tour_save')),
- jsonb_build_array('Contacted / clicked contact',count(DISTINCT session_id) FILTER(WHERE kind IN ('enquiry','whatsapp','phone','email')))) FROM current) AS journey`,[range.previousFrom,range.to,range.from]);
+ jsonb_build_array('Contacted / clicked contact',count(DISTINCT session_id) FILTER(WHERE kind IN ('enquiry','whatsapp','phone','email')))) FROM current) AS journey`,[range.previousFrom,range.to,range.from,TRACKING_STARTED_ON]);
  const report=result.rows[0];const empty={visits:0,visitors:0,pageViews:0,enquiries:0,whatsapp:0,phone:0,email:0,tourClicks:0,enquiryClicks:0,saves:0,contactRate:0};
  report.daily=report.daily.map((day:Record<string,unknown>)=>({...empty,...day}));
  report.tours=tours.map(t=>({...t,views:0,clicks:0,saves:0,enquiries:0,contactClicks:0,...report.tours.find((row:{slug:string})=>row.slug===t.slug)})).sort((a,b)=>b.views-a.views||b.clicks-a.clicks);

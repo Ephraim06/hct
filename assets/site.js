@@ -177,12 +177,24 @@
     const button = document.getElementById('submitBtn');
     const status = document.getElementById('formStatus');
     let pending = false, submissionId = null, submissionFingerprint = '';
+    const submissionModal=document.createElement('div');submissionModal.id='enquirySubmissionModal';submissionModal.className='enquiry-submit-modal';submissionModal.hidden=true;submissionModal.tabIndex=-1;submissionModal.setAttribute('role','dialog');submissionModal.setAttribute('aria-modal','true');submissionModal.setAttribute('aria-labelledby','enquiryModalTitle');submissionModal.setAttribute('aria-describedby','enquiryModalMessage');
+    submissionModal.innerHTML='<div class="enquiry-submit-card"><div class="enquiry-submit-symbol" aria-hidden="true"><span class="enquiry-submit-ring"></span><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m4 12 5 5L20 6"/></svg></div><span class="enquiry-submit-eyebrow">HAPPY CAPE TOURS</span><h2 id="enquiryModalTitle"></h2><p id="enquiryModalMessage" role="status" aria-live="polite"></p><strong class="enquiry-submit-reference" hidden></strong><button type="button" class="enquiry-submit-done" hidden>Done</button></div>';
+    document.body.append(submissionModal);
+    const modalTitle=submissionModal.querySelector('h2'),modalMessage=submissionModal.querySelector('#enquiryModalMessage'),modalReference=submissionModal.querySelector('strong'),modalDone=submissionModal.querySelector('button');
+    function dismissSubmission(){if(pending)return;submissionModal.hidden=true;closeDialog();}
+    modalDone.addEventListener('click',dismissSubmission);submissionModal.addEventListener('click',event=>{if(event.target===submissionModal)dismissSubmission();});
+    function showSubmission(state,title,message,reference=''){
+      submissionModal.dataset.state=state;modalTitle.textContent=title;modalMessage.textContent=message;modalReference.hidden=!reference;modalReference.textContent=reference?'Reference '+reference:'';modalDone.hidden=state==='loading';modalDone.textContent=state==='error'?'Back to form':'Done';submissionModal.setAttribute('aria-busy',String(state==='loading'));
+      if(submissionModal.hidden){submissionModal.hidden=false;openDialog(submissionModal,dismissSubmission);}
+      if(state!=='loading')modalDone.focus();
+    }
     const originalButton = button.innerHTML;
     const received=new URLSearchParams(location.search).get('received');if(received&&/^[0-9a-f]{8}$/i.test(received)){status.className='form-feedback is-success';status.textContent='Thank you! Your enquiry has been received. Reference: '+received.toUpperCase()+'.';}
     form.addEventListener('submit', async event => {
       event.preventDefault();
       if (pending || !form.reportValidity()) return;
       pending = true; button.disabled = true; form.setAttribute('aria-busy', 'true');
+      showSubmission('loading','Sending your enquiry','Saving your details and sending your message…');
       status.removeAttribute('data-success');status.className='form-feedback is-sending'; status.textContent = 'Sending your enquiry…';
       button.innerHTML='<span class="hct-button-spinner" aria-hidden="true"></span> Sending…';
       const controller = new AbortController();
@@ -203,11 +215,14 @@
         if (selectedTour) tour.value = selectedTour;
         status.dataset.success = '';status.className='form-feedback is-success';
         submissionId=null;submissionFingerprint='';
-        status.textContent = `Thank you! Your enquiry has been received. Reference: ${String(result.reference||'').slice(0,8).toUpperCase()}.`;
+        const reference=String(result.reference||'').slice(0,8).toUpperCase();
+        status.textContent = `Thank you! Your enquiry has been received. Reference: ${reference}.`;
+        showSubmission('success',result.notification==='sent'?'Message sent!':'Enquiry received!','Thank you. We’ll be in touch about your enquiry.',reference);
       } catch (error) {
         status.className='form-feedback is-error';status.textContent = 'We couldn’t confirm receipt. Please retry—your details are still here.';
+        showSubmission('error','Let’s try that again','We couldn’t confirm receipt. Your details are still in the form.');
       } finally {
-        clearTimeout(timeout); pending = false; button.disabled = false;button.innerHTML=originalButton; form.removeAttribute('aria-busy'); status.focus();
+        clearTimeout(timeout); pending = false; button.disabled = false;button.innerHTML=originalButton; form.removeAttribute('aria-busy'); if(submissionModal.hidden)status.focus();
       }
     });
   }

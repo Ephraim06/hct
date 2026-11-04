@@ -8,9 +8,9 @@ for(const file of (await fs.readdir('.')).filter(file=>file.endsWith('.html'))) 
   if(!d.querySelector('script[src="assets/backend-config.js"]')){const script=d.createElement('script');script.src='assets/backend-config.js';script.defer=true;d.head.append(script);}
   if(!d.querySelector('script[src^="assets/analytics.js"]')){const script=d.createElement('script');script.src='assets/analytics.js?v=analytics-1';script.defer=true;d.head.append(script);}
  }
- for(const style of d.querySelectorAll('link[href^="assets/site.css"],link[href^="assets/tailwind.min.css"]'))style.setAttribute('href',style.getAttribute('href').split('?')[0]+'?v=google-auth-1');
- const siteScript=d.querySelector('script[src^="assets/site.js"]');if(siteScript)siteScript.setAttribute('src','assets/site.js?v=inbox-gallery-1');
- for(const script of d.querySelectorAll('script[src^="assets/traveller/"]'))script.setAttribute('src',script.getAttribute('src').split('?')[0]+'?v=google-auth-1');
+ for(const style of d.querySelectorAll('link[href^="assets/site.css"],link[href^="assets/tailwind.min.css"]'))style.setAttribute('href',style.getAttribute('href').split('?')[0]+'?v=form-stats-1');
+ const siteScript=d.querySelector('script[src^="assets/site.js"]');if(siteScript)siteScript.setAttribute('src','assets/site.js?v=form-stats-1');
+ for(const script of d.querySelectorAll('script[src^="assets/traveller/"]'))script.setAttribute('src',script.getAttribute('src').split('?')[0]+'?v=form-stats-1');
  for(const link of d.querySelectorAll('header a, #offcanvas a'))if(link.getAttribute('href')===file)link.setAttribute('aria-current','page');
  await fs.writeFile(file,dom.serialize().split('\n').map(line=>line.trimEnd()).join('\n').replace(/\n{3,}/g,'\n\n')+'\n');
 }

@@ -40,12 +40,13 @@ test('Formspree success sends all named fields, blocks duplicates and clears onl
     submit(dom); submit(dom);
     assert.equal(calls,1); assert.equal(document.getElementById('submitBtn').disabled,true);
     assert.equal(document.getElementById('message').value,'Test enquiry');
+    const modal=document.getElementById('enquirySubmissionModal');assert.equal(modal.hidden,false);assert.equal(modal.dataset.state,'loading');assert.equal(document.getElementById('main-content').inert,true);document.dispatchEvent(new dom.window.KeyboardEvent('keydown',{key:'Escape',bubbles:true}));assert.equal(modal.hidden,false);
     resolve({ok:true,json:async()=>({accepted:true,reference:'12345678-1234-4123-8123-123456789abc'})}); await tick();
     assert.equal(document.getElementById('message').value,'');
     assert.ok(document.getElementById('formStatus').hasAttribute('data-success'));
     assert.equal(document.getElementById('submitBtn').disabled,false);
     assert.equal(dom.window.localStorage.length,0);
-    assert.equal(accepted.length,1);assert.equal(accepted[0].tourSlug,'cape-point-penguins-private-tour');
+    assert.equal(accepted.length,1);assert.equal(accepted[0].tourSlug,'cape-point-penguins-private-tour');assert.equal(modal.dataset.state,'success');assert.match(modal.textContent,/12345678/);modal.querySelector('button').click();assert.equal(modal.hidden,true);assert.equal(document.getElementById('main-content').inert,false);
   } finally {dom.window.close();}
 });
 for (const failure of ['http','network','timeout']) test(`Form ${failure} failure keeps enquiry and allows retry`, async () => {
@@ -63,7 +64,7 @@ for (const failure of ['http','network','timeout']) test(`Form ${failure} failur
     assert.equal(document.getElementById('message').value,'Test enquiry');
     assert.match(document.getElementById('formStatus').textContent,/couldn’t confirm receipt/);
     assert.equal(document.getElementById('submitBtn').disabled,false);
-    assert.equal(document.querySelector('form').hasAttribute('aria-busy'),false);assert.equal(accepted,0);
+    assert.equal(document.querySelector('form').hasAttribute('aria-busy'),false);assert.equal(accepted,0);const modal=document.getElementById('enquirySubmissionModal');assert.equal(modal.dataset.state,'error');modal.querySelector('button').click();assert.equal(modal.hidden,true);assert.equal(document.getElementById('message').value,'Test enquiry');
   } finally {dom.window.close();}
 });
 test('Invalid form never sends a request',async()=>{
