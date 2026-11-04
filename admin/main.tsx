@@ -1,6 +1,7 @@
 import React, {useEffect,useState} from 'react';
 import {createRoot} from 'react-dom/client';
 import {uploadImages,type UploadItem} from './lib/gallery-uploads';
+import {getAccessToken} from './lib/session';
 import {createAuthClient} from '@neondatabase/auth';
 import {Images, Upload, LogOut, ExternalLink, RefreshCw, Eye, EyeOff, Pencil, MapPin} from 'lucide-react';
 import {Button} from './components/ui/button';
@@ -18,7 +19,6 @@ const apiBase=config?.apiBaseUrl?.replace(/\/$/,'');
 // its beta declaration loses plugin inference with patched Better Auth versions.
 type AuthResult<T> = Promise<{data:T|null;error:{message?:string}|null}>;
 type ManagedExtensions = {
- token:()=>AuthResult<{token:string}>;
  emailOtp:{sendVerificationOtp:(input:{email:string;type:'email-verification'})=>AuthResult<unknown>;verifyEmail:(input:{email:string;otp:string})=>AuthResult<unknown>};
 };
 const createManagedClient = (url:string) => createAuthClient(url);
@@ -28,8 +28,8 @@ const categories=[['landscape','Landscape'],['wildlife','Wildlife'],['people','P
 class ApiError extends Error {constructor(message:string,public status:number,public code?:string){super(message);}}
 async function api(path:string, options:RequestInit={}){
  if(!auth||!apiBase)throw new Error('The gallery service has not been configured.');
- const {data,error}=await auth.token();if(error||!data?.token)throw new ApiError('Please sign in again.',401);
- const response=await fetch(apiBase+path,{...options,headers:{...options.headers,Authorization:`Bearer ${data.token}`}});
+ const token=await getAccessToken(auth);if(!token)throw new ApiError('Your sign-in session could not be restored. Please sign in again.',401);
+ const response=await fetch(apiBase+path,{...options,headers:{...options.headers,Authorization:`Bearer ${token}`}});
  const body=await response.json().catch(()=>({error:'The service returned an unexpected response.'}));
  if(!response.ok)throw new ApiError(body.error||'Request failed.',response.status,body.code);
  return body;

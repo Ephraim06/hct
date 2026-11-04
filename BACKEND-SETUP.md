@@ -195,3 +195,9 @@ Admins can select up to 20 photos at once, see per-file progress/errors, retry f
 All 19 automated tests pass, including upload queue retries, partial failures, filename alt text and the uploaded-only public gallery.
 
 Real Neon integration also passed for multiple-image uploads, server-enforced filename alt text, publish-after-upload, public image retrieval and cleanup on development. The upload API has been deployed to production with the `gallery-uploads-2` revision.
+
+## Sign-in session handoff fix - 4 November 2026
+
+The administrator account was verified and authorized, with successful sessions already created in Neon. The dashboard handoff failed because the installed `@neondatabase/auth` beta maps a cached `token()` request to its session response, which has no `data.token`. The browser now reads the JWT injected by this SDK at `getSession().data.session.token` and rejects opaque cookie tokens. No verification or access checks were weakened.
+
+A regression test reproduces the installed SDK's cached-response shape. `scripts/test-sdk-signin.mjs` also exercised real SDK signup, signin with Remember me disabled, JWT retrieval, protected `/admin/me` and `/admin/gallery` access, and signout. The disposable account was removed. All 21 automated tests, TypeScript checks and site validation passed. The admin HTML asset version was changed to load the corrected bundle.

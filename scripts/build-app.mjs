@@ -13,3 +13,5 @@ await build({entryPoints:['backend/dev.ts'],bundle:true,format:'esm',platform:'n
 await build({entryPoints:['backend/index.ts'],bundle:true,format:'esm',platform:'node',target:'node24',packages:'external',outfile:'dist/api.mjs',logLevel:'silent'});
 
 await build({entryPoints:['admin/lib/gallery-uploads.ts'],bundle:true,format:'esm',platform:'node',target:'node24',outfile:'dist/gallery-uploads.mjs',logLevel:'silent'});
+
+await build({entryPoints:['admin/lib/session.ts'],bundle:true,format:'esm',platform:'node',target:'node24',outfile:'dist/session.mjs',logLevel:'silent'});
