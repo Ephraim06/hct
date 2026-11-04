@@ -8,7 +8,7 @@ try{
  await client.query('SELECT id FROM gallery_images LIMIT 1');console.log('PASS production Postgres schema and administrator grant');
  const storage=new S3Client({forcePathStyle:true});await storage.send(new HeadBucketCommand({Bucket:'assets'}));console.log('PASS production private image bucket');
  const base=process.env.NEON_FUNCTION_GALLERY_BASE_URL.replace(/\/$/,'');
- let ready=false;for(let attempt=0;attempt<60;attempt++){const response=await fetch(base+'/health?revision=traveller-saves-1&attempt='+attempt,{signal:AbortSignal.timeout(20000)});if(response.ok&&(await response.json()).version==='traveller-saves-1'){ready=true;break;}await new Promise(resolve=>setTimeout(resolve,2000));}assert.ok(ready,'Production gallery revision is not ready.');
+ let ready=false;for(let attempt=0;attempt<60;attempt++){const response=await fetch(base+'/health?revision=analytics-2&attempt='+attempt,{signal:AbortSignal.timeout(20000)});if(response.ok&&(await response.json()).version==='analytics-2'){ready=true;break;}await new Promise(resolve=>setTimeout(resolve,2000));}assert.ok(ready,'Production gallery revision is not ready.');
  for(const [path,status]of [['/health',200],['/gallery',200],['/admin/me',401]]){const response=await fetch(base+path);assert.equal(response.status,status,path);if(path==='/gallery'){
     const {images}=await response.json();assert.ok(Array.isArray(images));
     for(const image of images.slice(0,5)){

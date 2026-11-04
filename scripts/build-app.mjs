@@ -17,3 +17,4 @@ await build({entryPoints:['admin/lib/gallery-uploads.ts'],bundle:true,format:'es
 await build({entryPoints:['admin/lib/session.ts'],bundle:true,format:'esm',platform:'node',target:'node24',outfile:'dist/session.mjs',logLevel:'silent'});
 
 await build({entryPoints:{account:'admin/traveller.tsx','tour-saves':'admin/tour-saves.ts'},bundle:true,splitting:true,format:'esm',platform:'browser',target:['es2022'],outdir:'assets/traveller',minify:true,define:{'process.env.NODE_ENV':'"production"'},logLevel:'info'});
+await build({entryPoints:['backend/analytics.ts'],bundle:true,format:'esm',platform:'node',target:'node24',packages:'external',outfile:'dist/analytics.mjs',logLevel:'silent'});

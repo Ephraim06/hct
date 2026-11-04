@@ -28,6 +28,7 @@ test('Formspree success sends all named fields, blocks duplicates and clears onl
   try {
     const {document}=dom.window; fill(dom);
     assert.equal(document.getElementById('tourInterest').value,'Private Cape of Good Hope & Penguins');
+    let accepted=[];document.addEventListener('hct:enquiry-accepted',e=>accepted.push(e.detail));
     let resolve, calls=0;
     dom.window.fetch = (url,options) => {
       calls++; assert.equal(url,'https://formspree.io/f/meaaveoz');
@@ -44,12 +45,13 @@ test('Formspree success sends all named fields, blocks duplicates and clears onl
     assert.ok(document.getElementById('formStatus').hasAttribute('data-success'));
     assert.equal(document.getElementById('submitBtn').disabled,false);
     assert.equal(dom.window.localStorage.length,0);
+    assert.equal(accepted.length,1);assert.equal(accepted[0].tourSlug,'cape-point-penguins-private-tour');
   } finally {dom.window.close();}
 });
 for (const failure of ['http','network','timeout']) test(`Form ${failure} failure keeps enquiry and allows retry`, async () => {
   const dom=await page('contact.html');
   try {
-    fill(dom);
+    fill(dom);let accepted=0;dom.window.document.addEventListener('hct:enquiry-accepted',()=>accepted++);
     dom.window.fetch=async (url, options) => {
       if(failure==='http') return {ok:false};
       if(failure==='timeout') return new Promise((resolve,reject) => options.signal.addEventListener('abort', () => reject(new dom.window.DOMException('Aborted','AbortError')), {once:true}));
@@ -61,7 +63,7 @@ for (const failure of ['http','network','timeout']) test(`Form ${failure} failur
     assert.equal(document.getElementById('message').value,'Test enquiry');
     assert.match(document.getElementById('formStatus').textContent,/couldn’t confirm delivery/);
     assert.equal(document.getElementById('submitBtn').disabled,false);
-    assert.equal(document.querySelector('form').hasAttribute('aria-busy'),false);
+    assert.equal(document.querySelector('form').hasAttribute('aria-busy'),false);assert.equal(accepted,0);
   } finally {dom.window.close();}
 });
 test('Invalid form never sends a request',async()=>{

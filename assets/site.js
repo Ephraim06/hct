@@ -183,6 +183,10 @@
       try {
         const response = await fetch(form.action, {method: 'POST', body: new FormData(form), headers: {Accept: 'application/json'}, signal: controller.signal});
         if (!response.ok) throw new Error('Submission rejected');
+        // Analytics receives only a canonical tour slug, never the form contents.
+        const selection=String(tour?.value||'').toLowerCase();
+        const tourSlug=({'cape point & penguins':'cape-point-penguins','cape of good hope & penguins':'cape-point-penguins','private cape point & penguins':'cape-point-penguins-private-tour','private cape of good hope & penguins':'cape-point-penguins-private-tour','cape agulhas':'cape-agulhas',"chapman’s peak":'chapmans-peak',"chapman's peak":'chapmans-peak','cape winelands':'capewinelands-stellenbosch','robben island & township':'robben-island','safari day tour':'safari-day-tour','whale watching hermanus':'whale-watching'})[selection]||null;
+        document.dispatchEvent(new CustomEvent('hct:enquiry-accepted',{detail:{tourSlug}}));
         // Clear private fields only after the receiving service accepts the request.
         form.reset();
         if (selectedTour) tour.value = selectedTour;

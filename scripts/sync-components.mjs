@@ -4,6 +4,12 @@ const components = await Promise.all([['header','header'],['#offcanvas','menu'],
 for(const file of (await fs.readdir('.')).filter(file=>file.endsWith('.html'))) {
  const dom=new JSDOM(await fs.readFile(file,'utf8'));const d=dom.window.document;
  for(const {selector,html} of components)d.querySelector(selector).outerHTML=html;
+ if(file!=='admin.html'){
+  if(!d.querySelector('script[src="assets/backend-config.js"]')){const script=d.createElement('script');script.src='assets/backend-config.js';script.defer=true;d.head.append(script);}
+  if(!d.querySelector('script[src^="assets/analytics.js"]')){const script=d.createElement('script');script.src='assets/analytics.js?v=analytics-1';script.defer=true;d.head.append(script);}
+ }
+ const siteScript=d.querySelector('script[src^="assets/site.js"]');if(siteScript)siteScript.setAttribute('src','assets/site.js?v=analytics-1');
+ for(const script of d.querySelectorAll('script[src^="assets/traveller/"]'))script.setAttribute('src',script.getAttribute('src').split('?')[0]+'?v=analytics-1');
  for(const link of d.querySelectorAll('header a, #offcanvas a'))if(link.getAttribute('href')===file)link.setAttribute('aria-current','page');
  await fs.writeFile(file,dom.serialize().split('\n').map(line=>line.trimEnd()).join('\n').replace(/\n{3,}/g,'\n\n')+'\n');
 }

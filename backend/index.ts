@@ -14,6 +14,7 @@ import {randomUUID} from 'node:crypto';
 import {galleryImages, adminInvitations, savedTours} from './database/schema';
 import {isAllowedOrigin} from './origins';
 import {findTour} from './tours';
+import {parseEvents,recordEvents,dateRange,analyticsReport} from './analytics';
 
 export const pool = new Pool({connectionString:process.env.DATABASE_URL, max:5, connectionTimeoutMillis:10000});
 attachDatabasePool(pool);
@@ -29,7 +30,15 @@ const app=new Hono<AppEnv>();
 app.use('*',(c,next)=>secureHeaders({crossOriginResourcePolicy:/^\/(?:api\/)?media\//.test(c.req.path)?'cross-origin':'same-origin'})(c,next));
 app.use('*',cors({origin:origin=>isAllowedOrigin(origin)?origin:undefined, allowMethods:['GET','POST','PATCH','DELETE','OPTIONS'],allowHeaders:['Authorization','Content-Type'],maxAge:600}));
 app.onError((error,c)=>{console.error('Gallery request failed',error.name);return c.json({error:'The request could not be completed. Please try again.'},500);});
-app.get('/health',c=>c.json({ok:true,service:'Happy Cape Tours gallery',version:'traveller-saves-1'}));
+app.get('/health',c=>c.json({ok:true,service:'Happy Cape Tours gallery',version:'analytics-2'}));
+app.post('/events',bodyLimit({maxSize:16384,onError:c=>c.json({error:'Payload too large.'},413)}),async c=>{
+ const origin=c.req.header('Origin')||'';
+ if(!isAllowedOrigin(origin))return c.json({error:'Origin not allowed.'},403);
+ if(/bot|spider|crawler|headless|preview|lighthouse/i.test(c.req.header('User-Agent')||''))return c.body(null,204);
+ if(c.req.header('DNT')==='1'||c.req.header('Sec-GPC')==='1')return c.body(null,204);
+ const events=parseEvents(await c.req.json().catch(()=>null));if(!events)return c.json({error:'Invalid events.'},400);
+ await recordEvents(pool,events);return c.body(null,204);
+});
 app.get('/config',c=>c.json({authUrl:process.env.NEON_AUTH_BASE_URL || ''}));
 async function requireIdentity(c:Context<AppEnv>,next:Next){
   c.header('Cache-Control','no-store');
@@ -82,6 +91,10 @@ app.get('/admin/users',async c=>{
  FROM neon_auth."user" u LEFT JOIN saved_tours s ON s.user_id=u.id
  WHERE u.email ILIKE $1 OR u.name ILIKE $1 GROUP BY u.id ORDER BY u."createdAt" DESC,u.id LIMIT 25 OFFSET $2`,[pattern,(page-1)*25]);
  return c.json({users:result.rows.map(user=>({...user,saved_tours:user.saved_tours.map((saved:{slug:string;savedAt:string})=>({...findTour(saved.slug),savedAt:saved.savedAt}))})),page,pageSize:25,total:count.rows[0].total});
+});
+app.get('/admin/analytics',async c=>{
+ const range=dateRange(c.req.query('from'),c.req.query('to'));if(!range)return c.json({error:'Choose a valid date range of 1–180 days, ending no later than today.'},400);
+ return c.json(await analyticsReport(pool,range));
 });
 app.get('/admin/me',c=>c.json({email:c.get('email'),userId:c.get('userId')}));
 function fields(value:Record<string,unknown>){

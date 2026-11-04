@@ -35,3 +35,9 @@ test('Published media routes allow cross-origin embedding while admin responses 
 test('Traveller collections and administrator user lists require authentication',async()=>{
  for(const [path,method] of [['/account/me','GET'],['/account/saved-tours','GET'],['/account/saved-tours/cape-agulhas','POST'],['/account/saved-tours/cape-agulhas','DELETE'],['/admin/users','GET']])assert.equal((await api.request(path,{method})).status,401);
 });
+
+test('Analytics rejects unknown origins and invalid events; reports remain private',async()=>{
+ assert.equal((await api.request('/admin/analytics')).status,401);
+ assert.equal((await api.request('/events',{method:'POST',headers:{Origin:'https://evil.example','Content-Type':'application/json'},body:'{}'})).status,403);
+ assert.equal((await api.request('/events',{method:'POST',headers:{Origin:'https://www.happycapetours.com','Content-Type':'application/json'},body:'{}'})).status,400);
+});

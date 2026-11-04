@@ -9,5 +9,6 @@ try{
  await client.connect();await client.query('BEGIN');
  await client.query(await readFile('backend/database/001-gallery.sql','utf8'));
  await client.query(await readFile('backend/database/002-saved-tours.sql','utf8'));
- await client.query('COMMIT');console.log('Gallery and saved-tour migrations applied successfully.');
+ await client.query(await readFile('backend/database/003-analytics.sql','utf8'));
+ await client.query('COMMIT');console.log('Gallery, saved-tour and analytics migrations applied successfully.');
 }catch(error){await client.query('ROLLBACK').catch(()=>{});throw error;}finally{await client.end();}
