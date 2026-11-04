@@ -188,7 +188,7 @@ Both load the admin bundle and production Neon configuration.
 
 ## Gallery update - 4 November 2026
 
-Removed the 16 bundled images from the public gallery collection. Original files remain available to other website pages. The gallery now loads only published Neon uploads, with no old-photo fallback.
+Removed the 16 bundled images from the public gallery collection, along with the old hero and related-tour photos on that page. Original files remain available to other website pages. The gallery now loads only published Neon uploads, with no old-photo fallback.
 
 Admins can select up to 20 photos at once, see per-file progress/errors, retry failed files and optionally publish immediately. Each file is uploaded separately to retain the 10 MB per-image limit. The server derives alt text from the original filename, ignoring caller-supplied alt text on new uploads. The initial caption also defaults to the filename. Previously uploaded photos keep their existing alt metadata, since the old implementation did not retain original filenames.
 
