@@ -21,3 +21,5 @@ await build({entryPoints:{account:'admin/traveller.tsx','tour-saves':'admin/tour
 await build({entryPoints:['backend/analytics.ts'],bundle:true,format:'esm',platform:'node',target:'node24',packages:'external',outfile:'dist/analytics.mjs',logLevel:'silent'});
 
 await build({entryPoints:['backend/enquiries.ts','backend/gallery-management.ts'],bundle:true,format:'esm',platform:'node',target:'node24',packages:'external',outdir:'dist',outExtension:{'.js':'.mjs'},logLevel:'silent'});
+
+await build({entryPoints:['admin/lib/google-auth.ts'],bundle:true,format:'esm',platform:'node',target:'node24',outfile:'dist/google-auth.mjs',logLevel:'silent'});

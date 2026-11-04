@@ -1,5 +1,6 @@
-import React,{useState} from 'react';
+import React,{useState,useEffect} from 'react';
 import {Eye,EyeOff} from 'lucide-react';
+import {continueWithGoogle,googleCallbackMessage} from '../lib/google-auth';
 import {auth,ApiError} from '../lib/auth';
 import {Button} from './ui/button';
 import {Input} from './ui/input';
@@ -8,7 +9,10 @@ export function AuthForm({onLogin,audience='admin'}:{onLogin:()=>Promise<void>;a
  const [mode,setMode]=useState<'login'|'register'|'verify'|'recover'>(new URLSearchParams(location.search).get('view')==='signup'?'register':'login');
  const [name,setName]=useState('');
  const [email,setEmail]=useState(''),[password,setPassword]=useState(''),[otp,setOtp]=useState('');
- const [busy,setBusy]=useState(false),[message,setMessage]=useState('');
+ const [busy,setBusy]=useState(false),[message,setMessage]=useState(()=>googleCallbackMessage(location.href));
+ const [googleBusy,setGoogleBusy]=useState(false);
+ useEffect(()=>{const restore=()=>{setBusy(false);setGoogleBusy(false);};window.addEventListener('pageshow',restore);const url=new URL(location.href);if(googleCallbackMessage(url.href)){for(const key of ['auth_error','error','error_description','error_code'])url.searchParams.delete(key);history.replaceState(history.state,'',url.href);}return()=>window.removeEventListener('pageshow',restore);},[]);
+ async function google(){if(busy)return;setBusy(true);setGoogleBusy(true);setMessage('');try{const result=await continueWithGoogle(auth,location.href,audience);if(typeof result.data==='object'&&result.data&&'user' in result.data){await onLogin();setBusy(false);setGoogleBusy(false);}}catch(error){setMessage(error instanceof Error?error.message:'Google sign-in could not start. Please try again.');setBusy(false);setGoogleBusy(false);}}
  const [showPassword,setShowPassword]=useState(false),[rememberMe,setRememberMe]=useState(false);
  async function sendCode(){
   if(!auth)return;const result=await auth.emailOtp.sendVerificationOtp({email,type:'email-verification'});
@@ -64,6 +68,7 @@ export function AuthForm({onLogin,audience='admin'}:{onLogin:()=>Promise<void>;a
   <div className="auth-form-panel"><div className="auth-form-inner">
    <span className="auth-form-eyebrow">HAPPY CAPE TOURS</span>
    <h2 className="auth-title">{title}</h2><p className="auth-description">{description}</p>
+   {!resetting&&(mode==='login'||mode==='register')&&<><Button className="auth-google" variant="outline" type="button" disabled={busy||!auth} aria-busy={googleBusy} onClick={google}>{googleBusy?<span className="hct-button-spinner" aria-hidden="true"/>:<svg width="20" height="20" viewBox="0 0 48 48" aria-hidden="true" focusable="false"><path fill="#4285F4" d="M43.61 24.46c0-1.36-.12-2.66-.35-3.92H24v7.42h11a9.4 9.4 0 0 1-4.08 6.17v5.13h6.6c3.86-3.55 6.09-8.78 6.09-14.8Z"/><path fill="#34A853" d="M24 44c5.51 0 10.13-1.83 13.51-4.95l-6.6-5.13c-1.83 1.23-4.17 1.96-6.91 1.96-5.32 0-9.83-3.59-11.44-8.42H5.74v5.3A20 20 0 0 0 24 44Z"/><path fill="#FBBC05" d="M12.56 27.46A12 12 0 0 1 11.93 24c0-1.2.21-2.37.63-3.46v-5.3H5.74A20 20 0 0 0 4 24c0 3.23.77 6.29 2.14 9l6.42-5.54Z"/><path fill="#EA4335" d="M24 12.12c3 0 5.7 1.03 7.82 3.06l5.87-5.87C34.12 5.98 29.51 4 24 4A20 20 0 0 0 5.74 15.24l6.82 5.3C14.17 15.71 18.68 12.12 24 12.12Z"/></svg>}{googleBusy?'Connecting to Google…':'Continue with Google'}</Button><div className="auth-divider"><span>or continue with email</span></div></>}
    <form onSubmit={resetting?reset:submit} className="auth-form">
     {!resetting&&mode==='register'&&audience==='traveller'&&<div className="auth-field"><Label htmlFor="traveller-name">Your name</Label><Input id="traveller-name" autoComplete="name" required maxLength={100} value={name} onChange={e=>setName(e.target.value)}/></div>}
     {!resetting&&<div className="auth-field"><Label htmlFor="admin-email">Email</Label><Input id="admin-email" type="email" placeholder="Enter your email" autoComplete="email" required value={email} onChange={e=>setEmail(e.target.value)} /></div>}
