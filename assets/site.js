@@ -135,46 +135,6 @@
     filter('all');
   }
 
-  const lightbox = document.getElementById('lightbox');
-  if (lightbox) {
-    let items = all('.gallery-item');
-    let selected = null;
-    const image = document.getElementById('lightboxImg');
-    const caption = document.getElementById('lightboxCaption');
-    function show(item) {
-      selected = item;
-      const source = item.querySelector('img');
-      image.src = source.currentSrc || source.src;
-      image.alt = source.alt; image.width = source.width; image.height = source.height;
-      caption.textContent = source.dataset.caption || source.alt;
-    }
-    function close() {lightbox.hidden = true; lightbox.classList.remove('active'); closeDialog();}
-    function move(delta) {
-      const visible = items.filter(item => !item.hidden);
-      if (visible.length) show(visible[(visible.indexOf(selected) + delta + visible.length) % visible.length]);
-    }
-    caption.setAttribute('aria-live', 'polite');
-    function bindItem(item) {
-      item.setAttribute('aria-label', `View photo: ${item.querySelector('img').alt}`);
-      item.addEventListener('click', () => {
-        show(item); lightbox.hidden = false; lightbox.classList.add('active'); openDialog(lightbox, close);
-      });
-    }
-    items.forEach(bindItem);
-    document.addEventListener('hct:gallery-added', () => {
-      const updated = all('.gallery-item'); updated.filter(item => !items.includes(item)).forEach(bindItem); items = updated;
-    });
-    document.getElementById('lightboxClose').addEventListener('click', close);
-    document.getElementById('lightboxPrev').addEventListener('click', () => move(-1));
-    document.getElementById('lightboxNext').addEventListener('click', () => move(1));
-    lightbox.addEventListener('click', event => {if (event.target === lightbox) close();});
-    document.addEventListener('keydown', event => {
-      if (lightbox.hidden) return;
-      if (event.key === 'ArrowLeft') {event.preventDefault(); move(-1);}
-      if (event.key === 'ArrowRight') {event.preventDefault(); move(1);}
-    });
-  }
-
   if(document.readyState!=='complete'){
     const progress=document.createElement('div');progress.className='hct-page-progress';progress.setAttribute('role','progressbar');progress.setAttribute('aria-label','Loading page');document.body.append(progress);
     const finish=()=>{progress.classList.add('is-done');setTimeout(()=>progress.remove(),300);};window.addEventListener('load',finish,{once:true});setTimeout(finish,4000);

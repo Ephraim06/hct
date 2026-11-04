@@ -80,107 +80,6 @@
       transform: scale(1.08);
     }
 
-    /* lightbox */
-    .lightbox {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.95);
-      backdrop-filter: blur(8px);
-      z-index: 100;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      opacity: 0;
-      transition: opacity 0.3s ease;
-    }
-
-    .lightbox.active {
-      display: flex;
-      opacity: 1;
-    }
-
-    .lightbox-content {
-      max-width: 85vw;
-      max-height: 85vh;
-      position: relative;
-      border-radius: 2rem;
-      overflow: hidden;
-      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
-      border: 3px solid rgba(251, 191, 36, 0.3);
-    }
-
-    .lightbox-content img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-    }
-
-    .lightbox-close {
-      position: absolute;
-      top: 20px;
-      right: 30px;
-      color: white;
-      cursor: pointer;
-      z-index: 110;
-      background: rgba(0, 0, 0, 0.3);
-      backdrop-filter: blur(4px);
-      border-radius: 9999px;
-      padding: 8px;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      transition: all 0.2s;
-    }
-
-    .lightbox-close:hover {
-      background: #fbbf24;
-      color: black;
-      transform: scale(1.1);
-    }
-
-    .lightbox-nav {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      color: white;
-      cursor: pointer;
-      background: rgba(0, 0, 0, 0.3);
-      backdrop-filter: blur(4px);
-      border-radius: 9999px;
-      padding: 12px;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      transition: all 0.2s;
-      z-index: 110;
-    }
-
-    .lightbox-nav:hover {
-      background: #fbbf24;
-      color: black;
-    }
-
-    .lightbox-prev {
-      left: 20px;
-    }
-
-    .lightbox-next {
-      right: 20px;
-    }
-
-    .lightbox-caption {
-      position: absolute;
-      bottom: 20px;
-      left: 0;
-      right: 0;
-      text-align: center;
-      color: white;
-      font-weight: 500;
-      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-      z-index: 110;
-      background: linear-gradient(to top, rgba(0, 0, 0, 0.5), transparent);
-      padding: 20px 20px 10px;
-    }
-
     /* filter buttons */
     .filter-btn.active {
       background: #fbbf24;
@@ -220,7 +119,7 @@
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "TravelAgency", "@id": "https://www.happycapetours.com/#business", "name": "Happy Cape Tours", "url": "https://www.happycapetours.com/", "telephone": "+27782308502", "email": "info@happycapetours.com", "areaServed": "Cape Town"}</script>
 <script src="assets/backend-config.js" defer=""></script>
 <script src="assets/gallery-loader.js?v=inbox-gallery-1" defer=""></script>
-<script src="assets/analytics.js?v=analytics-1" defer=""></script><meta name="theme-color" content="#0b3944"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Happy Cape Tours"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><script src="assets/controls.js?v=pwa-controls-1" type="module"></script><script src="assets/pwa.js?v=pwa-controls-1" defer=""></script><link rel="stylesheet" href="assets/controls.css?v=pwa-controls-1"></head>
+<script src="assets/analytics.js?v=analytics-1" defer=""></script><meta name="theme-color" content="#0b3944"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Happy Cape Tours"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><script src="assets/controls.js?v=pwa-controls-1" type="module"></script><script src="assets/pwa.js?v=pwa-controls-1" defer=""></script><link rel="stylesheet" href="assets/controls.css?v=pwa-controls-1"><link rel="stylesheet" href="assets/gallery-viewer.css?v=photoswipe-1"><script type="module" src="assets/gallery-viewer.js?v=photoswipe-1"></script></head>
 
 <body class="antialiased text-gray-800 selection:bg-amber-200/80">
   <a href="#main-content" class="skip-link">Skip to content</a>
@@ -346,29 +245,6 @@
   <section class="px-6 md:px-10 py-8 pb-20 max-w-7xl mx-auto">
     <div id="galleryGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 auto-rows-[280px]"></div><p id="galleryStatus" class="text-center text-gray-600 py-12" role="status" aria-live="polite">Loading photos…</p><noscript>Please enable JavaScript to view our uploaded gallery photos.</noscript>
   </section>
-
-  <!-- LIGHTBOX (custom, matches luxury brand) -->
-  <div id="lightbox" role="dialog" aria-modal="true" aria-label="Photo gallery" aria-describedby="lightboxCaption" hidden="" class="lightbox">
-    <button type="button" class="lightbox-close" id="lightboxClose" aria-label="Close image">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor" class="w-8 h-8" aria-hidden="true" focusable="false">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
-      </svg>
-    </button>
-    <button type="button" class="lightbox-nav lightbox-prev" id="lightboxPrev" aria-label="Previous image">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6" aria-hidden="true" focusable="false">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5"></path>
-      </svg>
-    </button>
-    <button type="button" class="lightbox-nav lightbox-next" id="lightboxNext" aria-label="Next image">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6" aria-hidden="true" focusable="false">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"></path>
-      </svg>
-    </button>
-    <div class="lightbox-content">
-      <img alt="" id="lightboxImg" width="1920" height="1280" decoding="async" loading="lazy">
-    </div>
-    <div class="lightbox-caption" id="lightboxCaption"></div>
-  </div>
 
   <!-- MARQUEE (branding) -->
   <div class="w-full bg-amber-400/10 border-y border-amber-200/50 py-4 overflow-hidden">

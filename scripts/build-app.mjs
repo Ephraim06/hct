@@ -29,3 +29,5 @@ await build({entryPoints:{'analytics-charts':'admin/lib/analytics-charts.ts','an
 await build({entryPoints:['admin/public-controls.ts'],bundle:true,format:'esm',platform:'browser',target:['es2022'],outfile:'assets/controls.js',minify:true,logLevel:'info'});
 
 await build({entryPoints:{'admin-controls':'admin/components/ui/admin-controls.ts'},bundle:true,format:'esm',platform:'node',target:'node24',packages:'external',outdir:'dist',outExtension:{'.js':'.mjs'},logLevel:'silent'});
+
+await build({entryPoints:['public/gallery-viewer.js'],bundle:true,splitting:true,format:'esm',platform:'browser',target:['es2022'],outdir:'assets',entryNames:'gallery-viewer',chunkNames:'gallery/[name]-[hash]',minify:true,logLevel:'info'});

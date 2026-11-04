@@ -1,0 +1,8 @@
+.hct-photo-viewer{--pswp-bg:#081d24;--pswp-icon-color:#fffdf5;--pswp-icon-color-secondary:#173f49;--pswp-icon-stroke-color:#081d24;font-family:Montserrat,sans-serif}
+.hct-photo-viewer .pswp__button{border-radius:50%;transition:background .2s}
+.hct-photo-viewer .pswp__button:hover{background:#ffffff18}
+.hct-photo-viewer .pswp__button:focus-visible{outline:2px solid #fbbf24;outline-offset:-4px}
+.hct-photo-viewer .pswp__counter{color:#ffe192;font-size:13px;letter-spacing:.08em;text-shadow:none}
+.hct-photo-viewer .pswp__preloader__icn{--pswp-icon-color:#fbbf24}
+.hct-photo-viewer .pswp__error-msg{color:#fffdf5;font-size:14px}
+@media(prefers-reduced-motion:reduce){.hct-photo-viewer{--pswp-transition-duration:0ms}.hct-photo-viewer .pswp__button{transition:none}}

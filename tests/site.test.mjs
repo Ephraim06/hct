@@ -85,25 +85,20 @@ test('Filters correctly classify all eight tours, including adventure results',a
     assert.equal(document.querySelector('[data-filter="adventure"]').getAttribute('aria-pressed'),'true');
   } finally {dom.window.close();}
 });
-test('Gallery next and previous respect active filter; Escape restores focus',async()=>{
+test('PhotoSwipe receives only the active gallery category and preserves alt text',async()=>{
   const dom=await page('gallery.html');
   try {
-    const {document,KeyboardEvent}=dom.window;
+    const {gallerySlides}=await import('../public/gallery-slides.mjs');
+    const document=dom.window.document;
     document.querySelector('[data-filter="wildlife"]').click();
-    const visible=[...document.querySelectorAll('.gallery-item')].filter(item=>!item.hidden);
-    visible[0].focus(); visible[0].click();
-    const box=document.getElementById('lightbox');
-    assert.equal(box.hidden,false);
-    assert.equal(document.querySelector('.gallery-item').closest('section').inert,true);
-    assert.equal(document.getElementById('lightboxImg').alt,visible[0].querySelector('img').alt);
-    document.getElementById('lightboxNext').click();
-    assert.equal(document.getElementById('lightboxImg').alt,visible[1].querySelector('img').alt);
-    document.getElementById('lightboxPrev').click();
-    assert.equal(document.getElementById('lightboxImg').alt,visible[0].querySelector('img').alt);
-    document.dispatchEvent(new KeyboardEvent('keydown',{key:'Escape',bubbles:true}));
-    assert.equal(box.hidden,true);assert.equal(document.activeElement,visible[0]);
-    assert.equal(document.body.style.overflow,'');
-    assert.equal(document.querySelector('.gallery-item').closest('section').inert,false);
+    const {items,slides}=gallerySlides(document.getElementById('galleryGrid'));
+    assert.ok(items.length>0);
+    assert.ok(items.every(item=>item.dataset.category==='wildlife'));
+    assert.equal(slides.length,items.length);
+    assert.equal(slides[0].alt,items[0].querySelector('img').alt);
+    assert.ok(slides[0].width>0&&slides[0].height>0);
+    assert.equal(document.getElementById('lightbox'),null);
+    assert.ok(document.querySelector('script[src*="gallery-viewer.js"]'));
   } finally {dom.window.close();}
 });
 test('Menu closes with backdrop and Escape, restoring state and focus',async()=>{
