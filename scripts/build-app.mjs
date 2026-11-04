@@ -11,3 +11,5 @@ await writeFile('assets/backend-config.js',`window.HCT_BACKEND = ${JSON.stringif
 await build({entryPoints:['admin/main.tsx'],bundle:true,format:'esm',platform:'browser',target:['es2022'],outfile:'assets/admin.bundle.js',minify:true,define:{'process.env.NODE_ENV':'"production"'},logLevel:'info'});
 await build({entryPoints:['backend/dev.ts'],bundle:true,format:'esm',platform:'node',target:'node24',packages:'external',outfile:'dist/server.mjs',logLevel:'info'});
 await build({entryPoints:['backend/index.ts'],bundle:true,format:'esm',platform:'node',target:'node24',packages:'external',outfile:'dist/api.mjs',logLevel:'silent'});
+
+await build({entryPoints:['admin/lib/gallery-uploads.ts'],bundle:true,format:'esm',platform:'node',target:'node24',outfile:'dist/gallery-uploads.mjs',logLevel:'silent'});

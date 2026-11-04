@@ -8,6 +8,7 @@ try{
  await client.query('SELECT id FROM gallery_images LIMIT 1');console.log('PASS production Postgres schema and administrator grant');
  const storage=new S3Client({forcePathStyle:true});await storage.send(new HeadBucketCommand({Bucket:'assets'}));console.log('PASS production private image bucket');
  const base=process.env.NEON_FUNCTION_GALLERY_BASE_URL.replace(/\/$/,'');
+ let ready=false;for(let attempt=0;attempt<30;attempt++){const response=await fetch(base+'/health?revision=gallery-uploads-2&attempt='+attempt,{signal:AbortSignal.timeout(20000)});if(response.ok&&(await response.json()).version==='gallery-uploads-2'){ready=true;break;}await new Promise(resolve=>setTimeout(resolve,2000));}assert.ok(ready,'Production gallery revision is not ready.');
  for(const [path,status]of [['/health',200],['/gallery',200],['/admin/me',401]]){const response=await fetch(base+path);assert.equal(response.status,status,path);if(path==='/gallery')assert.ok(Array.isArray((await response.json()).images));console.log(`PASS production ${path} HTTP ${response.status}`);}
  const configuration=await(await fetch(base+'/config')).json();assert.equal(configuration.authUrl,process.env.NEON_AUTH_BASE_URL);
  const preflight=await fetch(base+'/admin/gallery',{method:'OPTIONS',headers:{Origin:'https://www.happycapetours.com','Access-Control-Request-Method':'POST'}});assert.equal(preflight.headers.get('access-control-allow-origin'),'https://www.happycapetours.com');

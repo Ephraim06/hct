@@ -102,6 +102,12 @@
     });
     const count = document.getElementById('visibleCount');
     if (count) count.textContent = String(cards.filter(card => !card.hidden).length);
+    const galleryStatus = document.getElementById('galleryStatus');
+    if (galleryStatus && document.getElementById('galleryGrid')?.dataset.loaded === 'true') {
+      const visible = cards.filter(card => !card.hidden).length;
+      galleryStatus.hidden = visible > 0;
+      galleryStatus.textContent = cards.length ? 'No photos in this category yet.' : 'New adventures are on their way. Check back soon for photos from our tours.';
+    }
   }
   document.addEventListener('hct:gallery-added', () => {
     cards = all('.tour-card[data-category], .gallery-item[data-category]'); filter(currentCategory);
@@ -123,7 +129,7 @@
       selected = item;
       const source = item.querySelector('img');
       image.src = source.currentSrc || source.src;
-      image.alt = source.alt;
+      image.alt = source.alt; image.width = source.width; image.height = source.height;
       caption.textContent = source.dataset.caption || source.alt;
     }
     function close() {lightbox.hidden = true; lightbox.classList.remove('active'); closeDialog();}

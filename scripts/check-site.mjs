@@ -36,7 +36,7 @@ for (const [name, document] of docs) {
   }
   for (const label of document.querySelectorAll('label')) assert.ok(document.getElementById(label.htmlFor),`${name}: associated label`);
   for (const schema of document.querySelectorAll('script[type="application/ld+json"]')) JSON.parse(schema.textContent);
-  assert.equal(document.querySelectorAll('script[src="assets/site.js"]').length,1,`${name}: shared behavior`);
+  assert.equal(document.querySelectorAll('script[src^="assets/site.js"]').length,1,`${name}: shared behavior`);
   assert.equal(document.querySelectorAll('link[rel="manifest"]').length,1,`${name}: manifest`);
   assert.ok(!document.documentElement.outerHTML.includes('cdn.tailwindcss.com'),`${name}: runtime CSS`);
 }

@@ -7,6 +7,13 @@ async function page(file, query='') {
   const dom = new JSDOM(await fs.readFile(file,'utf8'), {url:`https://www.happycapetours.com/${file}${query}`, runScripts:'outside-only', pretendToBeVisual:true});
   dom.window.matchMedia = () => ({matches:false, addEventListener(){}});
   dom.window.HTMLElement.prototype.getClientRects = () => [{width:100,height:40}];
+  if (file === 'gallery.html') {
+    const grid=dom.window.document.getElementById('galleryGrid');
+    for(const [caption,category] of [['Whale one','wildlife'],['Whale two','wildlife'],['Coast','landscape']]) {
+      const item=dom.window.document.createElement('button');item.className='gallery-item';item.dataset.category=category;
+      const image=dom.window.document.createElement('img');image.src='https://example.com/photo.webp';image.alt=caption;image.width=800;image.height=600;item.append(image);grid.append(item);
+    }
+  }
   dom.window.eval(script);
   return dom;
 }

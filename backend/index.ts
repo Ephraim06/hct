@@ -26,7 +26,7 @@ const app=new Hono<{Variables:{userId:string; email:string}}>();
 app.use('*',secureHeaders());
 app.use('*',cors({origin:origin=>isAllowedOrigin(origin)?origin:undefined, allowMethods:['GET','POST','PATCH','OPTIONS'],allowHeaders:['Authorization','Content-Type'],maxAge:600}));
 app.onError((error,c)=>{console.error('Gallery request failed',error.name);return c.json({error:'The request could not be completed. Please try again.'},500);});
-app.get('/health',c=>c.json({ok:true,service:'Happy Cape Tours gallery'}));
+app.get('/health',c=>c.json({ok:true,service:'Happy Cape Tours gallery',version:'gallery-uploads-2'}));
 app.get('/config',c=>c.json({authUrl:process.env.NEON_AUTH_BASE_URL || ''}));
 app.use('/admin/*',async(c,next)=>{
   c.header('Cache-Control','no-store');
@@ -79,7 +79,7 @@ app.post('/admin/gallery',bodyLimit({maxSize:11*1024*1024,onError:c=>c.json({err
   if(!(file instanceof File)||file.size===0||file.size>10*1024*1024)return c.json({error:'Choose an image smaller than 10 MB.'},400);
   if(!['image/jpeg','image/png','image/webp','image/avif'].includes(file.type))return c.json({error:'Use a JPEG, PNG, WebP or AVIF image.'},400);
   let details:ReturnType<typeof fields>;
-  try{details=fields(Object.fromEntries(form));}catch(error){return c.json({error:(error as Error).message},400);}
+  try{details=fields({...Object.fromEntries(form),alt:file.name,caption:form.get('caption') || file.name.slice(0,200)});}catch(error){return c.json({error:(error as Error).message},400);}
   let output:{data:Buffer;info:OutputInfo};
   try{
     const image=sharp(Buffer.from(await file.arrayBuffer()),{limitInputPixels:40_000_000,animated:false});
@@ -90,7 +90,7 @@ app.post('/admin/gallery',bodyLimit({maxSize:11*1024*1024,onError:c=>c.json({err
   const id=randomUUID(),key=`gallery/${id}.webp`;
   await storage.send(new PutObjectCommand({Bucket:bucket,Key:key,Body:output.data,ContentType:'image/webp',CacheControl:'private, max-age=300'}));
   try{
-    const [image]=await db.insert(galleryImages).values({id,objectKey:key,...details,width:output.info.width,height:output.info.height,createdBy:c.get('userId')}).returning();
+    const [image]=await db.insert(galleryImages).values({id,objectKey:key,...details,width:output.info.width,height:output.info.height,createdBy:c.get('userId'),published:form.get('published')==='true'}).returning();
     return c.json({image:{...publicImage(image),published:image.published}},201);
   }catch(error){
     // Only roll back the newly-created object if its metadata insert failed.

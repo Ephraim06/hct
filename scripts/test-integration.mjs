@@ -1,17 +1,19 @@
 // Real service integration test. It creates and removes only its own fixtures on a non-production branch.
 import dotenv from 'dotenv';import pg from 'pg';import sharp from 'sharp';import assert from 'node:assert/strict';import {randomUUID} from 'node:crypto';
 import {S3Client,DeleteObjectCommand} from '@aws-sdk/client-s3';
+import {uploadImages} from '../dist/gallery-uploads.mjs';
 dotenv.config({path:'.env.local',quiet:true});dotenv.config({path:'.env',quiet:true});
 if(!process.env.NEON_BRANCH || process.env.NEON_BRANCH==='production')throw new Error('Integration fixtures may only run on the isolated development branch.');
 const api=process.env.NEON_FUNCTION_GALLERY_BASE_URL?.replace(/\/$/,'');const auth=process.env.NEON_AUTH_BASE_URL?.replace(/\/$/,'');
 if(!api||!auth)throw new Error('Deploy the Neon gallery and Auth services first.');
 const client=new pg.Client({connectionString:process.env.DATABASE_URL_UNPOOLED});const storage=new S3Client({forcePathStyle:true});
-const email=`hct-e2e-${randomUUID()}@example.invalid`;const password=randomUUID()+randomUUID();let userId;let imageId;let objectKey;
+const email=`hct-e2e-${randomUUID()}@example.invalid`;const password=randomUUID()+randomUUID();let userId;let imageId;let objectKey;const batchFixtures=[];
 async function authRequest(path,body,cookie){const headers={'Content-Type':'application/json',Origin:'http://localhost:3000',...(cookie?{Cookie:cookie}:{})};const response=await fetch(auth+path,{method:body?'POST':'GET',headers,body:body?JSON.stringify(body):undefined});const data=await response.json();if(!response.ok)throw new Error(`Neon Auth ${path}: HTTP ${response.status}`);return {response,data,cookie:response.headers.getSetCookie().map(value=>value.split(';')[0]).join('; ')};}
-async function request(path,options={}){return fetch(api+path,options);}
+async function request(path,options={}){return fetch(api+path,{...options,signal:AbortSignal.timeout(20000)});}
 try{
  await client.connect();assert.equal((await client.query('SELECT 1 AS connected')).rows[0].connected,1);console.log('PASS Postgres connection');
- const health=await request('/health');assert.equal(health.status,200);console.log('PASS deployed Neon Function');
+ let ready=false;for(let attempt=0;attempt<30;attempt++){const health=await request('/health?revision=gallery-uploads-2&attempt='+attempt);if(health.ok&&(await health.json()).version==='gallery-uploads-2'){ready=true;break;}console.log('Waiting for latest gallery function revision…');await new Promise(resolve=>setTimeout(resolve,2000));}
+ assert.ok(ready,'The newest gallery function has not finished rolling out.');console.log('PASS deployed Neon Function');
  const signup=await authRequest('/sign-up/email',{email,password,name:'Disposable gallery integration fixture'});
  userId=signup.data.user?.id || (await client.query('SELECT id FROM neon_auth."user" WHERE email=$1',[email])).rows[0]?.id;
  assert.ok(userId);
@@ -28,16 +30,26 @@ try{
  const form=new FormData();form.set('image',new Blob([image],{type:'image/jpeg'}),'test.jpg');form.set('caption','Disposable integration photo');form.set('alt','Gold test image');form.set('category','landscape');
  const uploaded=await request('/admin/gallery',{method:'POST',headers,body:form});assert.equal(uploaded.status,201);const record=(await uploaded.json()).image;imageId=record.id;
  objectKey=(await client.query('SELECT object_key FROM gallery_images WHERE id=$1',[imageId])).rows[0].object_key;
- assert.equal(record.published,false);assert.equal((await request(`/media/${imageId}`)).status,404);console.log('PASS private draft upload, image processing, storage and Postgres metadata');
+ assert.equal(record.published,false);assert.equal(record.alt,'test.jpg');assert.equal((await request(`/media/${imageId}`)).status,404);console.log('PASS private draft upload, image processing, storage and Postgres metadata');
  const update={caption:'Disposable integration photo',alt:'Gold test image',category:'landscape',sortOrder:-10,published:true};
  assert.equal((await request(`/admin/gallery/${imageId}`,{method:'PATCH',headers:{...headers,'Content-Type':'application/json'},body:JSON.stringify(update)})).status,200);
  const gallery=await(await request('/gallery')).json();assert.ok(gallery.images.some(photo=>photo.id===imageId));
  const media=await request(`/media/${imageId}`);assert.equal(media.status,200);assert.match(media.headers.get('content-type'),/image\/webp/);const metadata=await sharp(Buffer.from(await media.arrayBuffer())).metadata();assert.equal(metadata.width,64);console.log('PASS publish → public gallery → object download');
  update.published=false;assert.equal((await request(`/admin/gallery/${imageId}`,{method:'PATCH',headers:{...headers,'Content-Type':'application/json'},body:JSON.stringify(update)})).status,200);
  assert.equal((await request(`/media/${imageId}`)).status,404);console.log('PASS unpublish removes public access');
+ const batchFiles=['Cape Point.jpg','Penguins.jpg'].map(name=>({file:new File([image],name,{type:'image/jpeg'}),status:'pending'}));
+ const batch=await uploadImages(batchFiles,'wildlife',true,async form=>{
+  const response=await request('/admin/gallery',{method:'POST',headers,body:form});assert.equal(response.status,201);
+  const {image:photo}=await response.json();const fixture={id:photo.id,key:`gallery/${photo.id}.webp`};batchFixtures.push(fixture);
+  assert.equal(photo.alt,form.get('image').name);assert.equal(photo.published,true);
+ },()=>{});
+ assert.ok(batch.every(item=>item.status==='done'));
+ const publishedBatch=await(await request('/gallery')).json();for(const fixture of batchFixtures)assert.ok(publishedBatch.images.some(photo=>photo.id===fixture.id));
+ console.log('PASS multiple-image queue, filename alt text and publish-after-upload');
  await authRequest('/sign-out',{},cookie);const ended=await authRequest('/get-session',null,cookie);assert.ok(!ended.data?.user);console.log('PASS Neon Auth signout');
  console.log('All real Neon service integration checks passed.');
 }finally{
+ for(const fixture of batchFixtures){await storage.send(new DeleteObjectCommand({Bucket:'assets',Key:fixture.key}));await client.query('DELETE FROM gallery_images WHERE id=$1 AND created_by=$2',[fixture.id,userId]);}
  if(objectKey)await storage.send(new DeleteObjectCommand({Bucket:'assets',Key:objectKey}));
  if(imageId)await client.query('DELETE FROM gallery_images WHERE id=$1 AND created_by=$2',[imageId,userId]);
  await client.query('DELETE FROM gallery_admins WHERE email=$1',[email]).catch(()=>{});

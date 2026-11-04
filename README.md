@@ -39,7 +39,7 @@ Browser visual QA remains required for mobile/desktop layout and actual contrast
 
 Open `/admin.html` on a static host or `/admin` when using the Node server. The admin dashboard adapts the official shadcn/ui Sidebar-07 and its accessible Radix UI controls; it uses the site's gold, cream and navy palette.
 
-New uploads are optimized to WebP, stored in the private Neon `assets` bucket and saved as drafts in Postgres. Captions, alternative text, categories, display order and publishing status can be edited. Only published uploads are readable by public visitors. Existing repository gallery photos remain visible; the admin dashboard manages new uploads.
+The public gallery contains only published uploads from Neon; the old bundled gallery collection has been removed from the page. Select up to 20 images at once (10 MB per file). Photos are optimized to WebP and each original filename is used as its alt text and initial caption. Choose a shared category and optionally publish after uploading; otherwise photos remain private drafts. Per-file progress, errors and retry of failed files are supported, and completed files are skipped on retry. Captions, categories, display order and publishing status remain editable. Existing uploaded photos retain their previous metadata because earlier uploads did not store their original filenames.
 
 ```sh
 npm run build
@@ -93,3 +93,5 @@ Production password-reset links need a configured custom SMTP sender in Neon Aut
 Production activation is complete. The gallery schema and administrator grant for `info@happycapetours.com` were applied to development and production. Real Neon service integration tests passed on the isolated development branch, and read-only production checks passed for Postgres, storage, API health, authorization and trusted website origins. The frontend configuration has been rebuilt against production. The mailbox owner must create their account and verify its email code. The updated frontend has been published to GitHub Pages, and both website admin URLs have been verified. See `BACKEND-SETUP.md` for the validation record.
 
 Signup is available at `http://localhost:3000/admin`, `https://www.happycapetours.com/admin.html`, and `https://happycapetours.com/admin.html`. Start the local server with `npm start`. Neon Auth allows localhost, and the API accepts exact localhost/loopback origins on IDE preview ports (including 5500 and 5173). Lookalike domains are rejected.
+
+Neon Auth treats `localhost` and `127.0.0.1` separately. Production explicitly trusts `http://127.0.0.1:3000`, `http://127.0.0.1:5500`, and `http://127.0.0.1:5173` in addition to the website domains and the localhost setting. Other numeric loopback ports must be registered with `npx neon@latest neon-auth domain add <exact-origin>` on the intended branch. The origin-check script uses valid disposable signup accounts because invalid input may fail validation before origin checking.

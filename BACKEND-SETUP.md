@@ -11,7 +11,7 @@ Session date: 3 November 2026.
 - Administrator authorization against a server-side allowlist, using the verified identity read from Neon Auth's database. No automatic first-user admin grant or public admin-claim endpoint.
 - Official shadcn/ui Sidebar-07 and Radix UI components adapted for the gallery dashboard.
 - Image upload validation, size/pixel limits, WebP optimization, private draft storage, captions, alternative text, categories, display order, publishing and hiding.
-- Public gallery integration, filtered navigation and lightbox captions for new published uploads. Existing static photos remain available when the API is unavailable.
+- Public gallery integration, filtered navigation and lightbox captions for new published uploads. Only published uploads appear in the gallery; empty, filtered-empty and unavailable states are shown instead of bundled photos.
 - Local Node server with explicit static-file allowlisting, server-side secrets, restricted CORS and private-file protection.
 - SQL migration, admin grant command, integration test and public-URL-only frontend configuration generation.
 
@@ -77,7 +77,7 @@ npm test
  fail 0
 ```
 
-Tests include anonymous upload denial, invalid identity denial, CORS restrictions, safe public configuration, gallery upload ordering/filter/lightbox integration, static gallery fallback, and existing website interactions. These are automated local tests, not a substitute for the real-service integration test.
+Tests include anonymous upload denial, invalid identity denial, CORS restrictions, safe public configuration, gallery upload ordering/filter/lightbox integration, uploaded-only gallery empty/error states, and existing website interactions. These are automated local tests, not a substitute for the real-service integration test.
 
 ```text
 npm start
@@ -164,8 +164,20 @@ The Neon SDK pinned vulnerable Better Auth and Zod versions. Overrides upgrade t
 
 ## Signup origin verification
 
-Neon Auth reports email/password enabled, signup enabled, localhost allowed, and both website domains trusted. Invalid-input signup requests reached validation (HTTP 400 rather than an origin rejection) from `http://localhost:3000`, `http://localhost:5500`, `http://127.0.0.1:5173`, `https://www.happycapetours.com` and `https://happycapetours.com`. No account was created and no verification email was sent during these origin checks. Production API CORS checks passed for all five origins.
+Neon Auth allows `localhost`, but that setting does not include the loopback IP `127.0.0.1`. Real signup reproduced HTTP 403 `INVALID_ORIGIN` at `http://127.0.0.1:5500`; the user confirmed their failing address was `http://127.0.0.1:3000/admin`. Explicit trusted-origin entries were added for `http://127.0.0.1:3000`, `http://127.0.0.1:5500`, and `http://127.0.0.1:5173` on production.
 
+The earlier malformed-input probes were insufficient because validation can reject bad input before origin checks. `scripts/check-signup-origins.mjs` now tests valid disposable signup accounts and immediately removes each synthetic identity. No administrator grant is given to these accounts.
+
+Verified actual signup (HTTP 200 with a returned user) and API CORS from:
+- `http://localhost:3000`
+- `http://localhost:5500`
+- `http://127.0.0.1:3000`
+- `http://127.0.0.1:5500`
+- `http://127.0.0.1:5173`
+- `https://www.happycapetours.com`
+- `https://happycapetours.com`
+
+All disposable accounts were removed.
 The API was updated and deployed to accept exact localhost/loopback hosts on IDE preview ports while rejecting lookalike domains. The complete build, typecheck and 15 automated tests passed.
 
 Verified published signup pages:
@@ -173,3 +185,13 @@ Verified published signup pages:
 - https://happycapetours.com/admin.html
 
 Both load the admin bundle and production Neon configuration.
+
+## Gallery update - 4 November 2026
+
+Removed the 16 bundled images from the public gallery collection. Original files remain available to other website pages. The gallery now loads only published Neon uploads, with no old-photo fallback.
+
+Admins can select up to 20 photos at once, see per-file progress/errors, retry failed files and optionally publish immediately. Each file is uploaded separately to retain the 10 MB per-image limit. The server derives alt text from the original filename, ignoring caller-supplied alt text on new uploads. The initial caption also defaults to the filename. Previously uploaded photos keep their existing alt metadata, since the old implementation did not retain original filenames.
+
+All 19 automated tests pass, including upload queue retries, partial failures, filename alt text and the uploaded-only public gallery.
+
+Real Neon integration also passed for multiple-image uploads, server-enforced filename alt text, publish-after-upload, public image retrieval and cleanup on development. The upload API has been deployed to production with the `gallery-uploads-2` revision.

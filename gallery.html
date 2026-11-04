@@ -214,12 +214,12 @@
   </style>
   <link rel="stylesheet" href="assets/tailwind.min.css">
   <link rel="stylesheet" href="assets/site.css">
-  <script src="assets/site.js" defer=""></script>
+  <script src="assets/site.js?v=uploads-only-1" defer=""></script>
 <meta property="og:image" content="https://www.happycapetours.com/images/optimized/hero-bg-1600.webp">
 <meta name="twitter:image" content="https://www.happycapetours.com/images/optimized/hero-bg-1600.webp">
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "TravelAgency", "@id": "https://www.happycapetours.com/#business", "name": "Happy Cape Tours", "url": "https://www.happycapetours.com/", "telephone": "+27782308502", "email": "info@happycapetours.com", "areaServed": "Cape Town"}</script>
 <script src="assets/backend-config.js" defer=""></script>
-<script src="assets/gallery-loader.js" defer=""></script>
+<script src="assets/gallery-loader.js?v=uploads-only-1" defer=""></script>
 </head>
 
 <body class="antialiased text-gray-800 selection:bg-amber-200/80">
@@ -336,69 +336,13 @@
       </div>
       <span id="galleryCount" class="text-sm text-gray-500 flex items-center gap-1"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5" aria-hidden="true" focusable="false">
           <path stroke-linecap="round" stroke-linejoin="round" d="M6.429 9.75L2.25 12l4.179 2.25m0-4.5l5.571 3 5.571-3m-11.142 0L2.25 7.5 12 2.25l9.75 5.25-4.179 2.25m0 0L21.75 12l-4.179 2.25m0 0l4.179 2.25L12 21.75 2.25 16.5l4.179-2.25m11.142 0l-5.571 3-5.571-3"></path>
-        </svg><span id="visibleCount">16</span> photos</span>
+        </svg><span id="visibleCount">0</span> photos</span>
     </div>
   </section>
 
   <!-- GALLERY GRID (with lightbox triggers) -->
   <section class="px-6 md:px-10 py-8 pb-20 max-w-7xl mx-auto">
-    <div id="galleryGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 auto-rows-[280px]">
-      <!-- Row 1 -->
-      <button type="button" class="gallery-item" data-category="landscape" data-index="0">
-        <img src="images/optimized/gallery-table-mountain-beach-1600.webp" alt="Table Mountain beach" class="w-full h-full" srcset="images/optimized/gallery-table-mountain-beach-480.webp 480w, images/optimized/gallery-table-mountain-beach-960.webp 960w, images/optimized/gallery-table-mountain-beach-1600.webp 1600w" sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw" width="1920" height="1280" decoding="async" loading="lazy">
-      </button>
-      <button type="button" class="gallery-item" data-category="wildlife" data-index="1">
-        <img src="images/optimized/gallery-penguins-1600.webp" alt="Penguins at Boulders" class="w-full h-full" srcset="images/optimized/gallery-penguins-480.webp 480w, images/optimized/gallery-penguins-960.webp 960w, images/optimized/gallery-penguins-1600.webp 1600w" sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw" width="1920" height="1080" decoding="async" loading="lazy">
-      </button>
-      <button type="button" class="gallery-item" data-category="landscape" data-index="2">
-        <img src="images/optimized/gallery-cape-point-1600.webp" alt="Cape Point" class="w-full h-full" srcset="images/optimized/gallery-cape-point-480.webp 480w, images/optimized/gallery-cape-point-960.webp 960w, images/optimized/gallery-cape-point-1600.webp 1600w" sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw" width="1920" height="1280" decoding="async" loading="lazy">
-      </button>
-      <button type="button" class="gallery-item" data-category="people" data-index="3">
-        <img src="images/optimized/gallery-happy-tourist-1600.webp" alt="Happy tourist" class="w-full h-full" srcset="images/optimized/gallery-happy-tourist-480.webp 480w, images/optimized/gallery-happy-tourist-960.webp 960w, images/optimized/gallery-happy-tourist-1600.webp 1600w" sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw" width="1920" height="1440" decoding="async" loading="lazy">
-      </button>
-
-      <!-- Row 2 -->
-      <button type="button" class="gallery-item" data-category="wildlife" data-index="4">
-        <img src="images/optimized/gallery-safari-lion-1600.webp" alt="Safari lion" class="w-full h-full" srcset="images/optimized/gallery-safari-lion-480.webp 480w, images/optimized/gallery-safari-lion-960.webp 960w, images/optimized/gallery-safari-lion-1600.webp 1600w" sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw" width="1920" height="1280" decoding="async" loading="lazy">
-      </button>
-      <button type="button" class="gallery-item" data-category="landscape" data-index="5">
-        <img src="images/optimized/gallery-chapmans-peak-1600.webp" alt="Chapman’s Peak scenic drive" class="w-full h-full" srcset="images/optimized/gallery-chapmans-peak-480.webp 480w, images/optimized/gallery-chapmans-peak-960.webp 960w, images/optimized/gallery-chapmans-peak-1600.webp 1600w" sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw" width="1920" height="1440" decoding="async" loading="lazy">
-      </button>
-      <button type="button" class="gallery-item" data-category="culture" data-index="6">
-        <img src="images/optimized/gallery-bo-kaap-1600.webp" alt="Bo Kaap colorful houses" class="w-full h-full" srcset="images/optimized/gallery-bo-kaap-480.webp 480w, images/optimized/gallery-bo-kaap-960.webp 960w, images/optimized/gallery-bo-kaap-1600.webp 1600w" sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw" width="1920" height="1280" decoding="async" loading="lazy">
-      </button>
-      <button type="button" class="gallery-item" data-category="wildlife" data-index="7">
-        <img src="images/optimized/gallery-hermanus-1600.webp" alt="Whale breaching" class="w-full h-full" srcset="images/optimized/gallery-hermanus-480.webp 480w, images/optimized/gallery-hermanus-960.webp 960w, images/optimized/gallery-hermanus-1600.webp 1600w" sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw" width="1920" height="1280" decoding="async" loading="lazy">
-      </button>
-
-      <!-- Row 3 -->
-      <button type="button" class="gallery-item" data-category="landscape" data-index="8">
-        <img src="images/optimized/gallery-cape-agulhas-lighthouse-1600.webp" alt="Cape Agulhas lighthouse" class="w-full h-full" srcset="images/optimized/gallery-cape-agulhas-lighthouse-480.webp 480w, images/optimized/gallery-cape-agulhas-lighthouse-960.webp 960w, images/optimized/gallery-cape-agulhas-lighthouse-1600.webp 1600w" sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw" width="1920" height="1280" decoding="async" loading="lazy">
-      </button>
-      <button type="button" class="gallery-item" data-category="culture" data-index="9">
-        <img src="images/optimized/robben-island-2-1600.webp" alt="Robben Island" class="w-full h-full" srcset="images/optimized/robben-island-2-480.webp 480w, images/optimized/robben-island-2-960.webp 960w, images/optimized/robben-island-2-1600.webp 1600w" sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw" width="1920" height="1280" decoding="async" loading="lazy">
-      </button>
-      <button type="button" class="gallery-item" data-category="people" data-index="10">
-        <img src="images/optimized/gallery-happy-cape-tour-guide-1500.webp" alt="Local guide smiling" class="w-full h-full" srcset="images/optimized/gallery-happy-cape-tour-guide-480.webp 480w, images/optimized/gallery-happy-cape-tour-guide-960.webp 960w, images/optimized/gallery-happy-cape-tour-guide-1500.webp 1500w" sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw" width="1500" height="1000" decoding="async" loading="lazy">
-      </button>
-      <button type="button" class="gallery-item" data-category="wildlife" data-index="11">
-        <img src="images/optimized/gallery-penguins-1600.webp" alt="Penguins on beach" class="w-full h-full" srcset="images/optimized/gallery-penguins-480.webp 480w, images/optimized/gallery-penguins-960.webp 960w, images/optimized/gallery-penguins-1600.webp 1600w" sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw" width="1920" height="1080" decoding="async" loading="lazy">
-      </button>
-
-      <!-- Row 4 -->
-      <button type="button" class="gallery-item" data-category="wildlife" data-index="12">
-        <img src="images/optimized/gallery-elephant-aquila-1600.webp" alt="Elephant at Aquila" class="w-full h-full" srcset="images/optimized/gallery-elephant-aquila-480.webp 480w, images/optimized/gallery-elephant-aquila-960.webp 960w, images/optimized/gallery-elephant-aquila-1600.webp 1600w" sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw" width="1920" height="1280" decoding="async" loading="lazy">
-      </button>
-      <button type="button" class="gallery-item" data-category="landscape" data-index="13">
-        <img src="images/optimized/gallery-chapmans-peak-drive-1600.webp" alt="Chapman's Peak drive" class="w-full h-full" srcset="images/optimized/gallery-chapmans-peak-drive-480.webp 480w, images/optimized/gallery-chapmans-peak-drive-960.webp 960w, images/optimized/gallery-chapmans-peak-drive-1600.webp 1600w" sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw" width="1920" height="1152" decoding="async" loading="lazy">
-      </button>
-      <button type="button" class="gallery-item" data-category="culture" data-index="14">
-        <img src="images/optimized/gallery-winelands-vineyard-1600.webp" alt="Winelands vineyard" class="w-full h-full" srcset="images/optimized/gallery-winelands-vineyard-480.webp 480w, images/optimized/gallery-winelands-vineyard-960.webp 960w, images/optimized/gallery-winelands-vineyard-1600.webp 1600w" sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw" width="1920" height="1280" decoding="async" loading="lazy">
-      </button>
-      <button type="button" class="gallery-item" data-category="people" data-index="15">
-        <img src="images/optimized/gallery-tour-group-laughing-1600.webp" alt="Tour group laughing" class="w-full h-full" srcset="images/optimized/gallery-tour-group-laughing-480.webp 480w, images/optimized/gallery-tour-group-laughing-960.webp 960w, images/optimized/gallery-tour-group-laughing-1600.webp 1600w" sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw" width="1920" height="1313" decoding="async" loading="lazy">
-      </button>
-    </div>
+    <div id="galleryGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 auto-rows-[280px]"></div><p id="galleryStatus" class="text-center text-gray-600 py-12" role="status" aria-live="polite">Loading photos…</p><noscript>Please enable JavaScript to view our uploaded gallery photos.</noscript>
   </section>
 
   <!-- LIGHTBOX (custom, matches luxury brand) -->
@@ -419,7 +363,7 @@
       </svg>
     </button>
     <div class="lightbox-content">
-      <img src="images/optimized/gallery-table-mountain-beach-1600.webp" alt="Table Mountain beach" id="lightboxImg" srcset="images/optimized/gallery-table-mountain-beach-480.webp 480w, images/optimized/gallery-table-mountain-beach-960.webp 960w, images/optimized/gallery-table-mountain-beach-1600.webp 1600w" sizes="(min-width: 1024px) 50vw, 100vw" width="1920" height="1280" decoding="async" loading="lazy">
+      <img alt="" id="lightboxImg" width="1920" height="1280" decoding="async" loading="lazy">
     </div>
     <div class="lightbox-caption" id="lightboxCaption"></div>
   </div>
