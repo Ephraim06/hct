@@ -41,3 +41,9 @@ test('Analytics rejects unknown origins and invalid events; reports remain priva
  assert.equal((await api.request('/events',{method:'POST',headers:{Origin:'https://evil.example','Content-Type':'application/json'},body:'{}'})).status,403);
  assert.equal((await api.request('/events',{method:'POST',headers:{Origin:'https://www.happycapetours.com','Content-Type':'application/json'},body:'{}'})).status,400);
 });
+
+test('Gallery deletion, cover changes and enquiry management require administrator authentication',async()=>{
+ for(const [method,path]of [['POST','/admin/gallery-management/actions'],['POST','/admin/gallery-management/hero'],['DELETE','/admin/gallery-management/hero'],['GET','/admin/enquiries'],['GET','/admin/enquiries/export'],['POST','/admin/enquiries/recover'],['PATCH','/admin/enquiries/00000000-0000-4000-8000-000000000000'],['POST','/admin/enquiries/00000000-0000-4000-8000-000000000000/notes'],['POST','/admin/enquiries/00000000-0000-4000-8000-000000000000/retry']])assert.equal((await api.request(path,{method})).status,401,path);
+ assert.equal((await api.request('/enquiries',{method:'POST',headers:{Origin:'https://evil.example','Content-Type':'application/json'},body:'{}'})).status,403);
+ assert.equal((await api.request('/enquiries',{method:'POST',headers:{Origin:'https://www.happycapetours.com','Content-Type':'application/json'},body:'{}'})).status,400);
+});

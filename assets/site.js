@@ -161,6 +161,10 @@
     });
   }
 
+  if(document.readyState!=='complete'){
+    const progress=document.createElement('div');progress.className='hct-page-progress';progress.setAttribute('role','progressbar');progress.setAttribute('aria-label','Loading page');document.body.append(progress);
+    const finish=()=>{progress.classList.add('is-done');setTimeout(()=>progress.remove(),300);};window.addEventListener('load',finish,{once:true});setTimeout(finish,4000);
+  }
   const form = document.getElementById('contactForm');
   if (form) {
     const tour = form.elements.namedItem('tour');
@@ -172,17 +176,24 @@
     date.min = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
     const button = document.getElementById('submitBtn');
     const status = document.getElementById('formStatus');
-    let pending = false;
+    let pending = false, submissionId = null, submissionFingerprint = '';
+    const originalButton = button.innerHTML;
+    const received=new URLSearchParams(location.search).get('received');if(received&&/^[0-9a-f]{8}$/i.test(received)){status.className='form-feedback is-success';status.textContent='Thank you! Your enquiry has been received. Reference: '+received.toUpperCase()+'.';}
     form.addEventListener('submit', async event => {
       event.preventDefault();
       if (pending || !form.reportValidity()) return;
       pending = true; button.disabled = true; form.setAttribute('aria-busy', 'true');
-      status.removeAttribute('data-success'); status.textContent = 'Sending your enquiry…';
+      status.removeAttribute('data-success');status.className='form-feedback is-sending'; status.textContent = 'Sending your enquiry…';
+      button.innerHTML='<span class="hct-button-spinner" aria-hidden="true"></span> Sending…';
       const controller = new AbortController();
-      const timeout = setTimeout(() => controller.abort(), 20000);
+      const timeout = setTimeout(() => controller.abort(), 45000);
       try {
-        const response = await fetch(form.action, {method: 'POST', body: new FormData(form), headers: {Accept: 'application/json'}, signal: controller.signal});
-        if (!response.ok) throw new Error('Submission rejected');
+        const fields = new FormData(form);
+        const payload = {firstName:String(fields.get('first-name')||''),lastName:String(fields.get('last-name')||''),email:String(fields.get('email')||''),phone:String(fields.get('mobile-number')||''),tour:String(fields.get('tour')||''),travelDate:String(fields.get('travel-date')||''),partySize:Number(fields.get('party-size')),message:String(fields.get('message')||''),website:String(fields.get('website')||'')};
+        const fingerprint=JSON.stringify(payload);if(!submissionId||fingerprint!==submissionFingerprint){submissionId=crypto.randomUUID();submissionFingerprint=fingerprint;}
+        const base=window.HCT_BACKEND?.apiBaseUrl?.replace(/\/$/,'');if(!base)throw new Error('Enquiry service unavailable');
+        const response = await fetch(base+'/enquiries', {method:'POST',body:JSON.stringify({...payload,id:submissionId}),headers:{Accept:'application/json','Content-Type':'application/json'},signal:controller.signal});
+        const result=await response.json();if(!response.ok||!result.accepted)throw new Error(result.error||'Submission rejected');
         // Analytics receives only a canonical tour slug, never the form contents.
         const selection=String(tour?.value||'').toLowerCase();
         const tourSlug=({'cape point & penguins':'cape-point-penguins','cape of good hope & penguins':'cape-point-penguins','private cape point & penguins':'cape-point-penguins-private-tour','private cape of good hope & penguins':'cape-point-penguins-private-tour','cape agulhas':'cape-agulhas',"chapman’s peak":'chapmans-peak',"chapman's peak":'chapmans-peak','cape winelands':'capewinelands-stellenbosch','robben island & township':'robben-island','safari day tour':'safari-day-tour','whale watching hermanus':'whale-watching'})[selection]||null;
@@ -190,12 +201,13 @@
         // Clear private fields only after the receiving service accepts the request.
         form.reset();
         if (selectedTour) tour.value = selectedTour;
-        status.dataset.success = '';
-        status.textContent = 'Thank you. Your enquiry has been received. We’ll contact you to confirm availability and details.';
+        status.dataset.success = '';status.className='form-feedback is-success';
+        submissionId=null;submissionFingerprint='';
+        status.textContent = `Thank you! Your enquiry has been received. Reference: ${String(result.reference||'').slice(0,8).toUpperCase()}.`;
       } catch (error) {
-        status.textContent = 'We couldn’t confirm delivery. Your details are still here. Please try again, or contact us by phone or WhatsApp. If you already sent this enquiry, please mention it when contacting us.';
+        status.className='form-feedback is-error';status.textContent = 'We couldn’t confirm receipt. Please retry—your details are still here.';
       } finally {
-        clearTimeout(timeout); pending = false; button.disabled = false; form.removeAttribute('aria-busy'); status.focus();
+        clearTimeout(timeout); pending = false; button.disabled = false;button.innerHTML=originalButton; form.removeAttribute('aria-busy'); status.focus();
       }
     });
   }

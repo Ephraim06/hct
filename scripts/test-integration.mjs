@@ -12,7 +12,7 @@ async function authRequest(path,body,cookie){const headers={'Content-Type':'appl
 async function request(path,options={}){return fetch(api+path,{...options,signal:AbortSignal.timeout(20000)});}
 try{
  await client.connect();assert.equal((await client.query('SELECT 1 AS connected')).rows[0].connected,1);console.log('PASS Postgres connection');
- let ready=false;for(let attempt=0;attempt<60;attempt++){const health=await request('/health?revision=analytics-2&attempt='+attempt);if(health.ok&&(await health.json()).version==='analytics-2'){ready=true;break;}console.log('Waiting for latest gallery function revision…');await new Promise(resolve=>setTimeout(resolve,2000));}
+ let ready=false;for(let attempt=0;attempt<60;attempt++){const health=await request('/health?revision=inbox-gallery-3&attempt='+attempt);if(health.ok&&(await health.json()).version==='inbox-gallery-3'){ready=true;break;}console.log('Waiting for latest gallery function revision…');await new Promise(resolve=>setTimeout(resolve,2000));}
  assert.ok(ready,'The newest gallery function has not finished rolling out.');console.log('PASS deployed Neon Function');
  const signup=await authRequest('/sign-up/email',{email,password,name:'Disposable gallery integration fixture'});
  userId=signup.data.user?.id || (await client.query('SELECT id FROM neon_auth."user" WHERE email=$1',[email])).rows[0]?.id;

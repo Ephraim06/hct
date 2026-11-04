@@ -212,14 +212,14 @@
       }
     }
   </style>
-  <link rel="stylesheet" href="assets/tailwind.min.css">
-  <link rel="stylesheet" href="assets/site.css">
-  <script src="assets/site.js?v=analytics-1" defer=""></script>
+  <link rel="stylesheet" href="assets/tailwind.min.css?v=inbox-gallery-1">
+  <link rel="stylesheet" href="assets/site.css?v=inbox-gallery-1">
+  <script src="assets/site.js?v=inbox-gallery-1" defer=""></script>
 <meta property="og:image" content="https://www.happycapetours.com/images/optimized/hero-bg-1600.webp">
 <meta name="twitter:image" content="https://www.happycapetours.com/images/optimized/hero-bg-1600.webp">
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "TravelAgency", "@id": "https://www.happycapetours.com/#business", "name": "Happy Cape Tours", "url": "https://www.happycapetours.com/", "telephone": "+27782308502", "email": "info@happycapetours.com", "areaServed": "Cape Town"}</script>
 <script src="assets/backend-config.js" defer=""></script>
-<script src="assets/gallery-loader.js?v=uploads-only-1" defer=""></script>
+<script src="assets/gallery-loader.js?v=inbox-gallery-1" defer=""></script>
 <script src="assets/analytics.js?v=analytics-1" defer=""></script></head>
 
 <body class="antialiased text-gray-800 selection:bg-amber-200/80">
@@ -295,10 +295,10 @@
 <main id="main-content" tabindex="-1"><noscript>&lt;nav aria-label="Navigation without JavaScript" class="bg-gray-900 text-white px-6 pt-28 pb-4 flex flex-wrap gap-4"&gt;&lt;a href="index.html"&gt;Home&lt;/a&gt;&lt;a href="tours.html"&gt;Tours&lt;/a&gt;&lt;a href="about.html"&gt;About&lt;/a&gt;&lt;a href="gallery.html"&gt;Gallery&lt;/a&gt;&lt;a href="contact.html"&gt;Contact&lt;/a&gt;&lt;/nav&gt;</noscript>
 
   <!-- HERO for gallery page -->
-  <section class="relative min-h-[360px] md:min-h-[420px] pt-28 pb-16 flex items-center justify-center overflow-hidden" style="background: linear-gradient(135deg, #0b3038 0%, #111827 60%, #433416 100%);">
+  <section id="galleryHero" class="relative min-h-[360px] md:min-h-[420px] pt-28 pb-16 flex items-center justify-center overflow-hidden" style="background: linear-gradient(135deg, #0b3038 0%, #111827 60%, #433416 100%);">
     <div class="absolute inset-0 z-0">
-
-      <div class="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-amber-900/40"></div>
+      <img id="galleryHeroImage" alt="" width="1600" height="900" hidden="" class="gallery-hero-image" decoding="async" fetchpriority="high">
+      <div class="absolute inset-0 gallery-cover-overlay"></div>
     </div>
     <div class="relative z-10 text-center text-white px-6">
       <div class="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full border border-white/30 mb-6">

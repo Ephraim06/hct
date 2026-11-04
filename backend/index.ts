@@ -4,7 +4,7 @@ import {bodyLimit} from 'hono/body-limit';
 import {secureHeaders} from 'hono/secure-headers';
 import {Pool} from 'pg';
 import {drizzle} from 'drizzle-orm/node-postgres';
-import {and, eq, asc, desc} from 'drizzle-orm';
+import {and, eq, asc, desc,or,sql} from 'drizzle-orm';
 import {attachDatabasePool} from '@neon/functions';
 import {S3Client, PutObjectCommand, GetObjectCommand, DeleteObjectCommand} from '@aws-sdk/client-s3';
 import {getSignedUrl} from '@aws-sdk/s3-request-presigner';
@@ -14,6 +14,8 @@ import {randomUUID} from 'node:crypto';
 import {galleryImages, adminInvitations, savedTours} from './database/schema';
 import {isAllowedOrigin} from './origins';
 import {findTour} from './tours';
+import {enquiryRoutes} from './enquiries';
+import {galleryManagement} from './gallery-management';
 import {parseEvents,recordEvents,dateRange,analyticsReport} from './analytics';
 
 export const pool = new Pool({connectionString:process.env.DATABASE_URL, max:5, connectionTimeoutMillis:10000});
@@ -30,7 +32,7 @@ const app=new Hono<AppEnv>();
 app.use('*',(c,next)=>secureHeaders({crossOriginResourcePolicy:/^\/(?:api\/)?media\//.test(c.req.path)?'cross-origin':'same-origin'})(c,next));
 app.use('*',cors({origin:origin=>isAllowedOrigin(origin)?origin:undefined, allowMethods:['GET','POST','PATCH','DELETE','OPTIONS'],allowHeaders:['Authorization','Content-Type'],maxAge:600}));
 app.onError((error,c)=>{console.error('Gallery request failed',error.name);return c.json({error:'The request could not be completed. Please try again.'},500);});
-app.get('/health',c=>c.json({ok:true,service:'Happy Cape Tours gallery',version:'analytics-2'}));
+app.get('/health',c=>c.json({ok:true,service:'Happy Cape Tours gallery',version:'inbox-gallery-3'}));
 app.post('/events',bodyLimit({maxSize:16384,onError:c=>c.json({error:'Payload too large.'},413)}),async c=>{
  const origin=c.req.header('Origin')||'';
  if(!isAllowedOrigin(origin))return c.json({error:'Origin not allowed.'},403);
@@ -62,6 +64,10 @@ app.use('/admin/*',requireIdentity,async(c,next)=>{
  if(!grant)return c.json({error:'This account has not been authorized as an administrator.'},403);
  await next();
 });
+const enquiries=enquiryRoutes(pool,storage);
+app.route('/enquiries',enquiries.publicRoutes);
+app.route('/admin/enquiries',enquiries.admin);
+app.route('/admin/gallery-management',galleryManagement(pool,storage));
 app.get('/account/me',async c=>{
  const [grant]=await db.select().from(adminInvitations).where(eq(adminInvitations.email,c.get('email').toLowerCase())).limit(1);
  return c.json({user:{id:c.get('userId'),email:c.get('email'),name:c.get('name'),isAdmin:Boolean(grant)}});
@@ -106,13 +112,14 @@ function fields(value:Record<string,unknown>){
 function publicImage(row:typeof galleryImages.$inferSelect){
   return {id:row.id,caption:row.caption,alt:row.alt,category:row.category,width:row.width,height:row.height,sortOrder:row.sortOrder,src:`/media/${row.id}`};
 }
+async function heroImage(){const setting=await pool.query('SELECT hero_image_id FROM gallery_settings');if(!setting.rows[0]?.hero_image_id)return null;const [image]=await db.select().from(galleryImages).where(and(eq(galleryImages.id,setting.rows[0].hero_image_id),eq(galleryImages.archived,false))).limit(1);return image||null;}
 app.get('/gallery',async c=>{
-  const images=await db.select().from(galleryImages).where(and(eq(galleryImages.published,true),eq(galleryImages.archived,false))).orderBy(asc(galleryImages.sortOrder),desc(galleryImages.createdAt)).limit(500);
-  c.header('Cache-Control','no-store');return c.json({images:images.map(publicImage)});
+  const images=await db.select().from(galleryImages).where(and(eq(galleryImages.published,true),eq(galleryImages.archived,false),eq(galleryImages.purpose,'gallery'))).orderBy(asc(galleryImages.sortOrder),desc(galleryImages.createdAt)).limit(500);
+  c.header('Cache-Control','no-store');const hero=await heroImage();return c.json({images:images.map(publicImage),hero:hero?publicImage(hero):null});
 });
 app.get('/media/:id',async c=>{
   if(!/^[0-9a-f-]{36}$/i.test(c.req.param('id')))return c.notFound();
-  const [image]=await db.select().from(galleryImages).where(and(eq(galleryImages.id,c.req.param('id')),eq(galleryImages.published,true),eq(galleryImages.archived,false))).limit(1);
+  const [image]=await db.select().from(galleryImages).where(and(eq(galleryImages.id,c.req.param('id')),or(eq(galleryImages.published,true),sql`${galleryImages.id} IN (SELECT hero_image_id FROM gallery_settings)`),eq(galleryImages.archived,false))).limit(1);
   if(!image)return c.notFound();
   const object=await storage.send(new GetObjectCommand({Bucket:bucket,Key:image.objectKey}));
   if(!object.Body)return c.notFound();
@@ -120,9 +127,9 @@ app.get('/media/:id',async c=>{
   return new Response(object.Body.transformToWebStream(),{headers:{'Content-Type':'image/webp','Cache-Control':'no-store','X-Content-Type-Options':'nosniff','Access-Control-Allow-Origin':'*'}});
 });
 app.get('/admin/gallery',async c=>{
-  const images=await db.select().from(galleryImages).where(eq(galleryImages.archived,false)).orderBy(asc(galleryImages.sortOrder),desc(galleryImages.createdAt)).limit(500);
-  const result=await Promise.all(images.map(async row=>({...publicImage(row),published:row.published,createdAt:row.createdAt,preview:await getSignedUrl(storage,new GetObjectCommand({Bucket:bucket,Key:row.objectKey}),{expiresIn:300})})));
-  return c.json({images:result});
+  const images=await db.select().from(galleryImages).where(eq(galleryImages.archived,c.req.query('view')==='trash')).orderBy(asc(galleryImages.sortOrder),desc(galleryImages.createdAt)).limit(500);
+  const result=await Promise.all(images.map(async row=>({...publicImage(row),published:row.published,purpose:row.purpose,archived:row.archived,createdAt:row.createdAt,preview:await getSignedUrl(storage,new GetObjectCommand({Bucket:bucket,Key:row.objectKey}),{expiresIn:300})})));
+  const hero=await heroImage();return c.json({images:result,heroId:hero?.id||null});
 });
 app.post('/admin/gallery',bodyLimit({maxSize:11*1024*1024,onError:c=>c.json({error:'Choose an image smaller than 10 MB.'},413)}),async c=>{
   const form=await c.req.formData();const file=form.get('image');
@@ -137,10 +144,11 @@ app.post('/admin/gallery',bodyLimit({maxSize:11*1024*1024,onError:c=>c.json({err
     if(!['jpeg','png','webp','avif','heif'].includes(metadata.format || '')||(metadata.pages || 1)>1)throw new Error('Unsupported image');
     output=await image.rotate().resize({width:1600,height:1600,fit:'inside',withoutEnlargement:true}).webp({quality:82}).toBuffer({resolveWithObject:true});
   }catch{return c.json({error:'This image could not be processed. Use a valid still photo under 40 megapixels.'},400);}
+  const purpose=form.get('purpose')==='hero'?'hero':'gallery';
   const id=randomUUID(),key=`gallery/${id}.webp`;
   await storage.send(new PutObjectCommand({Bucket:bucket,Key:key,Body:output.data,ContentType:'image/webp',CacheControl:'private, max-age=300'}));
   try{
-    const [image]=await db.insert(galleryImages).values({id,objectKey:key,...details,width:output.info.width,height:output.info.height,createdBy:c.get('userId'),published:form.get('published')==='true'}).returning();
+    const image=await db.transaction(async tx=>{const [row]=await tx.insert(galleryImages).values({id,objectKey:key,...details,purpose,width:output.info.width,height:output.info.height,createdBy:c.get('userId'),published:purpose==='gallery'&&form.get('published')==='true'}).returning();if(purpose==='hero')await tx.execute(sql`UPDATE gallery_settings SET hero_image_id=${id}::uuid`);return row;});
     return c.json({image:{...publicImage(image),published:image.published}},201);
   }catch(error){
     // Only roll back the newly-created object if its metadata insert failed.

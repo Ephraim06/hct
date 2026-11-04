@@ -6,7 +6,7 @@ const db=new pg.Client({connectionString:process.env.DATABASE_URL_UNPOOLED,conne
 const nativeFetch=globalThis.fetch;const cookies=new Map();
 const authUrl=process.env.NEON_AUTH_BASE_URL;
 globalThis.fetch=async(input,init={})=>{
- const headers=new Headers(init.headers);headers.set('Origin','http://127.0.0.1:3000');
+ const headers=new Headers(init.headers);headers.set('Origin','http://localhost:3000');
  if(cookies.size)headers.set('Cookie',[...cookies].map(([key,value])=>`${key}=${value}`).join('; '));
  const response=await nativeFetch(input,{...init,headers,signal:AbortSignal.timeout(20000)});
  for(const cookie of response.headers.getSetCookie()){const pair=cookie.split(';')[0];const split=pair.indexOf('=');cookies.set(pair.slice(0,split),pair.slice(split+1));}
@@ -14,6 +14,10 @@ globalThis.fetch=async(input,init={})=>{
 };
 await db.connect();
 try{
+ const endpoint=process.env.NEON_FUNCTION_GALLERY_BASE_URL.replace(/\/$/,'');let ready=false;
+ for(let i=0;i<90;i++){const response=await nativeFetch(endpoint+'/health?revision=inbox-gallery-3&attempt='+i,{signal:AbortSignal.timeout(20000)});if(response.ok&&(await response.json()).version==='inbox-gallery-3'){ready=true;break;}await new Promise(r=>setTimeout(r,2000));}
+ assert.ok(ready,'Latest inbox/gallery deployment is not ready.');
+
  const client=createAuthClient(authUrl);
  const signedUp=await client.signUp.email({email,password,name:'Disposable SDK sign-in diagnostic'});assert.ok(!signedUp.error,'SDK signup failed');
  await db.query('UPDATE neon_auth."user" SET "emailVerified"=true WHERE email=$1',[email]);
@@ -23,7 +27,7 @@ try{
  const token=await getAccessToken(client);assert.ok(token,'The SDK provided no bearer JWT');
  const legacy=await client.token();assert.equal(legacy.data?.token,undefined,'The cached token response no longer matches the reproduced regression');
  const base=process.env.NEON_FUNCTION_GALLERY_BASE_URL.replace(/\/$/,'');
- for(const path of ['/admin/me','/admin/gallery']){const response=await nativeFetch(base+path,{headers:{Authorization:`Bearer ${token}`},signal:AbortSignal.timeout(20000)});assert.equal(response.status,200,path);}
+ for(const path of ['/admin/me','/admin/gallery','/admin/enquiries','/admin/enquiries/export']){const response=await nativeFetch(base+path,{headers:{Authorization:`Bearer ${token}`},signal:AbortSignal.timeout(20000)});assert.equal(response.status,200,path);}
  console.log('PASS real SDK signup, sign-in, cached-session JWT and protected dashboard access');
  await client.signOut();console.log('PASS SDK signout');
 }finally{

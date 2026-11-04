@@ -41,7 +41,7 @@ for (const [name, document] of docs) {
   assert.ok(!document.documentElement.outerHTML.includes('cdn.tailwindcss.com'),`${name}: runtime CSS`);
 }
 const contact = docs.get('contact.html');
-assert.equal(contact.querySelector('form').action,'https://formspree.io/f/meaaveoz');
+assert.match(contact.querySelector('form').action,/^https:\/\/[^/]+\/enquiries$/);
 assert.equal(contact.querySelector('form').method,'post');
 for (const name of ['email','tour','message','travel-date','party-size']) assert.ok(contact.querySelector(`[name="${name}"]`),`Form field ${name}`);
 for (const [name,document] of docs) {

@@ -5,6 +5,7 @@ import {JSDOM} from 'jsdom';
 const script = await fs.readFile('assets/site.js','utf8');
 async function page(file, query='') {
   const dom = new JSDOM(await fs.readFile(file,'utf8'), {url:`https://www.happycapetours.com/${file}${query}`, runScripts:'outside-only', pretendToBeVisual:true});
+  dom.window.HCT_BACKEND={apiBaseUrl:'https://api.example.com'};
   dom.window.matchMedia = () => ({matches:false, addEventListener(){}});
   dom.window.HTMLElement.prototype.getClientRects = () => [{width:100,height:40}];
   if (file === 'gallery.html') {
@@ -31,16 +32,15 @@ test('Formspree success sends all named fields, blocks duplicates and clears onl
     let accepted=[];document.addEventListener('hct:enquiry-accepted',e=>accepted.push(e.detail));
     let resolve, calls=0;
     dom.window.fetch = (url,options) => {
-      calls++; assert.equal(url,'https://formspree.io/f/meaaveoz');
+      calls++; assert.equal(url,'https://api.example.com/enquiries');
       assert.equal(options.method,'POST'); assert.equal(options.headers.Accept,'application/json');
-      assert.equal(options.body.get('party-size'),'2'); assert.equal(options.body.get('travel-date'),'2027-02-03');
-      assert.equal(options.body.get('tour'),'Private Cape of Good Hope & Penguins');
+      const payload=JSON.parse(options.body);assert.equal(payload.partySize,2);assert.equal(payload.travelDate,'2027-02-03');assert.equal(payload.tour,'Private Cape of Good Hope & Penguins');assert.match(payload.id,/^[a-f0-9-]{36}$/);
       return new Promise(done => {resolve=done;});
     };
     submit(dom); submit(dom);
     assert.equal(calls,1); assert.equal(document.getElementById('submitBtn').disabled,true);
     assert.equal(document.getElementById('message').value,'Test enquiry');
-    resolve({ok:true}); await tick();
+    resolve({ok:true,json:async()=>({accepted:true,reference:'12345678-1234-4123-8123-123456789abc'})}); await tick();
     assert.equal(document.getElementById('message').value,'');
     assert.ok(document.getElementById('formStatus').hasAttribute('data-success'));
     assert.equal(document.getElementById('submitBtn').disabled,false);
@@ -53,15 +53,15 @@ for (const failure of ['http','network','timeout']) test(`Form ${failure} failur
   try {
     fill(dom);let accepted=0;dom.window.document.addEventListener('hct:enquiry-accepted',()=>accepted++);
     dom.window.fetch=async (url, options) => {
-      if(failure==='http') return {ok:false};
+      if(failure==='http') return {ok:false,json:async()=>({error:'Unavailable'})};
       if(failure==='timeout') return new Promise((resolve,reject) => options.signal.addEventListener('abort', () => reject(new dom.window.DOMException('Aborted','AbortError')), {once:true}));
       throw new Error('Offline');
     };
-    if (failure === 'timeout') dom.window.setTimeout = (callback, delay) => {assert.equal(delay, 20000); queueMicrotask(callback); return 1;};
+    if (failure === 'timeout'){const original=dom.window.setTimeout.bind(dom.window);dom.window.setTimeout=(callback,delay)=>{if(delay===45000){queueMicrotask(callback);return 1;}return original(callback,delay);};}
     submit(dom); await tick();
     const document=dom.window.document;
     assert.equal(document.getElementById('message').value,'Test enquiry');
-    assert.match(document.getElementById('formStatus').textContent,/couldn’t confirm delivery/);
+    assert.match(document.getElementById('formStatus').textContent,/couldn’t confirm receipt/);
     assert.equal(document.getElementById('submitBtn').disabled,false);
     assert.equal(document.querySelector('form').hasAttribute('aria-busy'),false);assert.equal(accepted,0);
   } finally {dom.window.close();}

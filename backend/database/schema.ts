@@ -4,6 +4,7 @@ export const galleryImages = pgTable('gallery_images', {
   caption: text('caption').notNull(), alt: text('alt').notNull(), category: text('category').notNull(),
   width: integer('width').notNull(), height: integer('height').notNull(),
   sortOrder: integer('sort_order').notNull().default(0), published: boolean('published').notNull().default(false),
+  purpose:text('purpose').notNull().default('gallery'),
   archived: boolean('archived').notNull().default(false), createdBy: text('created_by').notNull(),
   createdAt: timestamp('created_at', {withTimezone:true}).defaultNow().notNull(),
   updatedAt: timestamp('updated_at', {withTimezone:true}).defaultNow().notNull(),
